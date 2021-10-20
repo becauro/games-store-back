@@ -1,37 +1,27 @@
 const models = require('../models/products');
-
-const UNPROCESSABLE_ENTITY = 422;
-const CODE = 'invalid_data';
-
-const validator = (name, quantity) => {
-    const nameCharMsg = '"name" length must be at least 5 characters long';
-    const qtdMsg = '"quantity" must be larger than or equal to 1';
-    const qtdStringmsg = '"quantity" must be a number';
-
-    if (name.length < 5) return { code: CODE, status: UNPROCESSABLE_ENTITY, message: nameCharMsg };
-    if (quantity < 1) return { code: CODE, status: UNPROCESSABLE_ENTITY, message: qtdMsg };
-    if (typeof quantity !== 'number') { 
-        return { code: CODE, status: UNPROCESSABLE_ENTITY, message: qtdStringmsg };
-    }
-
-    return {};
-};
+const validators = require('../utils/validators');
 
 const create = async (name, quantity) => {
-    const isValid = validator(name, quantity);
+  const validQtd = validators.quantity(quantity);
+  const validName = validators.name(name);
+  const existsMsg = 'Product already exists';
+  
+  if (validQtd.code) {
+    return { code: validQtd.code, status: validQtd.status, message: validQtd.message };
+  }
+  
+  if (validName.code) {
+    return { code: validName.code, status: validName.status, message: validName.message };
+  }
+  
+  const found = await validators.areadyExists(name, existsMsg);
 
-    if (isValid.code) {
-        return { code: isValid.code, status: isValid.status, message: isValid.message };
-    }
-
-    const product = await models.create(name, quantity);
-    return product;
-
-    // try {
-        
-    // } catch (error) {
-    //     return error;
-    // }
+  if (found.code) {
+    return { code: found.code, status: found.status, message: found.message };
+  }
+ 
+  const insertedId = await models.create(name, quantity);
+  return { insertedId };
 };
 
 module.exports = {
