@@ -26,44 +26,31 @@ const create = async (name, quantity) => {
   }
  
   const insertedId = await models.create(name, quantity);
-  return { insertedId };
+  return insertedId;
 };
 
 const getAll = async () => {
   const productS = await models.getAll();
-  console.log('Aqui productS em SERVICES');
-  console.log(productS);
   if (productS.length !== 0) return { status: OK, productS };
 };
-
-const MONGO_ID_LENGTH = 12 * 2;
-const isValidId = (id) => id && typeof id === 'string' && id.length === MONGO_ID_LENGTH;
 
 const getById = async (id) => {
   const notFoundMsg = 'Wrong id format';
 
-  // if (!ObjectId.isValid(id)) { // Get error if invalid id format
-  //   console.log('Services: Não deveria chegar nesse IF');
-  //   return { status: UNPROCESSABLE_ENTITY, code: CODE, message: notFoundMsg }; 
-  // }
-
-  if (!isValidId(id)) { // Get error if invalid id format
-    console.log('Services: Não deveria chegar nesse IF');
+  if (!ObjectId.isValid(id)) { // Get error if invalid id format
     return { status: UNPROCESSABLE_ENTITY, code: CODE, message: notFoundMsg }; 
   }
 
   const product = await models.getById(id);
 
-  console.log('O que chega no SERVICES:');
-    console.log(product);
-
-  // return { status: OK, product };
-
-  // if (product) return { status: OK, product }; // Estava indo em partes
-  if (product) return product; // Estava indo em partes
-
   // Get SAME error if invalid id was not found:
-  return { status: UNPROCESSABLE_ENTITY, code: CODE, message: notFoundMsg };
+  if (!product) { 
+    return { status: UNPROCESSABLE_ENTITY, 
+    code: CODE, 
+    message: notFoundMsg };
+  }
+  
+  return product;
 };
 
 module.exports = {

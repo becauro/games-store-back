@@ -7,7 +7,7 @@ function name(field) {
   const lengthMdg = '"name" length must be at least 5 characters long';
 
   if (field.length < 5) {
-    return ({ status: UNPROCESSABLE_ENTITY, code: CODE, message: lengthMdg });
+    return { status: UNPROCESSABLE_ENTITY, code: CODE, message: lengthMdg };
   }
 
   return {};
@@ -18,11 +18,11 @@ function quantity(qtd) {
   const typeMsg = '"quantity" must be a number';
 
   if (qtd < 1) {
-    return ({ status: UNPROCESSABLE_ENTITY, code: CODE, message: sizeMsg });
+    return { status: UNPROCESSABLE_ENTITY, code: CODE, message: sizeMsg };
   }
   
   if (typeof qtd !== 'number') {
-    return ({ status: UNPROCESSABLE_ENTITY, code: CODE, message: typeMsg });
+    return { status: UNPROCESSABLE_ENTITY, code: CODE, message: typeMsg };
   }
   
   return {};
@@ -32,7 +32,7 @@ const areadyExists = async (field, msg) => {
   const product = await models.getByName(field);
 
   if (product.name) {
-    return ({ status: UNPROCESSABLE_ENTITY, code: CODE, message: msg });
+    return { status: UNPROCESSABLE_ENTITY, code: CODE, message: msg };
   }
   
   return {};

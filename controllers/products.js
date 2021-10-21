@@ -4,14 +4,17 @@ const products = require('../services/products');
 
 const CREATED = 201;
 
+router.get('/', rescue(async (req, res) => {
+    const result = await products.getAll();
+        res.status(result.status).json({ products: [...result.productS] });
+}));
+
 router.get('/:id', async (req, res) => {
     const { id } = req.params;
 
-    // const result = await products.getById(id); // Estáva funcionando com outros. Cuidado
     const result = await products.getById(id);
-
+  
     if (result.code) {
-        console.log('MODEL: Não deveria chegar nesse IF');
         return res.status(result.status).json({
             err: {
                 code: result.code,
@@ -20,22 +23,17 @@ router.get('/:id', async (req, res) => {
         });
     }
 
-    // console.log('URL em CONTROLLER');
-    // console.log(req.path);
+    const { _id, name, quantity } = result;
 
-    // console.log('O que chega no CONTROLLER:');
-    // console.log({ _id, name, quantity });
-
-    // return res.status(result.status).json({ ...result.product });
-    return res.status(200).json(...result.product);
-    // return res.status(200).json({ _id, name, quantity });
-    // return res.status(200).json(id);
+    res.status(200).json({ id: _id, name, quantity });
 });
 
 router.post('/', rescue(async (req, res) => {
 const { name, quantity } = req.body;
 
     const result = await products.create(name, quantity);
+    console.log('CONTROLEER: post:');
+    console.log(result);
 
     if (result.code) {
         return res.status(result.status).json({
@@ -45,14 +43,7 @@ const { name, quantity } = req.body;
             },
     });
 }
-    return res.status(CREATED).json({ _id: result, name, quantity });
-}));
-
-// Descomnetar pois estar funcionando. Comentado apenas pra teste
-
-router.get('/', rescue(async (req, res) => {
-    const result = await products.getAll();
-        return res.status(result.status).json({ products: [...result.productS] });
+    res.status(CREATED).json({ _id: result, name, quantity });
 }));
 
 module.exports = router;
