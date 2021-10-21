@@ -43,7 +43,7 @@ const getById = async (id) => {
 
   const product = await models.getById(id);
 
-  // Get SAME error if invalid id was not found:
+  // Get the SAME error if invalid id was not found:
   if (!product) { 
     return { status: UNPROCESSABLE_ENTITY, 
     code: CODE, 
@@ -53,8 +53,37 @@ const getById = async (id) => {
   return product;
 };
 
+const update = async (id, name, quantity) => {
+  const validQtd = validators.quantity(quantity);
+  const validName = validators.name(name);
+  const notUpdated = 'Ops! nothing updated';
+  
+  if (validQtd.code) {
+    return { code: validQtd.code, status: validQtd.status, message: validQtd.message };
+  }
+  
+  if (validName.code) {
+    return { code: validName.code, status: validName.status, message: validName.message };
+  }
+ 
+  const updateLog = await models.update(id, name, quantity);
+
+  if (updateLog.modifiedCount === 0) { 
+    return { status: UNPROCESSABLE_ENTITY, 
+    code: CODE, 
+    message: notUpdated };
+  }
+
+  // DEBUG:
+    console.log('SERVICES: retorno updateLog:');
+    console.log(updateLog);
+
+  return updateLog;
+};
+
 module.exports = {
     create,
     getAll,
     getById,
+    update,
 };
