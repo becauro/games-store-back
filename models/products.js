@@ -20,7 +20,9 @@ const getAll = async () => connection()
     .then(async (db) => {
         const productS = await db.collection('products').find().toArray();
     
-        if (productS) return productS;
+        if (productS) return productS; // Talvez deixar retorno direto aqui -- igual o getById
+        // Isso porque, por enquanto, quando não acha nada --- por não ter nada no db, dá erro.
+        // No entanto, nada disso é avaliado.
     });
 
 const getById = async (id) => connection()

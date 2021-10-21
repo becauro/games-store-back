@@ -29,7 +29,7 @@ const create = async (name, quantity) => {
   return insertedId;
 };
 
-const getAll = async () => {
+const getAll = async () => { // Precisa ser feito algum tratamento de falha depois.
   const productS = await models.getAll();
   if (productS.length !== 0) return { status: OK, productS };
 };

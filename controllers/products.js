@@ -31,11 +31,9 @@ router.get('/:id', async (req, res) => {
 router.post('/', rescue(async (req, res) => {
 const { name, quantity } = req.body;
 
-    const result = await products.create(name, quantity);
-    console.log('CONTROLEER: post:');
-    console.log(result);
-
-    if (result.code) {
+    const result = await products.create(name, quantity); // Retorna apenas o insertedId
+   
+    if (result.code) { // Se der algum erro na validação, o SERVICES interrompe e retorna o erro.
         return res.status(result.status).json({
             err: {
                 code: result.code,
