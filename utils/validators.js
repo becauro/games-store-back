@@ -31,7 +31,7 @@ function quantity(qtd) {
 const areadyExists = async (field, msg) => {
   const product = await models.getByName(field);
 
-  if (product) {
+  if (product.name) {
     return ({ status: UNPROCESSABLE_ENTITY, code: CODE, message: msg });
   }
   
