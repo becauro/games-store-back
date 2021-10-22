@@ -66,27 +66,26 @@ router.put('/:id', rescue(async (req, res) => {
     res.status(OK).json({ _id: id, itensSold: [...soldProducts] }); // Se não houver erro, o SERVICE repassa insertedId da MODEL que é usado aqui. 
     }));
 
-// router.delete('/:id', rescue(async (req, res) => {
-//   const { id } = req.params; 
+router.delete('/:id', rescue(async (req, res) => {
+  const { id } = req.params; 
   
-//   const result = await sales.deleteIt(id); // Retorna apenas o log de delete
+  const result = await sales.deleteIt(id); // Retorna apenas o log de delete
     
-//   // DEBUG:
-//   console.log('CONTROLLER: retorno result:');
-//   console.log(result);
+  // DEBUG:
+  console.log('CONTROLLER: retorno result:');
+  console.log(result);
 
-//     if (result.code) {
-//         return res.status(result.status).json({
-//             err: {
-//                 code: result.code,
-//                 message: result.message,
-//             },
-//     });
-//   }
+    if (result.code) {
+        return res.status(result.status).json({
+            err: {
+                code: result.code,
+                message: result.message,
+            },
+    });
+  }
 
-//   const { _id, name, quantity } = result;
-
-//   res.status(200).json({ id: _id, name, quantity });
-// }));
+//   res.status(OK).json({ _id: id, itensSold: [...result.soldProducts] }); // Se não houver erro, o SERVICE repassa insertedId da MODEL que é usado aqui. 
+  res.status(OK).json(result); // Se não houver erro, o SERVICE repassa insertedId da MODEL que é usado aqui. 
+}));
 
 module.exports = router;

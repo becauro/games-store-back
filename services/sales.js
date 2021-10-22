@@ -96,50 +96,50 @@ const MSG_NOT_UPDATED = 'Wrong product ID or invalid quantity';
   return updateLog;
 };
 
-// const deleteIt = async (id) => {
-//   const notDeletedMsg = 'Wrong id format';
-//   const errorDeleteMsg = 'Ops!, Item not deleted';
+const deleteIt = async (id) => {
+  const notDeletedMsg = 'Wrong sale ID format';
+  const errorDeleteMsg = 'Ops!, Item not deleted';
 
-//   // Searching
+  // Searching
 
-//   if (!ObjectId.isValid(id)) { // Get error if invalid id format
-//     return { status: UNPROCESSABLE_ENTITY, code: CODE, message: notDeletedMsg }; 
-//   }
+  if (!ObjectId.isValid(id)) { // Get error if invalid id format
+    return { status: UNPROCESSABLE_ENTITY, code: CODE, message: notDeletedMsg }; 
+  }
 
-//   const sale = await models.getById(id);
+  const sale = await models.getById(id);
 
-//   //  // DEBUG:
-//   //  console.log('SERVICES: retorno sale:');
-//   //  console.log(sale);
+  //  // DEBUG:
+  //  console.log('SERVICES: retorno sale:');
+  //  console.log(sale);
 
-//   // Get the SAME error if invalid id was not found:
-//   if (!sale) { 
-//     return { status: UNPROCESSABLE_ENTITY, 
-//     code: CODE, 
-//     message: notDeletedMsg };
-//   }
+  // Get the SAME error if invalid id was not found:
+  if (!sale) { 
+    return { status: UNPROCESSABLE_ENTITY, 
+    code: CODE, 
+    message: notDeletedMsg };
+  }
   
-//   // Deleting
+  // Deleting
  
-//   const deleteLog = await models.deleteIt(id);
+  const deleteLog = await models.deleteIt(id);
 
-//   if (deleteLog.deletedCount === 0) { 
-//     return { status: UNPROCESSABLE_ENTITY, 
-//     code: CODE, 
-//     message: errorDeleteMsg };
-//   }
+  if (deleteLog.deletedCount === 0) { 
+    return { status: UNPROCESSABLE_ENTITY, 
+    code: CODE, 
+    message: errorDeleteMsg };
+  }
 
-//   // // DEBUG:
-//   //   console.log('SERVICES: retorno deleteLog:');
-//   //   console.log(deleteLog);
+  // // DEBUG:
+  //   console.log('SERVICES: retorno deleteLog:');
+  //   console.log(deleteLog);
 
-//   return sale;
-// };
+  return sale;
+};
 
 module.exports = {
     create,
     getAll,
     getById,
     update,
-    // deleteIt,
+    deleteIt,
 };
