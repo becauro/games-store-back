@@ -1,5 +1,6 @@
 const express = require('express');
 const products = require('./controllers/products');
+const sales = require('./controllers/sales');
 
 const PORT = '3000';
 
@@ -13,6 +14,7 @@ app.get('/', (_request, response) => {
 });
 
 app.use('/products', products);
+app.use('/sales', sales);
 
 app.all('*', (req, res) => res.status(404).send('Router not found'));
 
