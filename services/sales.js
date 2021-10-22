@@ -1,10 +1,15 @@
-// const { ObjectId } = require('mongodb');
+const { ObjectId } = require('mongodb');
 const models = require('../models/sales');
 const validators = require('../utils/validatorsSales');
 
 const OK = 200;
 const UNPROCESSABLE_ENTITY = 422;
+const STATUS_NOT_FOUND = 404;
+
+// const MSG_INVALID_ID = 'invalid_id_format';
+
 const CODE = 'invalid_data';
+const CODE_NOT_FOUND = 'not_found';
 
 const create = async (soldProducts) => {
   function notExistsProductsMsg(idArray) {
@@ -33,7 +38,7 @@ const create = async (soldProducts) => {
     return { code: CODE, status: UNPROCESSABLE_ENTITY, message: notExistsProductsMsg(found) };
   }
  
-  // If get here "soldProducts" will be create.
+  // If it gets here "soldProducts" will be created.
 
   const insertedId = await models.create(soldProducts); // if come here, thas means all productId were found
   return insertedId;
@@ -45,24 +50,24 @@ const getAll = async () => {
   return { status: OK, sales };
 };
 
-// const getById = async (id) => {
-//   const notFoundMsg = 'Wrong id format';
+const getById = async (id) => {
+  const MSG_SALE_NOT_FOUND = 'Sale not found';
 
-//   if (!ObjectId.isValid(id)) { // Get error if invalid id format
-//     return { status: UNPROCESSABLE_ENTITY, code: CODE, message: notFoundMsg }; 
-//   }
+  if (!ObjectId.isValid(id)) { // Get error if invalid id format. This signature is like evaluator ask it.
+    return { status: STATUS_NOT_FOUND, code: CODE_NOT_FOUND, message: MSG_SALE_NOT_FOUND }; 
+  }
 
-//   const sale = await models.getById(id);
+  const sale = await models.getById(id);
 
-//   // Get the SAME error if invalid id is not found:
-//   if (!sale) { 
-//     return { status: UNPROCESSABLE_ENTITY, 
-//     code: CODE, 
-//     message: notFoundMsg };
-//   }
+  // Get the SAME error if invalid id is not found:
+  if (!sale) { 
+    return { status: STATUS_NOT_FOUND, 
+    code: CODE_NOT_FOUND, 
+    message: MSG_SALE_NOT_FOUND };
+  }
   
-//   return sale;
-// };
+  return sale;
+};
 
 // const update = async (id, name, quantity) => {
 //   const validQtd = validators.quantity(quantity);
@@ -135,7 +140,7 @@ const getAll = async () => {
 module.exports = {
     create,
     getAll,
-    // getById,
+    getById,
     // update,
     // deleteIt,
 };

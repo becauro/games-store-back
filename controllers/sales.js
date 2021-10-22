@@ -10,24 +10,24 @@ router.get('/', rescue(async (req, res) => {
         res.status(result.status).json({ sales: [...result.sales] });
 }));
 
-// router.get('/:id', async (req, res) => {
-//     const { id } = req.params;
+router.get('/:id', async (req, res) => {
+    const { id } = req.params;
 
-//     const result = await sales.getById(id);
+    const result = await sales.getById(id);
   
-//     if (result.code) {
-//         return res.status(result.status).json({
-//             err: {
-//                 code: result.code,
-//                 message: result.message,
-//             },
-//         });
-//     }
+    if (result.code) {
+        return res.status(result.status).json({
+            err: {
+                code: result.code,
+                message: result.message,
+            },
+        });
+    }
 
-//     const { _id, name, quantity } = result;
+    // const { _id, name, quantity } = result;
 
-//     res.status(200).json({ id: _id, name, quantity });
-// });
+    res.status(200).json(result);
+});
 
 router.post('/', rescue(async (req, res) => {
 const soldProducts = req.body;
