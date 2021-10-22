@@ -24,9 +24,7 @@ router.get('/:id', async (req, res) => {
         });
     }
 
-    // const { _id, name, quantity } = result;
-
-    res.status(200).json(result);
+    res.status(OK).json(result);
 });
 
 router.post('/', rescue(async (req, res) => {
@@ -63,19 +61,15 @@ router.put('/:id', rescue(async (req, res) => {
                 },
         });
     }
-    res.status(OK).json({ _id: id, itensSold: [...soldProducts] }); // Se não houver erro, o SERVICE repassa insertedId da MODEL que é usado aqui. 
+    res.status(OK).json({ _id: id, itensSold: [...soldProducts] });
     }));
 
 router.delete('/:id', rescue(async (req, res) => {
   const { id } = req.params; 
   
-  const result = await sales.deleteIt(id); // Retorna apenas o log de delete
-    
-  // DEBUG:
-  console.log('CONTROLLER: retorno result:');
-  console.log(result);
+  const result = await sales.deleteIt(id); // Here is returned "deleted data product" OR "data Errors" from SERVICES.
 
-    if (result.code) {
+    if (result.code) { // Check if SERVICES retuned some "data errors"
         return res.status(result.status).json({
             err: {
                 code: result.code,
@@ -84,8 +78,7 @@ router.delete('/:id', rescue(async (req, res) => {
     });
   }
 
-//   res.status(OK).json({ _id: id, itensSold: [...result.soldProducts] }); // Se não houver erro, o SERVICE repassa insertedId da MODEL que é usado aqui. 
-  res.status(OK).json(result); // Se não houver erro, o SERVICE repassa insertedId da MODEL que é usado aqui. 
+  res.status(OK).json(result);
 }));
 
 module.exports = router;
