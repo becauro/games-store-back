@@ -1,13 +1,19 @@
+const { ObjectId } = require('mongodb');
 const modelsProducts = require('../models/products');
 
 const UNPROCESSABLE_ENTITY = 422;
-const CODE = 'invalid_data';
+const MSG_WRONG_ID = 'Wrong sale ID format';
+// const MSG_SALE_NOT_FOUND = 'Sale not found';
+// const CODE_NOT_FOUND = 'not_found';
+const CODE_INVALID_DATA = 'invalid_data';
+const STATUS_UNPROCESSABLE_ENTITY = 422;
+// const STATUS_NOT_FOUND = 404;
 
 // function name(field) {
 //   const lengthMdg = '"name" length must be at least 5 characters long';
 
 //   if (field.length < 5) {
-//     return { status: UNPROCESSABLE_ENTITY, code: CODE, message: lengthMdg };
+//     return { status: UNPROCESSABLE_ENTITY, code: CODE_INVALID_DATA, message: lengthMdg };
 //   }
 
 //   return {};
@@ -18,11 +24,11 @@ const CODE = 'invalid_data';
 //   const typeMsg = '"quantity" must be a number';
 
 //   if (qtd < 1) {
-//     return { status: UNPROCESSABLE_ENTITY, code: CODE, message: sizeMsg };
+//     return { status: UNPROCESSABLE_ENTITY, code: CODE_INVALID_DATA, message: sizeMsg };
 //   }
   
 //   if (typeof qtd !== 'number') {
-//     return { status: UNPROCESSABLE_ENTITY, code: CODE, message: typeMsg };
+//     return { status: UNPROCESSABLE_ENTITY, code: CODE_INVALID_DATA, message: typeMsg };
 //   }
   
 //   return {};
@@ -33,8 +39,9 @@ function quantityInArray(soldProducts) { // Refatorar depois
   const resultSize = soldProducts.some(({ quantity }) => quantity < 1);
   const resultType = soldProducts.some(({ quantity }) => typeof quantity !== 'number');
   
-  if (resultSize || resultType) return { status: UNPROCESSABLE_ENTITY, code: CODE, message: msg };
-  
+  if (resultSize || resultType) { 
+    return { status: UNPROCESSABLE_ENTITY, code: CODE_INVALID_DATA, message: msg };
+  }
   return {};
 }
 
@@ -42,7 +49,7 @@ function quantityInArray(soldProducts) { // Refatorar depois
 //   const product = await models.getByName(field);
 
 //   if (product.name) {
-//     return { status: UNPROCESSABLE_ENTITY, code: CODE, message: msg };
+//     return { status: UNPROCESSABLE_ENTITY, code: CODE_INVALID_DATA, message: msg };
 //   }
   
 //   return {};
@@ -73,10 +80,18 @@ const idExistsInArray = async (soldProducts) => {
   return result; // However, if return to here, some "productId" was not found. :)
 };
 
+const validSaleId = (id) => {
+  if (!ObjectId.isValid(id)) { // Get error if invalid id format
+    return { 
+      status: STATUS_UNPROCESSABLE_ENTITY, code: CODE_INVALID_DATA, message: MSG_WRONG_ID }; 
+  }
+};
+
 module.exports = {
   // name,
   // quantity,
   // alreadyExists,
   idExistsInArray,
   quantityInArray,
+  validSaleId,
 };

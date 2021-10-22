@@ -2,14 +2,14 @@ const { ObjectId } = require('mongodb');
 const models = require('../models/sales');
 const validators = require('../utils/validatorsSales');
 
-const OK = 200;
-const UNPROCESSABLE_ENTITY = 422;
+const STATUS_OK = 200;
+const STATUS_UNPROCESSABLE_ENTITY = 422;
 const STATUS_NOT_FOUND = 404;
 
-// const MSG_INVALID_ID = 'invalid_id_format';
 const MSG_SALE_NOT_FOUND = 'Sale not found';
+const MSG_NOT_UPDATED = 'Wrong product ID or invalid quantity';
 
-const CODE = 'invalid_data';
+const CODE_INVALID_DATA = 'invalid_data';
 const CODE_NOT_FOUND = 'not_found';
 
 const create = async (soldProducts) => {
@@ -25,18 +25,14 @@ const create = async (soldProducts) => {
       return { code: validQtd.code, status: validQtd.status, message: validQtd.message };
     }
     
-  // Id format validation
-
-  // if (!ObjectId.isValid(id)) { // Get error if invalid id format
-  //   return { status: UNPROCESSABLE_ENTITY, code: CODE, message: notDeletedMsg }; 
-  // }
- 
   // Check if product already exists
 
   const found = await validators.idExistsInArray(soldProducts);
 
   if (found.length !== 0) { // if true that means some productId was not found
-    return { code: CODE, status: UNPROCESSABLE_ENTITY, message: notExistsProductsMsg(found) };
+    return { code: CODE_INVALID_DATA,
+      status: STATUS_UNPROCESSABLE_ENTITY,
+message: notExistsProductsMsg(found) };
   }
  
     // CREATING in 3, 2, 1 ........ 
@@ -48,7 +44,7 @@ const create = async (soldProducts) => {
 const getAll = async () => {
   const sales = await models.getAll();
 
-  return { status: OK, sales };
+  return { status: STATUS_OK, sales };
 };
 
 const getById = async (id) => {
@@ -69,11 +65,8 @@ const getById = async (id) => {
 };
 
 const update = async (id, soldProducts) => {
-const MSG_NOT_UPDATED = 'Wrong product ID or invalid quantity';
-
-  if (!ObjectId.isValid(id)) { // Get error if invalid id format. This signature is like evaluator ask it.
-    return { status: STATUS_NOT_FOUND, code: CODE_NOT_FOUND, message: MSG_SALE_NOT_FOUND }; 
-  }
+  const validateId = validators.validSaleId(id);
+  if (validateId && validateId.code) return validateId;
     
   // Quantity format valitation
 
@@ -88,8 +81,8 @@ const MSG_NOT_UPDATED = 'Wrong product ID or invalid quantity';
   const updateLog = await models.update(id, soldProducts);
 
   if (updateLog.modifiedCount === 0) { 
-    return { status: UNPROCESSABLE_ENTITY, 
-    code: CODE, 
+    return { status: STATUS_UNPROCESSABLE_ENTITY, 
+    code: CODE_INVALID_DATA, 
     message: MSG_NOT_UPDATED };
   }
 
@@ -102,20 +95,18 @@ const deleteIt = async (id) => {
 
   // Searching
 
-  if (!ObjectId.isValid(id)) { // Get error if invalid id format
-    return { status: UNPROCESSABLE_ENTITY, code: CODE, message: notDeletedMsg }; 
-  }
+  // if (!ObjectId.isValid(id)) { // Get error if invalid id format
+  //   return { status: STATUS_UNPROCESSABLE_ENTITY, code: CODE_INVALID_DATA, message: notDeletedMsg }; 
+  // }
 
+  const validateId = validators.validSaleId(id);
+  if (validateId && validateId.code) return validateId;
   const sale = await models.getById(id);
-
-  //  // DEBUG:
-  //  console.log('SERVICES: retorno sale:');
-  //  console.log(sale);
 
   // Get the SAME error if invalid id was not found:
   if (!sale) { 
-    return { status: UNPROCESSABLE_ENTITY, 
-    code: CODE, 
+    return { status: STATUS_UNPROCESSABLE_ENTITY, 
+    code: CODE_INVALID_DATA, 
     message: notDeletedMsg };
   }
   
@@ -124,14 +115,10 @@ const deleteIt = async (id) => {
   const deleteLog = await models.deleteIt(id);
 
   if (deleteLog.deletedCount === 0) { 
-    return { status: UNPROCESSABLE_ENTITY, 
-    code: CODE, 
+    return { status: STATUS_UNPROCESSABLE_ENTITY, 
+    code: CODE_INVALID_DATA, 
     message: errorDeleteMsg };
   }
-
-  // // DEBUG:
-  //   console.log('SERVICES: retorno deleteLog:');
-  //   console.log(deleteLog);
 
   return sale;
 };
