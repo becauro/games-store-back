@@ -20,9 +20,7 @@ const getAll = async () => connection()
     .then(async (db) => {
         const productS = await db.collection('products').find().toArray();
     
-        if (productS) return productS; // Talvez deixar retorno direto aqui -- igual o getById
-        // Isso porque, por enquanto, quando não acha nada --- por não ter nada no db, dá erro.
-        // No entanto, nada disso é avaliado.
+    return productS;
     });
 
 const getById = async (id) => connection()
@@ -37,12 +35,23 @@ const update = async (id, name, quantity) => connection()
         const updateLog = await db.collection('products').updateOne({ _id: ObjectId(id) },
         { $set: { name, quantity } });
 
-        // DEBUG:
-          console.log('MODEL: retorno updateLog:');
-          console.log(updateLog);
+        // // DEBUG:
+        //   console.log('MODEL: retorno updateLog:');
+        //   console.log(updateLog);
 
         return updateLog;
     });
+
+const deleteIt = async (id) => connection()
+.then(async (db) => {
+    const deleteLog = await db.collection('products').deleteOne({ _id: ObjectId(id) });
+
+    // // DEBUG:
+    //     console.log('MODEL: retorno deleteLog:');
+    //     console.log(deleteLog);
+
+    return deleteLog;
+});
 
 module.exports = {
     create,
@@ -50,4 +59,5 @@ module.exports = {
     getAll,
     getById,
     update,
+    deleteIt,
 };

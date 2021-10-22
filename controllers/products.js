@@ -66,4 +66,27 @@ router.put('/:id', rescue(async (req, res) => {
         res.status(OK).json({ id, name, quantity });
     }));
 
+router.delete('/:id', rescue(async (req, res) => {
+  const { id } = req.params; 
+  
+  const result = await products.deleteIt(id); // Retorna apenas o log de delete
+    
+  // DEBUG:
+  console.log('CONTROLLER: retorno result:');
+  console.log(result);
+
+    if (result.code) {
+        return res.status(result.status).json({
+            err: {
+                code: result.code,
+                message: result.message,
+            },
+    });
+  }
+
+  const { _id, name, quantity } = result;
+
+  res.status(200).json({ id: _id, name, quantity });
+}));
+
 module.exports = router;

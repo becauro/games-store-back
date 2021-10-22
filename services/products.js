@@ -29,9 +29,10 @@ const create = async (name, quantity) => {
   return insertedId;
 };
 
-const getAll = async () => { // Precisa ser feito algum tratamento de falha depois.
+const getAll = async () => {
   const productS = await models.getAll();
-  if (productS.length !== 0) return { status: OK, productS };
+
+  return { status: OK, productS };
 };
 
 const getById = async (id) => {
@@ -43,7 +44,7 @@ const getById = async (id) => {
 
   const product = await models.getById(id);
 
-  // Get the SAME error if invalid id was not found:
+  // Get the SAME error if invalid id is not found:
   if (!product) { 
     return { status: UNPROCESSABLE_ENTITY, 
     code: CODE, 
@@ -81,9 +82,50 @@ const update = async (id, name, quantity) => {
   return updateLog;
 };
 
+const deleteIt = async (id) => {
+  const notDeletedMsg = 'Wrong id format';
+  const errorDeleteMsg = 'Ops!, Item not deleted';
+
+  // Searching
+
+  if (!ObjectId.isValid(id)) { // Get error if invalid id format
+    return { status: UNPROCESSABLE_ENTITY, code: CODE, message: notDeletedMsg }; 
+  }
+
+  const product = await models.getById(id);
+
+  //  // DEBUG:
+  //  console.log('SERVICES: retorno product:');
+  //  console.log(product);
+
+  // Get the SAME error if invalid id was not found:
+  if (!product) { 
+    return { status: UNPROCESSABLE_ENTITY, 
+    code: CODE, 
+    message: notDeletedMsg };
+  }
+  
+  // Deleting
+ 
+  const deleteLog = await models.deleteIt(id);
+
+  if (deleteLog.deletedCount === 0) { 
+    return { status: UNPROCESSABLE_ENTITY, 
+    code: CODE, 
+    message: errorDeleteMsg };
+  }
+
+  // // DEBUG:
+  //   console.log('SERVICES: retorno deleteLog:');
+  //   console.log(deleteLog);
+
+  return product;
+};
+
 module.exports = {
     create,
     getAll,
     getById,
     update,
+    deleteIt,
 };
