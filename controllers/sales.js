@@ -47,23 +47,23 @@ const soldProducts = req.body;
 
 router.put('/:id', rescue(async (req, res) => {
     const { id } = req.params; // Talvez tenha que validar o id também. Depois vejo.
-    const { name, quantity } = req.body;
+    const soldProducts = req.body;
     
-        const updateLog = await sales.update(id, name, quantity); // Retorna apenas o log de update
+        const result = await sales.update(id, soldProducts); // Retorna apenas o log de update
         
-        // DEBUG:
-        console.log('CONTROLLER: retorno updateLog:');
-        console.log(updateLog);
+        // // DEBUG:
+        // console.log('CONTROLLER: retorno result:');
+        // console.log(result);
 
-        if (updateLog.code) {
-            return res.status(updateLog.status).json({
+        if (result.code) {
+            return res.status(result.status).json({
                 err: {
-                    code: updateLog.code,
-                    message: updateLog.message,
+                    code: result.code,
+                    message: result.message,
                 },
         });
     }
-        res.status(OK).json({ id, name, quantity });
+    res.status(OK).json({ _id: id, itensSold: [...soldProducts] }); // Se não houver erro, o SERVICE repassa insertedId da MODEL que é usado aqui. 
     }));
 
 // router.delete('/:id', rescue(async (req, res) => {

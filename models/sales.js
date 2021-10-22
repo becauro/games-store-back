@@ -31,10 +31,10 @@ const getById = async (id) => connection()
     return sale;
 });
 
-const update = async (id, name, quantity) => connection()
+const update = async (id, soldProducts) => connection()
     .then(async (db) => {
         const updateLog = await db.collection('sales').updateOne({ _id: ObjectId(id) },
-        { $set: { name, quantity } });
+        { $set: { itensSold: [...soldProducts] } });
 
         // // DEBUG:
         //   console.log('MODEL: retorno updateLog:');

@@ -7,6 +7,7 @@ const UNPROCESSABLE_ENTITY = 422;
 const STATUS_NOT_FOUND = 404;
 
 // const MSG_INVALID_ID = 'invalid_id_format';
+const MSG_SALE_NOT_FOUND = 'Sale not found';
 
 const CODE = 'invalid_data';
 const CODE_NOT_FOUND = 'not_found';
@@ -38,7 +39,7 @@ const create = async (soldProducts) => {
     return { code: CODE, status: UNPROCESSABLE_ENTITY, message: notExistsProductsMsg(found) };
   }
  
-  // If it gets here "soldProducts" will be created.
+    // CREATING in 3, 2, 1 ........ 
 
   const insertedId = await models.create(soldProducts); // if come here, thas means all productId were found
   return insertedId;
@@ -51,8 +52,6 @@ const getAll = async () => {
 };
 
 const getById = async (id) => {
-  const MSG_SALE_NOT_FOUND = 'Sale not found';
-
   if (!ObjectId.isValid(id)) { // Get error if invalid id format. This signature is like evaluator ask it.
     return { status: STATUS_NOT_FOUND, code: CODE_NOT_FOUND, message: MSG_SALE_NOT_FOUND }; 
   }
@@ -69,33 +68,33 @@ const getById = async (id) => {
   return sale;
 };
 
-// const update = async (id, name, quantity) => {
-//   const validQtd = validators.quantity(quantity);
-//   const validName = validators.name(name);
-//   const notUpdated = 'Ops! nothing updated';
+const update = async (id, soldProducts) => {
+const MSG_NOT_UPDATED = 'Wrong product ID or invalid quantity';
+
+  if (!ObjectId.isValid(id)) { // Get error if invalid id format. This signature is like evaluator ask it.
+    return { status: STATUS_NOT_FOUND, code: CODE_NOT_FOUND, message: MSG_SALE_NOT_FOUND }; 
+  }
+    
+  // Quantity format valitation
+
+  const validQtd = validators.quantityInArray(soldProducts);
   
-//   if (validQtd.code) {
-//     return { code: validQtd.code, status: validQtd.status, message: validQtd.message };
-//   }
-  
-//   if (validName.code) {
-//     return { code: validName.code, status: validName.status, message: validName.message };
-//   }
- 
-//   const updateLog = await models.update(id, name, quantity);
+  if (validQtd.code) {
+      return { code: validQtd.code, status: validQtd.status, message: validQtd.message };
+    }
 
-//   if (updateLog.modifiedCount === 0) { 
-//     return { status: UNPROCESSABLE_ENTITY, 
-//     code: CODE, 
-//     message: notUpdated };
-//   }
+  // UPDATING in 3, 2, 1 ........ 
 
-//   // DEBUG:
-//     console.log('SERVICES: retorno updateLog:');
-//     console.log(updateLog);
+  const updateLog = await models.update(id, soldProducts);
 
-//   return updateLog;
-// };
+  if (updateLog.modifiedCount === 0) { 
+    return { status: UNPROCESSABLE_ENTITY, 
+    code: CODE, 
+    message: MSG_NOT_UPDATED };
+  }
+
+  return updateLog;
+};
 
 // const deleteIt = async (id) => {
 //   const notDeletedMsg = 'Wrong id format';
@@ -141,6 +140,6 @@ module.exports = {
     create,
     getAll,
     getById,
-    // update,
+    update,
     // deleteIt,
 };
