@@ -1,7 +1,7 @@
 const modelsProducts = require('../models/products');
 
-// const UNPROCESSABLE_ENTITY = 422;
-// const CODE = 'invalid_data';
+const UNPROCESSABLE_ENTITY = 422;
+const CODE = 'invalid_data';
 
 // function name(field) {
 //   const lengthMdg = '"name" length must be at least 5 characters long';
@@ -28,20 +28,15 @@ const modelsProducts = require('../models/products');
 //   return {};
 // }
 
-// function quantityInArray(qtd) { // Refatorar depois
-//   const sizeMsg = '"quantity" must be larger than or equal to 1';
-//   const typeMsg = '"quantity" must be a number';
-
-//   if (qtd < 1) {
-//     return { status: UNPROCESSABLE_ENTITY, code: CODE, message: sizeMsg };
-//   }
+function quantityInArray(soldProducts) { // Refatorar depois
+  const msg = 'Wrong product ID or invalid quantity';
+  const resultSize = soldProducts.some(({ quantity }) => quantity < 1);
+  const resultType = soldProducts.some(({ quantity }) => typeof quantity !== 'number');
   
-//   if (typeof qtd !== 'number') {
-//     return { status: UNPROCESSABLE_ENTITY, code: CODE, message: typeMsg };
-//   }
+  if (resultSize || resultType) return { status: UNPROCESSABLE_ENTITY, code: CODE, message: msg };
   
-//   return {};
-// }
+  return {};
+}
 
 // const alreadyExists = async (field, msg) => {
 //   const product = await models.getByName(field);
@@ -83,5 +78,5 @@ module.exports = {
   // quantity,
   // alreadyExists,
   idExistsInArray,
-  // quantityInArray,
+  quantityInArray,
 };

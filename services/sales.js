@@ -7,17 +7,18 @@ const UNPROCESSABLE_ENTITY = 422;
 const CODE = 'invalid_data';
 
 const create = async (soldProducts) => {
-  // const validQtd = validators.quantityInArray(soldProducts);
   function notExistsProductsMsg(idArray) {
     return `The following productId(s) is(are) found: [ ${idArray} ]`;
   }
   
-  // Qtd format valitation
+  // Quantity format valitation
 
-  // if (validQtd.code) {
-  //   return { code: validQtd.code, status: validQtd.status, message: validQtd.message };
-  // }
+  const validQtd = validators.quantityInArray(soldProducts);
   
+  if (validQtd.code) {
+      return { code: validQtd.code, status: validQtd.status, message: validQtd.message };
+    }
+    
   // Id format validation
 
   // if (!ObjectId.isValid(id)) { // Get error if invalid id format
@@ -28,14 +29,11 @@ const create = async (soldProducts) => {
 
   const found = await validators.idExistsInArray(soldProducts);
 
-  console.log('SERVICE, validator return:');
-  console.log(found);
-
   if (found.length !== 0) { // if true that means some productId was not found
     return { code: CODE, status: UNPROCESSABLE_ENTITY, message: notExistsProductsMsg(found) };
   }
  
-  // Vamos ver o que se segue ...
+  // If get here "soldProducts" will be create.
 
   const insertedId = await models.create(soldProducts); // if come here, thas means all productId were found
   return insertedId;
