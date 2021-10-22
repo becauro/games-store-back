@@ -6,7 +6,7 @@ const mongoDbUrl = 'mongodb://localhost:27017/StoreManager';
 const url = 'http://localhost:3000';
 const invalidId = 99999;
 
-describe('5 - Crie um endpoint para cadastrar vendas', () => {
+describe.only('5 - Crie um endpoint para cadastrar vendas', () => {
   let connection;
   let db;
 
@@ -124,7 +124,7 @@ describe('5 - Crie um endpoint para cadastrar vendas', () => {
       });
   });
 
-  it('Será validado que é possível criar uma compra com sucesso', async () => {
+  it.only('Será validado que é possível criar uma compra com sucesso', async () => {
     let result;
     let resultProductId;
 
