@@ -17,25 +17,29 @@ const create = async (soldProducts) => {
     return `The following productId(s) is(are) found: [ ${idArray} ]`;
   }
   
-  // Quantity format valitation
+  // "quantity" format valitation
 
   const validQtd = validators.quantityInArray(soldProducts);
   
   if (validQtd.code) {
       return { code: validQtd.code, status: validQtd.status, message: validQtd.message };
     }
-    
-  // Check if product already exists
+  
+  // SEARCHING products:
 
-  const found = await validators.idExistsInArray(soldProducts);
+  // Check if ALL product to be sold exists:
 
-  if (found.length !== 0) { // if true that means some productId was not found
+  const notFound = await validators.idExistsInArray(soldProducts);
+
+  // if true, that means some productId was not found. Its ids were sent to "notFound" var:
+
+  if (notFound.length !== 0) { 
     return { code: CODE_INVALID_DATA,
       status: STATUS_UNPROCESSABLE_ENTITY,
-message: notExistsProductsMsg(found) };
+      message: notExistsProductsMsg(notFound) };
   }
  
-    // CREATING in 3, 2, 1 ........ 
+  // CREATING
 
   const insertedId = await models.create(soldProducts); // if come here, thas means all productId were found
   return insertedId;
@@ -48,23 +52,32 @@ const getAll = async () => {
 };
 
 const getById = async (id) => {
+  // Validation id used like "not found id" too. The tester just using invalid id to requesting.
+
   if (!ObjectId.isValid(id)) { // Get error if invalid id format. This signature is like evaluator ask it.
     return { status: STATUS_NOT_FOUND, code: CODE_NOT_FOUND, message: MSG_SALE_NOT_FOUND }; 
   }
 
+  // SEARCHING:
+
   const sale = await models.getById(id);
 
-  // Get the SAME error if invalid id is not found:
+  // if found nothing return arror data:
+
   if (!sale) { 
     return { status: STATUS_NOT_FOUND, 
     code: CODE_NOT_FOUND, 
     message: MSG_SALE_NOT_FOUND };
   }
   
+ // if found something, return its data:
+
   return sale;
 };
 
 const update = async (id, soldProducts) => {
+  // id validation:
+
   const validateId = validators.validSaleId(id);
   if (validateId && validateId.code) return validateId;
     
@@ -76,15 +89,19 @@ const update = async (id, soldProducts) => {
       return { code: validQtd.code, status: validQtd.status, message: validQtd.message };
     }
 
-  // UPDATING in 3, 2, 1 ........ 
+  // UPDATING:
 
   const updateLog = await models.update(id, soldProducts);
+
+  // if found nothing (.modifiedCount === 0), return arror data:
 
   if (updateLog.modifiedCount === 0) { 
     return { status: STATUS_UNPROCESSABLE_ENTITY, 
     code: CODE_INVALID_DATA, 
     message: MSG_NOT_UPDATED };
   }
+
+  // if found something, return its "updateLog":
 
   return updateLog;
 };
@@ -93,32 +110,37 @@ const deleteIt = async (id) => {
   const notDeletedMsg = 'Wrong sale ID format';
   const errorDeleteMsg = 'Ops!, Item not deleted';
 
-  // Searching
-
-  // if (!ObjectId.isValid(id)) { // Get error if invalid id format
-  //   return { status: STATUS_UNPROCESSABLE_ENTITY, code: CODE_INVALID_DATA, message: notDeletedMsg }; 
-  // }
+  // id validation:
 
   const validateId = validators.validSaleId(id);
   if (validateId && validateId.code) return validateId;
+
+  // SEARCHING:
+
   const sale = await models.getById(id);
 
-  // Get the SAME error if invalid id was not found:
+  // if found nothing, return arror data:
+
   if (!sale) { 
     return { status: STATUS_UNPROCESSABLE_ENTITY, 
     code: CODE_INVALID_DATA, 
-    message: notDeletedMsg };
+    message: notDeletedMsg,
+    };
   }
   
-  // Deleting
+  // DELETING
  
   const deleteLog = await models.deleteIt(id);
+
+  // if deleted nothing(.deletedCount === 0), return arror data:
 
   if (deleteLog.deletedCount === 0) { 
     return { status: STATUS_UNPROCESSABLE_ENTITY, 
     code: CODE_INVALID_DATA, 
     message: errorDeleteMsg };
   }
+
+  // if deleted something, return its data:
 
   return sale;
 };
