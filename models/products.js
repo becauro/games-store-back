@@ -35,22 +35,14 @@ const update = async (id, name, quantity) => connection()
         const updateLog = await db.collection('products').updateOne({ _id: ObjectId(id) },
         { $set: { name, quantity } });
 
-        // // DEBUG:
-        //   console.log('MODEL: retorno updateLog:');
-        //   console.log(updateLog);
-
         return updateLog;
     });
 
 const deleteIt = async (id) => connection()
 .then(async (db) => {
-    const deleteLog = await db.collection('products').deleteOne({ _id: ObjectId(id) });
+    const product = await db.collection('products').findOneAndDelete({ _id: ObjectId(id) });
 
-    // // DEBUG:
-    //     console.log('MODEL: retorno deleteLog:');
-    //     console.log(deleteLog);
-
-    return deleteLog;
+    return product;
 });
 
 module.exports = {

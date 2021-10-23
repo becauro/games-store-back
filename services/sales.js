@@ -108,41 +108,28 @@ const update = async (id, soldProducts) => {
 
 const deleteIt = async (id) => {
   const notDeletedMsg = 'Wrong sale ID format';
-  const errorDeleteMsg = 'Ops!, Item not deleted';
 
   // id validation:
 
   const validateId = validators.validSaleId(id);
   if (validateId && validateId.code) return validateId;
 
-  // SEARCHING:
+  // DELETING:
 
-  const sale = await models.getById(id);
+  const sale = await models.deleteIt(id);
 
   // if found nothing, return arror data:
 
-  if (!sale) { 
+  if (sale.value === null) {
     return { status: STATUS_UNPROCESSABLE_ENTITY, 
     code: CODE_INVALID_DATA, 
     message: notDeletedMsg,
     };
   }
-  
-  // DELETING
- 
-  const deleteLog = await models.deleteIt(id);
-
-  // if deleted nothing(.deletedCount === 0), return arror data:
-
-  if (deleteLog.deletedCount === 0) { 
-    return { status: STATUS_UNPROCESSABLE_ENTITY, 
-    code: CODE_INVALID_DATA, 
-    message: errorDeleteMsg };
-  }
 
   // if deleted something, return its data:
 
-  return sale;
+  return sale.value;
 };
 
 module.exports = {
