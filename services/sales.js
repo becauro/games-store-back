@@ -14,7 +14,7 @@ const CODE_NOT_FOUND = 'not_found';
 
 const create = async (soldProducts) => {
   function notExistsProductsMsg(idArray) {
-    return `The following productId(s) is(are) found: [ ${idArray} ]`;
+    return `The following productId(s) is(are) NOT found: [ ${idArray} ]`;
   }
   
   // "quantity" format valitation
