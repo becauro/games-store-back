@@ -17,7 +17,7 @@ const create = async (name, quantity) => {
     return { code: validQtd.code, status: validQtd.status, message: validQtd.message };
   }
 
-  // "name" format valitation
+  // "name" format valitation:
 
   const validName = validators.name(name);
   
@@ -25,7 +25,7 @@ const create = async (name, quantity) => {
     return { code: validName.code, status: validName.status, message: validName.message };
   }
   
-  // Check if product name already exist in database.
+  // The following block check if product name already exist in database:
 
   const found = await validators.areadyExists(name, existsMsg);
 
@@ -33,7 +33,7 @@ const create = async (name, quantity) => {
     return { code: found.code, status: found.status, message: found.message };
   }
  
-  // CREATING
+  // CREATING:
 
   const insertedId = await models.create(name, quantity);
   return insertedId;
@@ -46,7 +46,7 @@ const getAll = async () => {
 };
 
 const getById = async (id) => {
-  // id validation:
+  // "id" validation:
   
    const validateId = validators.validProductId(id);
    if (validateId && validateId.code) return validateId;
@@ -71,7 +71,7 @@ const getById = async (id) => {
 const update = async (id, name, quantity) => {
   const notUpdated = 'Ops! nothing updated';
   
-  // quantity format valitation
+  // "quantity" format valitation:
   
   const validQtd = validators.quantity(quantity);
   
@@ -79,7 +79,7 @@ const update = async (id, name, quantity) => {
     return { code: validQtd.code, status: validQtd.status, message: validQtd.message };
   }
   
-  // name format valitation
+  // "name" format valitation:
   
   const validName = validators.name(name);
 
@@ -107,12 +107,12 @@ const update = async (id, name, quantity) => {
 const deleteIt = async (id) => {
   const notDeletedMsg = 'Wrong id format';
 
-  // id validation:
+  // "id" validation:
   
   const validateId = validators.validProductId(id);
   if (validateId && validateId.code) return validateId;
   
-   // DELETING
+   // DELETING:
   
   const product = await models.deleteIt(id);
 

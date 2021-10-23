@@ -23,7 +23,7 @@ const idExistsInArray = async (soldProducts) => {
     
     if (check === null) return productId; 
 
-    // For every item test that return nothing, promises return "undefined" anyway.
+    // Promises return "undefined" for every item test returning nothing.
   });
   
   // Promises add value(undefined) when some promises return nothing.
@@ -48,6 +48,10 @@ const validSaleId = (id) => {
       status: STATUS_UNPROCESSABLE_ENTITY, code: CODE_INVALID_DATA, message: MSG_WRONG_ID }; 
   }
 };
+
+// const updateProductQtd = (id, qtd) => {
+
+// };
 
 module.exports = {
   idExistsInArray,

@@ -2,7 +2,6 @@ const router = require('express').Router();
 const rescue = require('express-rescue');
 const sales = require('../services/sales');
 
-// const CREATED = 201;
 const OK = 200;
 
 router.get('/', rescue(async (req, res) => {
@@ -30,9 +29,9 @@ router.get('/:id', async (req, res) => {
 router.post('/', rescue(async (req, res) => {
 const soldProducts = req.body;
 
-    const result = await sales.create(soldProducts); // Se der algum erro, o SERVICES interrompe e retorna código de personalizado.
+    const result = await sales.create(soldProducts); // If registration successful, its log is returned ...
    
-    if (result.code) { 
+    if (result.code) { // ... otherwise its error logs are returned.
         return res.status(result.status).json({
             err: {
                 code: result.code,
@@ -44,16 +43,12 @@ const soldProducts = req.body;
 }));
 
 router.put('/:id', rescue(async (req, res) => {
-    const { id } = req.params; // Talvez tenha que validar o id também. Depois vejo.
+    const { id } = req.params;
     const soldProducts = req.body;
     
-        const result = await sales.update(id, soldProducts); // Retorna apenas o log de update
-        
-        // // DEBUG:
-        // console.log('CONTROLLER: retorno result:');
-        // console.log(result);
+        const result = await sales.update(id, soldProducts); // If update successful, its log is returned ...
 
-        if (result.code) {
+        if (result.code) { // ... otherwise its error logs are returned.
             return res.status(result.status).json({
                 err: {
                     code: result.code,

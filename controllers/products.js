@@ -32,7 +32,7 @@ router.get('/:id', async (req, res) => {
 router.post('/', rescue(async (req, res) => {
 const { name, quantity } = req.body;
 
-    const result = await products.create(name, quantity); // Se der algum erro, o SERVICES interrompe e retorna código de personalizado.
+    const result = await products.create(name, quantity);
    
     if (result.code) { 
         return res.status(result.status).json({
@@ -42,18 +42,14 @@ const { name, quantity } = req.body;
             },
     });
 }
-    res.status(CREATED).json({ _id: result, name, quantity }); // Se não houver erro, o SERVICE repassa insertedId da MODEL que é usado aqui. 
+    res.status(CREATED).json({ _id: result, name, quantity });
 }));
 
 router.put('/:id', rescue(async (req, res) => {
-    const { id } = req.params; // Talvez tenha que validar o id também. Depois vejo.
+    const { id } = req.params;
     const { name, quantity } = req.body;
     
-        const updateLog = await products.update(id, name, quantity); // Retorna apenas o log de update
-        
-        // DEBUG:
-        console.log('CONTROLLER: retorno updateLog:');
-        console.log(updateLog);
+        const updateLog = await products.update(id, name, quantity);
 
         if (updateLog.code) {
             return res.status(updateLog.status).json({
@@ -69,11 +65,7 @@ router.put('/:id', rescue(async (req, res) => {
 router.delete('/:id', rescue(async (req, res) => {
   const { id } = req.params; 
   
-  const result = await products.deleteIt(id); // Retorna apenas o log de delete
-    
-  // DEBUG:
-  console.log('CONTROLLER: retorno result:');
-  console.log(result);
+  const result = await products.deleteIt(id);
 
     if (result.code) {
         return res.status(result.status).json({

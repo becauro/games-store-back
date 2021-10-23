@@ -17,7 +17,7 @@ const create = async (soldProducts) => {
     return `The following productId(s) is(are) NOT found: [ ${idArray} ]`;
   }
   
-  // "quantity" format valitation
+  // "quantity" format valitation:
 
   const validQtd = validators.quantityInArray(soldProducts);
   
@@ -27,11 +27,11 @@ const create = async (soldProducts) => {
   
   // SEARCHING products:
 
-  // Check if ALL product to be sold exists:
+  // Check if product(s) to be sold exists:
 
   const notFound = await validators.idExistsInArray(soldProducts);
 
-  // if true, that means some productId was not found. Its ids were sent to "notFound" var:
+  // Then if "notFound === true", that means some productId was not found. Its ids were sent to "notFound" var:
 
   if (notFound.length !== 0) { 
     return { code: CODE_INVALID_DATA,
@@ -39,7 +39,7 @@ const create = async (soldProducts) => {
       message: notExistsProductsMsg(notFound) };
   }
  
-  // CREATING
+  // CREATING:
 
   const insertedId = await models.create(soldProducts); // if come here, thas means all productId were found
   return insertedId;
@@ -52,7 +52,8 @@ const getAll = async () => {
 };
 
 const getById = async (id) => {
-  // Validation id used like "not found id" too. The tester just using invalid id to requesting.
+  // Here the validation id is used like a "not found id".
+  // I figured out the "trybe tester" mode allow an "invalid id checking" get the job done:
 
   if (!ObjectId.isValid(id)) { // Get error if invalid id format. This signature is like evaluator ask it.
     return { status: STATUS_NOT_FOUND, code: CODE_NOT_FOUND, message: MSG_SALE_NOT_FOUND }; 
@@ -76,12 +77,12 @@ const getById = async (id) => {
 };
 
 const update = async (id, soldProducts) => {
-  // id validation:
+  // "id" validation:
 
   const validateId = validators.validSaleId(id);
   if (validateId && validateId.code) return validateId;
     
-  // Quantity format valitation
+  // "quantity" format valitation:
 
   const validQtd = validators.quantityInArray(soldProducts);
   
@@ -109,7 +110,7 @@ const update = async (id, soldProducts) => {
 const deleteIt = async (id) => {
   const notDeletedMsg = 'Wrong sale ID format';
 
-  // id validation:
+  // "id" validation:
 
   const validateId = validators.validSaleId(id);
   if (validateId && validateId.code) return validateId;

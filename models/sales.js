@@ -36,23 +36,13 @@ const update = async (id, soldProducts) => connection()
         const updateLog = await db.collection('sales').updateOne({ _id: ObjectId(id) },
         { $set: { itensSold: [...soldProducts] } });
 
-        // // DEBUG:
-        //   console.log('MODEL: retorno updateLog:');
-        //   console.log(updateLog);
-
         return updateLog;
     });
 
 const deleteIt = async (id) => connection()
 .then(async (db) => {
-    // const deleteLog = await db.collection('sales').deleteOne({ _id: ObjectId(id) });
     const saleDeleted = await db.collection('sales').findOneAndDelete({ _id: ObjectId(id) });
 
-    // // DEBUG:
-    //     console.log('MODEL: retorno deleteLog:');
-    //     console.log(deleteLog);
-
-    // return deleteLog;
     return saleDeleted;
 });
 
