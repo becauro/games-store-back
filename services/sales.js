@@ -54,7 +54,7 @@ const create = async (soldProducts) => {
 
   // CREATING:
 
-  const insertedId = await models.create(soldProducts); // if come here, thas means all productId were found
+  const insertedId = await models.create(soldProducts); // if come to here, that means all productId were found
 
   // UPDATING product stock quantity:
 

@@ -49,7 +49,7 @@ const validSaleId = (id) => {
 };
 
 const decProductQtd = async (soldProducts) => {
-  // map every "soldProducts" passed and increment each quantity of it:
+  // map every "soldProducts" passed and decrement its quantity:
 
     const promises = soldProducts.map(async ({ productId, quantity }) => {
       const { modifiedCount } = await modelsProducts.updateQtd(productId, -quantity);
@@ -69,7 +69,7 @@ const decProductQtd = async (soldProducts) => {
 };
 
 const incProductQtd = async (soldProducts) => {
-// map every "soldProducts" passed and increment each quantity of it:
+// map every "soldProducts" passed and increment its quantity:
 
   const promises = soldProducts.map(async ({ productId, quantity }) => {
     const { modifiedCount } = await modelsProducts.updateQtd(productId, quantity);
