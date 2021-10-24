@@ -53,6 +53,8 @@ const validSaleId = (id) => {
 };
 
 const decProductQtd = async (soldProducts) => {
+  // map every "soldProducts" passed and increment each quantity of it:
+
     const promises = soldProducts.map(async ({ productId, quantity }) => {
       const { modifiedCount } = await modelsProducts.updateQtd(productId, -quantity);
       if (modifiedCount === 0) return { modifiedCount, productId };
@@ -62,11 +64,6 @@ const decProductQtd = async (soldProducts) => {
 
   const result = await Promise.all(promises);
 
-  // DEBUG
-
-    console.log('validatorSales: o que tem no result da proimise:');
-    console.log(result);
-
   const checkIfAllUpdated = result.some((modifiedCount) => modifiedCount === 0);
 
   if (checkIfAllUpdated) { 
@@ -75,9 +72,30 @@ const decProductQtd = async (soldProducts) => {
     return 'Deu certo, atualizou todos produtos';
 };
 
+const incProductQtd = async (soldProducts) => {
+// map every "soldProducts" passed and increment each quantity of it:
+
+  const promises = soldProducts.map(async ({ productId, quantity }) => {
+    const { modifiedCount } = await modelsProducts.updateQtd(productId, quantity);
+    if (modifiedCount === 0) return { modifiedCount, productId };
+
+    return {};
+  });
+
+const result = await Promise.all(promises);
+
+const checkIfAllUpdated = result.some((modifiedCount) => modifiedCount === 0);
+
+if (checkIfAllUpdated) { 
+  return `Os seguintes itens não foram atualizados: ${result} `;
+  }
+  return 'Deu certo, atualizou todos produtos';
+};
+
 module.exports = {
   idExistsInArray,
   quantityInArray,
   validSaleId,
   decProductQtd,
+  incProductQtd,
 };

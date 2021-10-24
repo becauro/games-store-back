@@ -47,7 +47,7 @@ const create = async (soldProducts) => {
 
   // UPDATING product stock quantity:
 
-  const result = await validators.decProductQtd(soldProducts, 'dec');
+  const result = await validators.decProductQtd(soldProducts);
   
   console.log(result); // Resultado penas para desenvolvedor.
 
@@ -138,6 +138,10 @@ const deleteIt = async (id) => {
     message: notDeletedMsg,
     };
   }
+
+  const result = await validators.incProductQtd(sale.value.itensSold);
+  
+  console.log(result); // Resultado apenas para desenvolvedor.
 
   // if deleted something, return its data:
 
