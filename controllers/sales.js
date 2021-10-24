@@ -39,7 +39,7 @@ const soldProducts = req.body;
             },
     });
 }
-    res.status(OK).json({ _id: result, itensSold: [...soldProducts] }); // Se não houver erro, o SERVICE repassa insertedId da MODEL que é usado aqui. 
+    res.status(OK).json({ _id: result, itensSold: [...soldProducts] }); // If there is no error, the "insertId" is catch and forward it here.
 }));
 
 router.put('/:id', rescue(async (req, res) => {
