@@ -1,10 +1,13 @@
 const { ObjectId } = require('mongodb');
 const modelsProducts = require('../models/products');
 
-const UNPROCESSABLE_ENTITY = 422;
-const MSG_WRONG_ID = 'Wrong sale ID format';
 const CODE_INVALID_DATA = 'invalid_data';
+// const CODE_INTERNAL_SERVER_ERROR = 'Internal Server Error';
+
+// const STATUS_INTERNAL_SERVER_ERROR = 500;
 const STATUS_UNPROCESSABLE_ENTITY = 422;
+const MSG_WRONG_ID = 'Wrong sale ID format';
+// const MSG_NOT_UPDATED_PRODUCT_QTD = 'We got unable update product quantity';
 
 function quantityInArray(soldProducts) {
   const msg = 'Wrong product ID or invalid quantity';
@@ -12,14 +15,14 @@ function quantityInArray(soldProducts) {
   const resultType = soldProducts.some(({ quantity }) => typeof quantity !== 'number');
   
   if (resultSize || resultType) { 
-    return { status: UNPROCESSABLE_ENTITY, code: CODE_INVALID_DATA, message: msg };
+    return { status: STATUS_UNPROCESSABLE_ENTITY, code: CODE_INVALID_DATA, message: msg };
   }
   return {};
 }
 
 const idExistsInArray = async (soldProducts) => {
   const promises = soldProducts.map(async ({ productId }) => {
-    const check = await modelsProducts.getById(productId); // Em services/products
+    const check = await modelsProducts.getById(productId);
     
     if (check === null) return productId; 
 
@@ -49,12 +52,32 @@ const validSaleId = (id) => {
   }
 };
 
-// const updateProductQtd = (id, qtd) => {
+const decProductQtd = async (soldProducts) => {
+    const promises = soldProducts.map(async ({ productId, quantity }) => {
+      const { modifiedCount } = await modelsProducts.updateQtd(productId, -quantity);
+      if (modifiedCount === 0) return { modifiedCount, productId };
 
-// };
+      return {};
+    });
+
+  const result = await Promise.all(promises);
+
+  // DEBUG
+
+    console.log('validatorSales: o que tem no result da proimise:');
+    console.log(result);
+
+  const checkIfAllUpdated = result.some((modifiedCount) => modifiedCount === 0);
+
+  if (checkIfAllUpdated) { 
+    return `Os seguintes itens não foram atualizados: ${result} `;
+    }
+    return 'Deu certo, atualizou todos produtos';
+};
 
 module.exports = {
   idExistsInArray,
   quantityInArray,
   validSaleId,
+  decProductQtd,
 };

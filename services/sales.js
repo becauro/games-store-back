@@ -42,6 +42,17 @@ const create = async (soldProducts) => {
   // CREATING:
 
   const insertedId = await models.create(soldProducts); // if come here, thas means all productId were found
+  
+// TÔ AQUI >>>>>>>>
+
+  // UPDATING product stock quantity:
+
+  const result = await validators.decProductQtd(soldProducts, 'dec');
+  
+  console.log(result); // Resultado penas para desenvolvedor.
+
+// TÔ AQUI >>>>>>>>
+
   return insertedId;
 };
 

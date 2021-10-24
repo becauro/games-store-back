@@ -38,13 +38,13 @@ const update = async (id, name, quantity) => connection()
         return updateLog;
     });
 
-// const updateQtd = async (id, quantity) => connection()
-// .then(async (db) => {
-//     const updateLog = await db.collection('products').updateOne({ _id: ObjectId(id) },
-//     { $set: { quantity } });
+const updateQtd = async (id, quantity) => connection()
+.then(async (db) => {
+    const updateLog = await db.collection('products').updateOne({ _id: ObjectId(id) },
+    { $inc: { quantity } });
 
-//     return updateLog;
-// });
+    return updateLog;
+});
 
 const deleteIt = async (id) => connection()
 .then(async (db) => {
@@ -59,6 +59,6 @@ module.exports = {
     getAll,
     getById,
     update,
-    // updateQtd,
+    updateQtd,
     deleteIt,
 };
