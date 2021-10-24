@@ -8,15 +8,16 @@ const STATUS_NOT_FOUND = 404;
 
 const MSG_SALE_NOT_FOUND = 'Sale not found';
 const MSG_NOT_UPDATED = 'Wrong product ID or invalid quantity';
+const MSG_STOCK_PROBLEM = 'Such amount is not permitted to sell';
 
 const CODE_INVALID_DATA = 'invalid_data';
 const CODE_NOT_FOUND = 'not_found';
+const CODE_STOCK_PROBLEM = 'stock_problem';
 
+function notExistsProductsMsg(idArray) { // This function help decrease line length warned by ESLint.
+  return `The following productId(s) is(are) NOT found: [ ${idArray} ]`;
+}
 const create = async (soldProducts) => {
-  function notExistsProductsMsg(idArray) {
-    return `The following productId(s) is(are) NOT found: [ ${idArray} ]`;
-  }
-  
   // "quantity" format valitation:
 
   const validQtd = validators.quantityInArray(soldProducts);
@@ -33,25 +34,31 @@ const create = async (soldProducts) => {
 
   // Then if "notFound === true", that means some productId was not found. Its ids were sent to "notFound" var:
 
-  if (notFound.length !== 0) { 
-    return { code: CODE_INVALID_DATA,
-      status: STATUS_UNPROCESSABLE_ENTITY,
+  if (notFound.length !== 0) {
+    return { code: CODE_INVALID_DATA, 
+      status: STATUS_UNPROCESSABLE_ENTITY, 
       message: notExistsProductsMsg(notFound) };
   }
- 
+
+  // SEARCHING products quantity:
+
+ // Check product(s) stock quantity is enough:
+
+ const notEnough = await validators.checkProductQtd(soldProducts);
+
+ // Then if "notFound === true", that means some productId has not the quantity to be sold. Its ids were sent to "notFound" var:
+
+ if (notEnough.length !== 0) { 
+   return { code: CODE_STOCK_PROBLEM, status: STATUS_NOT_FOUND, message: MSG_STOCK_PROBLEM };
+ }
+
   // CREATING:
 
   const insertedId = await models.create(soldProducts); // if come here, thas means all productId were found
-  
-// TÔ AQUI >>>>>>>>
 
   // UPDATING product stock quantity:
 
-  const result = await validators.decProductQtd(soldProducts);
-  
-  console.log(result); // Resultado penas para desenvolvedor.
-
-// TÔ AQUI >>>>>>>>
+  await validators.decProductQtd(soldProducts); // Unecessary return here, if will, atribut it to variable to see in console.log()
 
   return insertedId;
 };
@@ -141,7 +148,7 @@ const deleteIt = async (id) => {
 
   const result = await validators.incProductQtd(sale.value.itensSold);
   
-  console.log(result); // Resultado apenas para desenvolvedor.
+  console.log(result); // result checking for development purpose.
 
   // if deleted something, return its data:
 

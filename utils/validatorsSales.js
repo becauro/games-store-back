@@ -42,7 +42,7 @@ const idExistsInArray = async (soldProducts) => {
       return [];
   }
 
-  return result; // However, if return to here, some "productId" was not found. :)
+  return result; // However, if get here, some "productId" was not found. :)
 };
 
 const validSaleId = (id) => {
@@ -92,10 +92,34 @@ if (checkIfAllUpdated) {
   return 'Deu certo, atualizou todos produtos';
 };
 
+// TÔ AQUI >>>>>>>>>>>>>>
+
+const checkProductQtd = async (soldProducts) => {
+  const promises = soldProducts.map(async ({ productId, quantity }) => {
+    const check = await modelsProducts.getById(productId);
+    
+    // if (check === null) return productId;
+    if (check.quantity < quantity) return productId;
+
+    // Promises return "undefined" for every item test returning nothing.
+  });
+
+  const result = await Promise.all(promises);
+  
+  const someNotFound = result.some((item) => item !== undefined); // Promise.all assign a "undefined" item to every not found id in "map".
+
+  if (!someNotFound) { // if false ("allFound"), that means ALL "productId" were found. 
+      return [];
+  }
+
+  return result; // However, if get here, some "productId" was not found. :)
+};
+
 module.exports = {
   idExistsInArray,
   quantityInArray,
   validSaleId,
   decProductQtd,
   incProductQtd,
+  checkProductQtd,
 };
