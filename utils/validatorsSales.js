@@ -2,12 +2,8 @@ const { ObjectId } = require('mongodb');
 const modelsProducts = require('../models/products');
 
 const CODE_INVALID_DATA = 'invalid_data';
-// const CODE_INTERNAL_SERVER_ERROR = 'Internal Server Error';
-
-// const STATUS_INTERNAL_SERVER_ERROR = 500;
 const STATUS_UNPROCESSABLE_ENTITY = 422;
 const MSG_WRONG_ID = 'Wrong sale ID format';
-// const MSG_NOT_UPDATED_PRODUCT_QTD = 'We got unable update product quantity';
 
 function quantityInArray(soldProducts) {
   const msg = 'Wrong product ID or invalid quantity';
@@ -91,8 +87,6 @@ if (checkIfAllUpdated) {
   }
   return 'Deu certo, atualizou todos produtos';
 };
-
-// TÔ AQUI >>>>>>>>>>>>>>
 
 const checkProductQtd = async (soldProducts) => {
   const promises = soldProducts.map(async ({ productId, quantity }) => {
