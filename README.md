@@ -139,4 +139,4 @@ Particulamente eu preferi utilizar o [plugin `ESLint`](https://marketplace.visua
 <a href="#sumario">Sumário</a>
 
 Para entender melhor a lógica da API, pode ser interessante olhar a regra de negócio do projeto.
-Tratamos dessas no [Wiki](https://github.com/becauro/store_manager/wiki)
+Tratamos sobre isso no [Wiki](https://github.com/becauro/store_manager/wiki).
