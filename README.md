@@ -8,6 +8,10 @@ Esse projeto é uma API de um sistema de gerenciamento de vendas, onde será pos
 
 - [Habilidades](#habilidades)
 - <a href="#arquitetura-e-padroes">Arquitetura e padrões</a>
+- <a href="#tecnologias-utilizadas">Tecnologias utilizadas</a>
+- <a href="#futuras-implementacoes">Futuras implementações</a> 
+- <a href="#requisitos-execucao">Requisitos para execução e consumo da API</a>
+- [Como executar](#como-executar) 
 - <a href="#shape-retornos">ENDPOINTS: Shape dos retornos das requisições</a>
 - [Banco de dados: Shape dos Documentos (registros)](#banco-de-dados-shape-dos-documentos-registros)
 - [Linter](#linter)
@@ -38,38 +42,47 @@ Esse projeto teve como objetivo praticar as seguintes hardskills:
 ---
 
 # <span id="arquitetura-e-padroes">Arquitetura e Padrões</span>
+<a href="#sumario">Sumário</a>
 
 * Arquitetura MSC
 * API RESTfull.
 
-# <span id="tecnologias-usadas">Tecnologias usadas</span>
+# <span id="tecnologias-utilizadas">Tecnologias utilizadas</span>
+<a href="#sumario">Sumário</a>
 
 * Node.js
 * Express
 * MongoDB
 * ESLinter
 
-# Futuras implementações
+# <span id="futuras-implementacoes">Futuras implementações</span>
+<a href="#sumario">Sumário</a>
 
-* Aplicação na plataforma PaaS do Heroku para que possa ser testada como uma API pública.
-* Banco de Dados na nuvem do [MongoDB Atlas](https://www.mongodb.com/atlas) para que possa ser utilizado via Heroku.
+* Implantar a aplicação na plataforma (PaaS) do Heroku, para que possa ser consumida e testada externamente.
+* Implantar um Banco de Dados na nuvem do [MongoDB Atlas](https://www.mongodb.com/atlas) para que possa ser utilizado via Heroku.
 
-### Requisitos para configurar e rodar o projeto em modo desenvolvimento:
+# <span id="requisitos-execucao">Requisitos para execução e consumo da API:</span>
+<a href="#sumario">Sumário</a>
 
 1. **Node.js**
-2. Ter a **porta 3000** disponível, ou configurar outra.
-3. Ter um algum cliente (ex.: Postman, Insomnia e etc) se quiser testar diretamente as requisições à API.
+2. **MongoDB**
+3. **Porta 3000** disponível, ou configurar outra.
+4. Algum cliente de teste de API (ex.: Postman, Insomnia e etc) caso queira testar as requisições.
 
-### Como configurar as dependências do projeto:
+# <span id="dependencias">Dependências:</span>
+<a href="#sumario">Sumário</a>
 
-Um vez que no arquivo `package.json` é listado as dependências necessárias, basta digitar o seguinte comando, estando na pasta do repositório clonado:
+No arquivo `package.json` é listado as dependências necessárias.
+Para instalar as dependências, estando conectado a internet e dentro da pasta do repositório, basta digitar o seguinte comando:
 
     `npm install`
 
-### Como executar o projeto:
+# Como Executar
 
-1. Estando dentro pasta do projeto, basta executar o comando: `npm start`.
-2. Em seguida, abra o navegador e digite: **http://localhost:3000** (porta 3000 está como padrão alternativo a porta da variável de ambiente).
+Instalado os requisitos e as dependecias necessárias, basta seguir as seguintes etapas:
+
+1. Dentro pasta do projeto, execute o comando: `npm start`.
+2. Em seguida, abra algum cliente de API (ex.: Postman, Insomnia e etc) e faça as requicições para as rotas de **http://localhost:3000** (A porta 3000 está como padrão alternativo na ausência de variável de ambiente).
 
 # <span id="shape-retornos">ENDPOINTS: Shape dos retornos das requisições</span>
 <a href="#sumario">Sumário</a>
