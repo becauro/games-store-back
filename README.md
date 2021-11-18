@@ -73,13 +73,13 @@ Esse projeto teve como objetivo praticar as seguintes hardskills:
 <a href="#sumario">Sumário</a>
 
 No arquivo `package.json` é listado as dependências necessárias.
-Para instalar as dependências, estando conectado a internet e dentro da pasta do repositório, basta digitar o seguinte comando:
+Para instalar essas dependências, estando conectado a internet e dentro da pasta do repositório, basta digitar o seguinte comando:
 
     `npm install`
 
 # Como Executar
 
-Instalado os requisitos e as dependecias necessárias, basta seguir as seguintes etapas:
+Instalado os requisitos e as dependências necessárias, basta seguir as seguintes etapas:
 
 1. Dentro pasta do projeto, execute o comando: `npm start`.
 2. Em seguida, abra algum cliente de API (ex.: Postman, Insomnia e etc) e faça as requicições para as rotas de **http://localhost:3000** (A porta 3000 está como padrão alternativo na ausência de variável de ambiente).
