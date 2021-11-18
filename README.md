@@ -1,13 +1,13 @@
-# Boas vindas ao repositório do Store Manager!
+# Boas vindas ao repositório do Store Manager
 
-Esse projeto é uma API de um sistema de gerenciamento de vendas, onde será possível criar, visualizar, deletar e atualizar os produtos e as vendas.
+Esse projeto é uma API de um sistema de gerenciamento de vendas, onde será possível criar, visualizar, deletar e atualizar os produtos e as vendas. Ou seja, um CRUD.
 
 ---
 
 # <span id="sumario">Sumário</span>
 
 - [Habilidades](#habilidades)
-- <a href="#modelos-e-padroes">Modelos e padrões usados</a>
+- <a href="#arquitetura-e-padroes">Arquitetura e padrões</a>
 - <a href="#shape-retornos">ENDPOINTS: Shape dos retornos das requisições</a>
 - [Banco de dados: Shape dos Documentos (registros)](#banco-de-dados-shape-dos-documentos-registros)
 - [Linter](#linter)
@@ -23,24 +23,24 @@ Esse projeto é uma API de um sistema de gerenciamento de vendas, onde será pos
       - [6 - Endpoint para listar as vendas](#6---endpoint-para-listar-as-vendas)
       - [7 - Endpoint para atualizar uma venda](#7---endpoint-para-atualizar-uma-venda)
       - [8 - Endpoint para deletar uma venda](#8---endpoint-para-deletar-uma-venda)
-      - [9 - Atualize a quantidade de produtos](#9---atualize-a-quantidade-de-produtos)
-      - [10 - Valide a quantidade de produtos](#10---valide-a-quantidade-de-produtos)
+      - <a href="#atualiza-qtd-produtos">9 - Atualização da quantidade de produtos</a>
+      - <a href="#valida-qtd-produtos">10 - Validação da quantidade de produtos </a>
 
 # Habilidades
 
 Esse projeto teve como objetivo praticar as seguintes hardskills:
 
-- Estruturar uma aplicação em camadas (Arquitetura MSC);
-- Delegar responsabilidades específicas para cada parte do app;
-- Melhorar manutenibilidade e reusabilidade do código;
-- Aplicar os padrões REST;
-- Escrever assinaturas para APIs intuitivas e facilmente entendíveis.
+- Estruturação de uma aplicação em camadas (Arquitetura MSC);
+- Delegação de responsabilidades específicas para cada parte do app;
+- Melhora da manutenibilidade e reusabilidade do código;
+- Aplicação dos padrões REST;
+- Implementação de uma API intuitiva e facilmente entendível.
 ---
 
-# <span id="modelos-e-padroes">Modelos e Padrões usados</span>
+# <span id="arquitetura-e-padroes">Arquitetura e Padrões</span>
 
-* API RESTfull para CRUD em Banco de dados
 * Arquitetura MSC
+* API RESTfull.
 
 # <span id="tecnologias-usadas">Tecnologias usadas</span>
 
@@ -54,29 +54,46 @@ Esse projeto teve como objetivo praticar as seguintes hardskills:
 * Aplicação na plataforma PaaS do Heroku para que possa ser testada como uma API pública.
 * Banco de Dados na nuvem do [MongoDB Atlas](https://www.mongodb.com/atlas) para que possa ser utilizado via Heroku.
 
+### Requisitos para configurar e rodar o projeto em modo desenvolvimento:
+
+1. **Node.js**
+2. Ter a **porta 3000** disponível, ou configurar outra.
+3. Ter um algum cliente (ex.: Postman, Insomnia e etc) se quiser testar diretamente as requisições à API.
+
+### Como configurar as dependências do projeto:
+
+Um vez que no arquivo `package.json` é listado as dependências necessárias, basta digitar o seguinte comando, estando na pasta do repositório clonado:
+
+    `npm install`
+
+### Como executar o projeto:
+
+1. Estando dentro pasta do projeto, basta executar o comando: `npm start`.
+2. Em seguida, abra o navegador e digite: **http://localhost:3000** (porta 3000 está como padrão alternativo a porta da variável de ambiente).
+
 # <span id="shape-retornos">ENDPOINTS: Shape dos retornos das requisições</span>
 <a href="#sumario">Sumário</a>
 
-  - Caso o recurso não seja encontrado, sua API retorne o status HTTP adequado com o body `{ message: '<recurso> não encontrado' }`.
-  - Em caso de erro, sua API retorne o status HTTP adequado com o body `{ err: { message: <mensagem de erro>, code: <código do erro> } }`.
-    - O código do erro deve ser determinado por você e deve seguir o mesmo padrão para toda a aplicação. Por exemplo: `'not_found'`, `'invalid_data'` e afins.
-  - Em caso de dados inválidos, sua API retorne o status HTTP adequado, com o body `{ err: { message: 'Dados inválidos', code: <código do erro> } }`.
-  - Todos os retornos de erro devem seguir o mesmo formato. Para erros que requerem dados adicionais (por exemplo, para informar quais campos estão incorretos) utilize a propriedade `data` dentro do objeto `err`.
+  - Caso o recurso não seja encontrado, a API deve retornar o status HTTP adequado com o body `{ message: '<recurso> não encontrado' }`.
+  - Em caso de erro, a API deve retornar o status HTTP adequado com o body `{ err: { message: <mensagem de erro>, code: <código do erro> } }`.
+    - O código de erro implementado deve deve seguir o mesmo padrão para toda a aplicação. Por exemplo: `'not_found'`, `'invalid_data'` e afins.
+  - Em caso de dados inválidos, a API deve retornar o status HTTP adequado, com o body `{ err: { message: 'Dados inválidos', code: <código do erro> } }`.
+  - Todos os retornos de erro devem seguir o mesmo formato. Para erros que requerem dados adicionais (por exemplo, para informar quais campos estão incorretos) é utilizado a propriedade `data` dentro do objeto `err`.
 
 # Banco de dados: Shape dos Documentos (Registros)
 <a href="#sumario">Sumário</a>
 
-O banco terá duas tabelas: produtos e vendas
+O banco deve duas `collections` para: uma para os produtos e outra para as vendas
 
-A tabela de produtos deverá ter o seguinte nome: `products`
+A tabela terá o seguinte nome: `products`
 
-Os campos da tabela `products` terão esse formato:
+Os campos da collection `products` terão esse formato:
 
 ```json
 { "name": "Produto Silva", "quantity": 10 }
 ```
 
-A resposta do insert que deve retornar após a criação tem o seguinte shape:
+A resposta retornada após um `insert` (criação) no banco precisa ter o seguinte shape:
 
 ```json
 { "_id": ObjectId("5f43cbf4c45ff5104986e81d"), "name": "Produto Silva", "quantity": 10 }
@@ -84,7 +101,7 @@ A resposta do insert que deve retornar após a criação tem o seguinte shape:
 
 (O \_id é gerado automaticamente)
 
-A tabela de vendas deverá ter o seguinte nome: `sales`
+A tabela de vendas terá o seguinte nome: `sales`
 
 Os campos da tabela `sales` terão esse formato:
 
@@ -92,7 +109,7 @@ Os campos da tabela `sales` terão esse formato:
 { "itensSold": [{ "productId": "5f43cbf4c45ff5104986e81d", "quantity": 2 }] }
 ```
 
-A resposta do insert que deve retornar após a criação é parecida essa:
+A resposta retornada após um `insert` (criação) no banco precisa ter o seguinte shape:
 
 ```json
 {
@@ -154,11 +171,6 @@ O retorno da API de um produto cadastrado com sucesso deverá ser:
   "quantity": 100
 }
 ```
-
-#### Requisição de Cadastro de Produtos:
-
-O projeto deve rodar na porta `http://localhost:3000`
-
 
 #### Validações:
 
@@ -283,17 +295,17 @@ O retorno de uma venda cadastrada com sucesso deverá ser:
 - Apenas a venda com o `id` presente na URL deve ser deletado;
 
 
-### 9 - Atualize a quantidade de produtos
+### <span id="atualiza-qtd-produtos"> 9 - Atualização da quantidade de produtos</span>
 <a href="#sumario">Sumário</a>
 
-- Ao realizar uma venda, atualizá-la ou deletá-la, você deve também atualizar a quantidade do produto em questão presente na `collection` responsável pelos produtos;
+- Ao realizar uma venda, atualizá-la ou deletá-la, deve-se, também, atualizar a quantidade do produto em questão presente na `collection` responsável pelos produtos;
 
 - Por exemplo: suponha que haja um produto chamado _Bola de Futebol_ e a sua propriedade `quantity` tenha o valor _10_. Caso seja feita uma venda com _8_ unidades desse produto, a quantidade do produto deve ser atualizada para _2_ , pois 10 - 8 = 2;
 
 
-### 10 - Valide a quantidade de produtos
+### <span id="valida-qtd-produtos">10 - Validação da quantidade de produtos</span>
 <a href="#sumario">Sumário</a>
 
 - Um produto nunca deve ter a quantidade em estoque menor que 0;
 
-- Quando uma venda for realizada, garanta que a quantidade sendo vendida está disponível no estoque
+- Quando uma venda for realizada, precisa ser garantido que a quantidade sendo vendida está disponível no estoque.

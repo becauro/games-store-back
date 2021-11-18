@@ -4,6 +4,7 @@ const sales = require('./controllers/sales');
 const errorMiddleware = require('./utils/errorMiddleware');
 
 const app = express();
+const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 
@@ -14,6 +15,6 @@ app.all('*', (req, res) => res.status(404).send('Router not found'));
 
 app.use(errorMiddleware);
 
-app.listen(process.env.PORT, () => {
-  console.log('Online');
+app.listen(PORT, () => {
+  console.log(`Online na porta ${PORT}`);
 });
