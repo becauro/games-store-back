@@ -129,7 +129,7 @@ No entanto, para usá-lo de forma mais manual, o projeto já vem com as dependê
 
 Para executá-lo basta usar --- dentro da pasta do projeto --- o comando `npm run lint`. Se a análise do `ESLint` encontrar problemas no código, tais problemas serão mostrados no seu terminal. Se não houver problema no seu código, nada será impresso no seu terminal.
 
-## ESLint de foram automática
+## ESLint de forma automática
 
 Particulamente eu preferi utilizar o [plugin `ESLint`](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) pela extensão do `VSCode`, em favor da produtividade.
 
