@@ -138,5 +138,5 @@ Particulamente eu preferi utilizar o [plugin `ESLint`](https://marketplace.visua
 # Requisitos funcionais
 <a href="#sumario">Sumário</a>
 
-Para entender melhor a lógica da API, pode ser interessante olhar a regra de negócio do projeto.
-Tratamos sobre isso no [Wiki](https://github.com/becauro/store_manager/wiki).
+Para entender melhor a lógica por trás do código de desenvolvimento da API, é interessante olhar a _Requisitos funcionais_ do projeto.
+Tratamos sobre isso em seu [Wiki](https://github.com/becauro/store_manager/wiki).
