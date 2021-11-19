@@ -15,7 +15,7 @@ Esse projeto é uma API de um sistema de gerenciamento de vendas, onde será pos
 - <a href="#shape-retornos">ENDPOINTS: Shape dos retornos das requisições</a>
 - [Banco de dados: Shape dos Documentos (registros)](#banco-de-dados-shape-dos-documentos-registros)
 - [Linter](#linter)
-- [Regras de negócio](#regras-de-negócio)
+- [Requisistos funcionais](#requisitos-funcionais)
 
 # Habilidades
 
@@ -135,7 +135,7 @@ Particulamente eu preferi utilizar o [plugin `ESLint`](https://marketplace.visua
 
 ---
 
-# Regras de negócio
+# Requisistos funcionais
 <a href="#sumario">Sumário</a>
 
 Para entender melhor a lógica da API, pode ser interessante olhar a regra de negócio do projeto.
