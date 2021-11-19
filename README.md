@@ -11,9 +11,7 @@ Esse projeto é uma API de um sistema de gerenciamento de vendas, onde será pos
 - <a href="#tecnologias-utilizadas">Tecnologias utilizadas</a>
 - <a href="#futuras-implementacoes">Futuras implementações</a> 
 - <a href="#requisitos-execucao">Requisitos para execução e consumo da API</a>
-- [Como executar](#como-executar) 
-- <a href="#shape-retornos">ENDPOINTS: Shape dos retornos das requisições</a>
-- [Banco de dados: Shape dos Documentos (registros)](#banco-de-dados-shape-dos-documentos-registros)
+- [Como executar](#como-executar)
 - [Linter](#linter)
 - [Requisitos funcionais](#requisitos-funcionais)
 
@@ -70,56 +68,6 @@ Instalado os requisitos e as dependências necessárias, basta seguir as seguint
 
 1. Dentro pasta do projeto, execute o comando: `npm start`.
 2. Em seguida, abra algum cliente de API (ex.: Postman, Insomnia e etc) e faça as requicições para as rotas de **http://localhost:3000** (A porta 3000 está como padrão alternativo na ausência de variável de ambiente).
-
-# <span id="shape-retornos">ENDPOINTS: Shape dos retornos das requisições</span>
-<a href="#sumario">Sumário</a>
-
-  - Caso o recurso não seja encontrado, a API deve retornar o status HTTP adequado com o body `{ message: '<recurso> não encontrado' }`.
-  - Em caso de erro, a API deve retornar o status HTTP adequado com o body `{ err: { message: <mensagem de erro>, code: <código do erro> } }`.
-    - O código de erro implementado deve deve seguir o mesmo padrão para toda a aplicação. Por exemplo: `'not_found'`, `'invalid_data'` e afins.
-  - Em caso de dados inválidos, a API deve retornar o status HTTP adequado, com o body `{ err: { message: 'Dados inválidos', code: <código do erro> } }`.
-  - Todos os retornos de erro devem seguir o mesmo formato. Para erros que requerem dados adicionais (por exemplo, para informar quais campos estão incorretos) é utilizado a propriedade `data` dentro do objeto `err`.
-
-# Banco de dados: Shape dos Documentos (Registros)
-<a href="#sumario">Sumário</a>
-
-O banco deve duas `collections` para: uma para os produtos e outra para as vendas
-
-A tabela terá o seguinte nome: `products`
-
-Os campos da collection `products` terão esse formato:
-
-```json
-{ "name": "Produto Silva", "quantity": 10 }
-```
-
-A resposta retornada após um `insert` (criação) no banco precisa ter o seguinte shape:
-
-```json
-{ "_id": ObjectId("5f43cbf4c45ff5104986e81d"), "name": "Produto Silva", "quantity": 10 }
-```
-
-(O \_id é gerado automaticamente)
-
-A tabela de vendas terá o seguinte nome: `sales`
-
-Os campos da tabela `sales` terão esse formato:
-
-```json
-{ "itensSold": [{ "productId": "5f43cbf4c45ff5104986e81d", "quantity": 2 }] }
-```
-
-A resposta retornada após um `insert` (criação) no banco precisa ter o seguinte shape:
-
-```json
-{
-  "_id": ObjectId("5f43cc53c45ff5104986e81e"),
-  "itensSold": [{ "productId": "5f43cbf4c45ff5104986e81d", "quantity": 2 }]
-}
-```
-
-(O \_id é gerado automaticamente)
-
 
 # Linter
 <a href="#sumario">Sumário</a>
