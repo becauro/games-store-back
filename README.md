@@ -1,4 +1,4 @@
-# Boas vindas ao repositório do Store Manager
+# Boas vindas ao repositório do Store Manager (develop)
 
 Esse projeto é uma API de um sistema de gerenciamento de vendas, onde será possível criar, visualizar, deletar e atualizar os produtos e as vendas. Ou seja, um CRUD.
 
