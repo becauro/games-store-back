@@ -67,7 +67,7 @@ Para instalar essas dependências, estando conectado a internet e dentro da past
 Instalado os requisitos e as dependências necessárias, basta seguir as seguintes etapas:
 
 1. Dentro pasta do projeto, execute o comando: `npm start`.
-2. Em seguida, abra algum cliente de API (ex.: Postman, Insomnia e etc) e faça as requicições para as rotas de **http://localhost:3000** (A porta 3000 está como padrão alternativo na ausência de variável de ambiente).
+2. Em seguida, abra algum cliente de API (ex.: Postman, Insomnia e etc) e faça as requisições para os ENDPOINTs de **http://localhost:3000** (A porta 3000 está como padrão alternativo na ausência de variável de ambiente).
 
 # Linter
 <a href="#sumario">Sumário</a>
