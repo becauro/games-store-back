@@ -5,7 +5,7 @@ const products = require('../services/products');
 const CREATED = 201;
 const OK = 200;
 
-router.get('/', rescue(async (req, res) => {
+router.get('/', rescue(async (_req, res) => {
     const result = await products.getAll();
         res.status(result.status).json({ products: [...result.productS] });
 }));
@@ -24,32 +24,35 @@ router.get('/:id', async (req, res) => {
         });
     }
 
-    const { _id, name, quantity } = result;
+    const { _id, name, quantity, price, thumbnail, description } = result;
+    const productData = { id: _id, name, quantity, price, thumbnail, description };
 
-    res.status(200).json({ id: _id, name, quantity });
+    res.status(200).json(productData);
 });
 
 router.post('/', rescue(async (req, res) => {
-const { name, quantity } = req.body;
-
-    const result = await products.create(name, quantity);
+  const { name, quantity, price, thumbnail, description } = req.body;
+  const productData = { name, quantity, price, thumbnail, description };
+  const result = await products.create(productData);
    
-    if (result.code) { 
-        return res.status(result.status).json({
-            err: {
-                code: result.code,
-                message: result.message,
-            },
+  if (result.code) { 
+    return res.status(result.status).json({
+      err: {
+          code: result.code,
+          message: result.message,
+      },
     });
-}
-    res.status(CREATED).json({ _id: result, name, quantity });
+  }
+  
+  res.status(CREATED).json({ _id: result, name, quantity });
 }));
 
 router.put('/:id', rescue(async (req, res) => {
     const { id } = req.params;
-    const { name, quantity } = req.body;
+    const { name, quantity, price, thumbnail, description } = req.body;
+    const productData = { name, quantity, price, thumbnail, description };
     
-        const updateLog = await products.update(id, name, quantity);
+        const updateLog = await products.update({ id, ...productData });
 
         if (updateLog.code) {
             return res.status(updateLog.status).json({
