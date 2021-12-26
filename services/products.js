@@ -6,7 +6,8 @@ const STATUS_UNPROCESSABLE_ENTITY = 422;
 const CODE_INVALID_DATA = 'invalid_data';
 const MSG_WRONG_ID = 'Wrong id format';
 
-const create = async (name, quantity) => {
+const create = async (productData) => {
+  const { name, quantity } = productData;
   const existsMsg = 'Product already exists';
   
   // "quantity" format valitation
@@ -35,7 +36,7 @@ const create = async (name, quantity) => {
  
   // CREATING:
 
-  const insertedId = await models.create(name, quantity);
+  const insertedId = await models.create(productData);
   return insertedId;
 };
 
@@ -68,7 +69,8 @@ const getById = async (id) => {
   return product;
 };
 
-const update = async (id, name, quantity) => {
+const update = async (productData) => {
+  const { name, quantity } = productData;
   const notUpdated = 'Ops! nothing updated';
   
   // "quantity" format valitation:
@@ -89,7 +91,7 @@ const update = async (id, name, quantity) => {
  
   // UPDATING:
 
-  const updateLog = await models.update(id, name, quantity);
+  const updateLog = await models.update(productData);
 
   // if found nothing (.modifiedCount === 0), return arror data:
 
