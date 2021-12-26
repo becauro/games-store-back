@@ -87,6 +87,8 @@ Instalado os requisitos e as dependências necessárias, basta seguir as seguint
 1. Dentro pasta do projeto, execute o comando: `npm start`.
 2. Em seguida, abra algum cliente de API (ex.: Postman, Insomnia e etc) e faça as requisições para os ENDPOINTs de **http://localhost:3000** (A porta 3000 está como padrão alternativo na ausência de variável de ambiente).
 
+**Observação**: Você pode manualmente criar um banco chamado `StoreManager` e criar uma Collection chamada `products` e usar o conteúdo do arquivo `dataTestForDb.json` (que se contra na raiz do projeto) para cadastrar algum produto usanfo a API ou , se quiser pode popular o banco com um insertMany usando o array de produtos que está dentro do arquivo `dataTestForDb.json`.
+
 ## Linter
 <a href="#sumario">Sumário</a>
 
@@ -119,7 +121,13 @@ Particulamente eu preferi utilizar o [plugin `ESLint`](https://marketplace.visua
     * Os campos da collection `products` terão esse formato:
 
         ```json
-        { "name": "Produto Silva", "quantity": 10 }
+        {
+          "name": "Sony Playstation 5 825gb Digital Edition Cor  Branco E Preto",
+          "price": 6499,
+          "thumbnail": "http://http2.mlstatic.com/D_799755-MLA47058389754_082021-I.jpg",
+          "description": "",
+          "quantity": 7
+        }
         ```
 
   * A tabela de **vendas** terá o seguinte nome: `sales`
