@@ -3,7 +3,10 @@ const validators = require('../utils/validators');
 
 const STATUS_OK = 200;
 const STATUS_UNPROCESSABLE_ENTITY = 422;
+const STATUS_NOT_FOUND = 404;
 const CODE_INVALID_DATA = 'invalid_data';
+const MSG_NOT_FOUND = 'No match found';
+const MSG_FOUND = 'Match found';
 const MSG_WRONG_ID = 'Wrong id format';
 
 const create = async (productData) => {
@@ -44,6 +47,20 @@ const getAll = async () => {
   const productS = await models.getAll();
 
   return { status: STATUS_OK, productS };
+};
+
+const getAllFiltered = async (query) => {
+  const products = await models.getAll(query);
+  
+  if (!products) { 
+    return { 
+      status: STATUS_NOT_FOUND,
+      message: MSG_NOT_FOUND,
+      products, 
+    };
+  }
+
+  return { status: STATUS_OK, message: MSG_FOUND, products };
 };
 
 const getById = async (id) => {
@@ -137,4 +154,5 @@ module.exports = {
     getById,
     update,
     deleteIt,
+    getAllFiltered,
 };

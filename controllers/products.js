@@ -27,7 +27,7 @@ router.get('/:id', async (req, res) => {
     const { _id, name, quantity, price, thumbnail, description } = result;
     const productData = { id: _id, name, quantity, price, thumbnail, description };
 
-    res.status(200).json(productData);
+    res.status(OK).json(productData);
 });
 
 router.post('/', rescue(async (req, res) => {
@@ -81,7 +81,7 @@ router.delete('/:id', rescue(async (req, res) => {
 
   const { _id, name, quantity } = result;
 
-  res.status(200).json({ id: _id, name, quantity });
+  res.status(OK).json({ id: _id, name, quantity });
 }));
 
 module.exports = router;

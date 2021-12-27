@@ -18,10 +18,19 @@ const getByName = async (name) => connection()
 
 const getAll = async () => connection()
     .then(async (db) => {
-        const productS = await db.collection('products').find().toArray();
+        const products = await db.collection('products').find().toArray();
     
-    return productS;
+    return products;
     });
+
+const getAllFiltered = async (query) => {
+    const db = await connection();
+
+    const products = await db.collection('products')
+    .find({ name: { $regex: `/${query}/i` } }).toArray();
+    
+    return products;
+};
 
 const getById = async (id) => connection()
   .then(async (db) => {
@@ -62,4 +71,5 @@ module.exports = {
     update,
     updateQtd,
     deleteIt,
+    getAllFiltered,
 };
