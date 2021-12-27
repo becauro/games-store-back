@@ -58,7 +58,7 @@ Depois, foi criado uma Collection para os **produtos** (products) que desejam se
 * Node.js
 * Express
 * MongoDB
-* ESLinter (Para auxiliar na análise de erros no código e de algumas boas práticas)
+* ESLinter (Para auxiliar na análise de erros no código e também para ajudar manter algumas boas práticas)
 
 ## <span id="futuras-implementacoes">Futuras implementações</span>
 <a href="#sumario">Sumário</a>
