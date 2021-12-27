@@ -87,6 +87,7 @@ Instalado os requisitos e as dependências necessárias, basta seguir as seguint
 
 1. Dentro pasta do projeto, execute o comando: `npm start`.
 2. Em seguida, abra algum cliente de API (ex.: Postman, Insomnia e etc) e faça as requisições para os ENDPOINTs de **http://localhost:3000** (Essa porta 3000 está como padrão alternativo à ausência de uma variável de ambiente para porta).
+  2.1 - Recomendo usar um `127.0.0.1` ao invés de `localhost`, quando estiver executando outro servidor web, simultâneamente, na mesma máquina. Tive alguns erros com 'localhost' em mais de um servidor. Talvez seja "algo particular", mas não custa avisar. :-) 
 
 **Observação**: Você pode, manualmente, criar um banco chamado `StoreManager` com uma Collection chamada `products`, e então usar algum dos objetos que se encontram no array do arquivo `dataTestForDb.json` (na raiz do projeto) para cadastrar algum produto na API. Esse objetos são alguns produtos que já estão no formato (shape / schema) que deve se usado pelo banco para não haver problema nos retornos das requisições à API.  Se preferir, pode ainda popular o banco (usando um insertMany()) passando o array de produtos que está dentro desse mesmo arquivo, `dataTestForDb.json`.
 
