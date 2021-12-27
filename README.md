@@ -4,6 +4,10 @@ Esse projeto é uma API de um sistema de gerenciamento de vendas, onde será pos
 
 ---
 
+### FRONTEND (outro repo):
+
+Aqui está o [link](https://github.com/becauro/games-store-front) do repositório frontend.
+
 ## <span id="sumario">Sumário</span>
 
 - [Habilidades](#habilidades)
