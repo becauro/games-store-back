@@ -87,7 +87,11 @@ Instalado os requisitos e as dependências necessárias, basta seguir as seguint
 1. Dentro pasta do projeto, execute o comando: `npm start`.
 2. Em seguida, abra algum cliente de API (ex.: Postman, Insomnia e etc) e faça as requisições para os ENDPOINTs de **http://localhost:3000** (A porta 3000 está como padrão alternativo na ausência de variável de ambiente).
 
-**Observação**: Você pode manualmente criar um banco chamado `StoreManager` e criar uma Collection chamada `products` e usar o conteúdo do arquivo `dataTestForDb.json` (que se contra na raiz do projeto) para cadastrar algum produto usanfo a API ou , se quiser pode popular o banco com um insertMany usando o array de produtos que está dentro do arquivo `dataTestForDb.json`.
+**Observação**: Você pode, manualmente, criar um banco chamado `StoreManager` com uma Collection chamada `products`, e então usar algum dos objetos que se encontram no array do arquivo `dataTestForDb.json` (na raiz do projeto) para cadastrar algum produto na API. Esse objetos são alguns produtos que já estão no formato (shape / schema) que deve se usado pelo banco para não haver problema nos retornos das requisições à API.  Se preferir, pode ainda popular o banco (usando um insertMany()) passando o array de produtos que está dentro desse mesmo arquivo, `dataTestForDb.json`.
+
+Esse dados que se encontram no arquivo `dataTestForDb.json`, obtive do seguinte ENDPOINT de produtos _gamers_, de uma API pública do _Mercado Livre_: `https://api.mercadolibre.com/sites/MLB/search?category=MLB1144`.
+
+Eu apenas modifiquei alguns nomes de parâmetros nesses dados para se adaptar ao que eu queria. E lógico que fiz isso de forma automática, visto que são muito dados.
 
 ## Linter
 <a href="#sumario">Sumário</a>
