@@ -91,7 +91,7 @@ Instalado os requisitos e as dependências necessárias, basta seguir as seguint
 
 **Observação**: Você pode, manualmente, criar um banco chamado `StoreManager` com uma Collection chamada `products`, e então usar algum dos objetos que se encontram no array do arquivo `dataTestForDb.json` (na raiz do projeto) para cadastrar algum produto na API. Esse objetos são alguns produtos que já estão no formato (shape / schema) que deve se usado pelo banco para não haver problema nos retornos das requisições à API.  Se preferir, pode ainda popular o banco (usando um insertMany()) passando o array de produtos que está dentro desse mesmo arquivo, `dataTestForDb.json`.
 
-Esse dados que se encontram no arquivo `dataTestForDb.json`, obtive do seguinte ENDPOINT de produtos _gamers_, de uma API pública do _Mercado Livre_: `https://api.mercadolibre.com/sites/MLB/search?category=MLB1144`.
+Os dados que se encontram no arquivo `dataTestForDb.json`, foi obtido do ENDPOINT de produtos _gamers_, da API pública do _Mercado Livre_: `https://api.mercadolibre.com/sites/MLB/search?category=MLB1144`.
 
 Eu apenas modifiquei alguns nomes de parâmetros nesses dados para se adaptar ao que eu queria. E lógico que fiz isso de forma automática, visto que são muito dados.
 
