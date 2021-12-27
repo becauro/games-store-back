@@ -50,10 +50,10 @@ const getAll = async () => {
 };
 
 const getAllFiltered = async (query) => {
-  const products = await models.getAll(query);
-  
-  if (!products) { 
-    return { 
+  const products = await models.getAllFiltered(query);
+
+  if (products.length === 0) {
+    return {
       status: STATUS_NOT_FOUND,
       message: MSG_NOT_FOUND,
       products, 

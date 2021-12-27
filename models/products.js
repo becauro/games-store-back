@@ -27,8 +27,8 @@ const getAllFiltered = async (query) => {
     const db = await connection();
 
     const products = await db.collection('products')
-    .find({ name: { $regex: `/${query}/i` } }).toArray();
-    
+    .find({ name: { $regex: `${query}`, $options: 'i' } }).toArray();
+
     return products;
 };
 

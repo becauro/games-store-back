@@ -10,6 +10,14 @@ router.get('/', rescue(async (_req, res) => {
         res.status(result.status).json({ products: [...result.productS] });
 }));
 
+router.get('/search', rescue(async (req, res) => {
+  const { name } = req.query;
+  const result = await products.getAllFiltered(name);
+
+  res.status(result.status).json({ products: [...result.products],
+  message: result.message });
+}));
+
 router.get('/:id', async (req, res) => {
     const { id } = req.params;
 
