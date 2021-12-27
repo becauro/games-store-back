@@ -13,6 +13,7 @@ Esse projeto é uma API de um sistema de gerenciamento de vendas, onde será pos
 - <a href="#tecnologias-utilizadas">Tecnologias utilizadas</a>
 - <a href="#futuras-implementacoes">Futuras implementações</a> 
 - <a href="#requisitos-execucao">Requisitos para execução e consumo da API</a>
+- [Dependências](#dependencias)
 - [Como executar](#como-executar)
 - [Endpoints](#endpoints)
 - [Linter](#linter)
@@ -76,7 +77,7 @@ Depois, foi criado uma Collection para os **produtos** (products) que desejam se
    3.1 - A API também estar configurada para, opcinalmente, ler uma variável de ambiente que se chame "PORT".
 4. Algum cliente de teste de API (ex.: Postman, Insomnia e etc) caso queira testar as requisições.
 
-## <span id="dependencias">Dependências:</span>
+## <span id="dependencias">Dependências</span>
 <a href="#sumario">Sumário</a>
 
 No arquivo `package.json` é listado as dependências necessárias.
@@ -85,6 +86,7 @@ Para instalar essas dependências, estando conectado a internet e dentro da past
     `npm install`
 
 ## Como Executar
+<a href="#sumario">Sumário</a>
 
 Instalado os requisitos e as dependências necessárias, basta seguir as seguintes etapas:
 
