@@ -69,7 +69,8 @@ Depois, foi criado uma Collection para os **produtos** (products) que desejam se
 
 1. **Node.js**
 2. **MongoDB**
-3. **Porta 3000** disponível, ou configurar outra.
+3. **Porta 3000** disponível, ou configurar outra em uma variável de ambiente.
+   3.1 - A API também estar configurada para, opcinalmente, ler uma variável de ambiente que se chame "PORT".
 4. Algum cliente de teste de API (ex.: Postman, Insomnia e etc) caso queira testar as requisições.
 
 ## <span id="dependencias">Dependências:</span>
@@ -85,7 +86,7 @@ Para instalar essas dependências, estando conectado a internet e dentro da past
 Instalado os requisitos e as dependências necessárias, basta seguir as seguintes etapas:
 
 1. Dentro pasta do projeto, execute o comando: `npm start`.
-2. Em seguida, abra algum cliente de API (ex.: Postman, Insomnia e etc) e faça as requisições para os ENDPOINTs de **http://localhost:3000** (A porta 3000 está como padrão alternativo na ausência de variável de ambiente).
+2. Em seguida, abra algum cliente de API (ex.: Postman, Insomnia e etc) e faça as requisições para os ENDPOINTs de **http://localhost:3000** (Essa porta 3000 está como padrão alternativo à ausência de uma variável de ambiente para porta).
 
 **Observação**: Você pode, manualmente, criar um banco chamado `StoreManager` com uma Collection chamada `products`, e então usar algum dos objetos que se encontram no array do arquivo `dataTestForDb.json` (na raiz do projeto) para cadastrar algum produto na API. Esse objetos são alguns produtos que já estão no formato (shape / schema) que deve se usado pelo banco para não haver problema nos retornos das requisições à API.  Se preferir, pode ainda popular o banco (usando um insertMany()) passando o array de produtos que está dentro desse mesmo arquivo, `dataTestForDb.json`.
 
