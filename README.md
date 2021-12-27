@@ -14,6 +14,7 @@ Esse projeto é uma API de um sistema de gerenciamento de vendas, onde será pos
 - <a href="#futuras-implementacoes">Futuras implementações</a> 
 - <a href="#requisitos-execucao">Requisitos para execução e consumo da API</a>
 - [Como executar](#como-executar)
+- [Endpoints](#endpoints)
 - [Linter](#linter)
 - [Observações](#observações)
 - [Requisitos funcionais](#requisitos-funcionais)
@@ -40,7 +41,7 @@ Depois, foi criado uma Collection para os **produtos** (products) que desejam se
 
 ## Requisitos de Usuário
 
-* Deve ser possível que a pessoa usuária, independente de cadastramento ou login, possa adicionar, ler, deletar e atualizar produtos no seu estoque.
+* Deve ser possível que a pessoa usuária, independente de cadastramento ou login, possa adicionar, ler, deletar e atualizar produtos no seu estoque. (Mas irei implantar Login e autorizações de usuários também brevemente)
 * O usuário deve poder também enviar vendas para o sistema. Essas vendas devem validar se o produto em questão existe.
 * Deve, também, ser possível ler, deletar e atualizar vendas.
 
@@ -48,7 +49,7 @@ Depois, foi criado uma Collection para os **produtos** (products) que desejam se
 <a href="#sumario">Sumário</a>
 
 * Arquitetura MSC
-* API RESTfull.
+* API RESTfull
 
 ## <span id="tecnologias-utilizadas">Tecnologias utilizadas</span>
 <a href="#sumario">Sumário</a>
@@ -56,11 +57,13 @@ Depois, foi criado uma Collection para os **produtos** (products) que desejam se
 * Node.js
 * Express
 * MongoDB
-* ESLinter
+* ESLinter (Para auxiliar na análise de erros no código e de algumas boas práticas)
 
 ## <span id="futuras-implementacoes">Futuras implementações</span>
 <a href="#sumario">Sumário</a>
 
+* Autenticação de Usuários (Login)
+* Autorizações de usuários com uso de tokens (JWT).
 * Implantar a aplicação na plataforma (PaaS) do Heroku, para que possa ser consumida e testada externamente.
 * Implantar um Banco de Dados na nuvem do [MongoDB Atlas](https://www.mongodb.com/atlas) para que possa ser utilizado via Heroku.
 
@@ -94,6 +97,26 @@ Instalado os requisitos e as dependências necessárias, basta seguir as seguint
 Os dados que se encontram no arquivo `dataTestForDb.json`, foi obtido do ENDPOINT de produtos _gamers_, da API pública do _Mercado Livre_: `https://api.mercadolibre.com/sites/MLB/search?category=MLB1144`.
 
 Eu apenas modifiquei alguns nomes de parâmetros nesses dados para se adaptar ao que eu queria. E lógico que fiz isso de forma automática, visto que são muito dados.
+
+## Endpoints
+<a href="#sumario">Sumário</a>
+
+### Produtos
+
+* GET: /products
+* GET: /products/:id
+* POST: /products
+* PUT: /products/:id
+* DELETE: /products/:id
+
+
+### Vendas
+
+* GET: /sales
+* GET: /sales/:id
+* POST: /sales
+* PUT: /sales/:id
+* DELETE: /sales/:id
 
 ## Linter
 <a href="#sumario">Sumário</a>
