@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const products = require('./controllers/products');
 const sales = require('./controllers/sales');
 const errorMiddleware = require('./utils/errorMiddleware');
@@ -7,6 +8,8 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
+
+app.use('*', cors());
 
 app.use('/products', products);
 app.use('/sales', sales);
