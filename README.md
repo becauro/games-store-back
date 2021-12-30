@@ -147,8 +147,6 @@ Particulamente eu preferi utilizar o [plugin `ESLint`](https://marketplace.visua
 
 ### Estrutura da lista de requisitos funcionais
 
-- Em cada requisito você encontrará uma imagem de um protótipo de como sua aplicação deve ficar. 
-
 ### Estrutura do banco de dados:
 
 * **Observação:** O `_id` é gerado automaticamente.
