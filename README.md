@@ -1,6 +1,7 @@
 # Boas vindas ao repositório Games Store (Backend)
 
-Esse projeto é uma API de um sistema de gerenciamento de vendas, onde será possível criar, visualizar, deletar e atualizar os produtos e as vendas. Ou seja, um CRUD.
+Esse projeto é Uma API RESTfull de um sistema de gerenciamento de uma loja de games, onde é possível criar, visualizar, deletar e atualizar os produtos e as vendas. Usado Node.js, Express e MongoDB.
+Ainda em fase de desenvolvimento, porém é possível já utilizar.
 
 ---
 
