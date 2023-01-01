@@ -1,0 +1,10 @@
+.editorconfig.json
+.env
+.eslintignore
+.eslintrc.json
+.git
+.github
+.gitignore
+Dockerfile*
+.dockerignore
+node_modules
