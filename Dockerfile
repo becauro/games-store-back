@@ -1,9 +1,10 @@
 FROM node:lts-buster
 
+ENV DB_URL mongodb://store-db-cont-data:27017/StoreManager
+
 WORKDIR /myapp
 
 ENV PORT 3000
-    DB_URL mongodb://localhost:27017/StoreManager
 
 COPY . .
 

@@ -1,9 +1,9 @@
-FROM mongo
+FROM mongo:4.4.6
+
+EXPOSE 27017
 
 RUN mkdir /DataForImport
 
-COPY ../dataTestForDb.json /DataForImport/
+COPY dataTestForDb.mongodb /DataForImport/
 
-RUN mongoimport --db=StoreManager --collection=products --file=/DataForImport/dataTestForDb.json
-
-
+COPY db-import.sh /docker-entrypoint-initdb.d/
