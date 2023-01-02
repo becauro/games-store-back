@@ -44,9 +44,10 @@ Esse projeto teve como objetivo praticar as seguintes hardskills:
 Se trata de uma API de gerenciamento de vendas que manipula **produtos** e **vendas**.
 Basicamente é um modesto controle de estoque em forma de CRUD para lidar tanto com produtos como com as vendas .
 
-Começando pela API, foi desenvolvido alguns ENDPOINTS seguindo os princípios do REST que se conectam a um banco de dados NÃO relacional.
+Seguindo os princípios REST foi desenvolvido alguns ENDPOINTS que se conectam a um banco de dados NÃO relacional (NoSQL), MongoDB.
 
-Depois, foi criado uma Collection para os **produtos** (products) que desejam se cadastrar na aplicação, afim de ser possível fazer vendas com esses produtos. Após isso, uma Collection para **vendas** (sales) também foi criada. As vendas são realizadas conforme a quantidade de produtos disponíveis em estoque.
+Há uma Collection para **produtos** (products) serem cadastrados na aplicação, afim de ser possível fazer vendas com esses produtos. 
+Da mesma forma, uma Collection para **vendas** (sales) também foi criada. Essas vendas são realizadas conforme a quantidade de produtos disponíveis em estoque.
 
 ## Requisitos de Usuário
 
