@@ -7,9 +7,8 @@ Ainda em fase de desenvolvimento, porém é possível já utilizar.
 
 ### Tem FRONT ?
 
-Aqui está o [link](https://github.com/becauro/games-store-front) do repositório **frontend**.
+Aqui está o [link](https://github.com/becauro/games-store-front) do repositório **frontend** que também fiz para usar com essa API.
 Desenvolvi algumas interfaces para interagir com essa API.
-Ainda estar em desenvolvimento, portanto o Front nem usa tudo que tem no Back ainda. 
 
 Então, corre lá pra dá uma olhada e aproveite para sentar aquele dedo nos botões de `Code Review` pra ajudar o projeto.
 
