@@ -81,10 +81,15 @@ Depois, foi criado uma Collection para os **produtos** (products) que desejam se
 <a href="#sumario">Sumário</a>
 
 1. **Node.js**
-2. **MongoDB**
-3. **Porta 3000** disponível, ou configurar outra em uma variável de ambiente.
-   3.1 - A API também estar configurada para, opcinalmente, ler uma variável de ambiente que se chame "PORT".
-4. Algum cliente de teste de API (ex.: Postman, Insomnia e etc) caso queira testar as requisições.
+2. **MongoDB** na porta 27017.
+   1. Se o banco estiver em outra porta e/ou máquina, crie na raiz do projeto um arquivo chamado _*.env*_, com a variável DB_URL conforme suas necessidades, preservando a sintaxe da seguinte forma: DB_URL=mongodb://localhost:27017/StoreManager
+   2. Se não for criado esse arquivo .env, ou na ausência da variável DB_URL, a API usará, por padrão, a seguinte URI: mongodb://localhost:27017/StoreManager
+3. **Porta 3000** disponível.
+   1. Se essa porta estiver indisponível, crie na raiz do projeto um arquivo chamado _*.env*_ com a variável PORT que tenha o número da porta disponível.
+   2. Se não for criado esse arquivo .env, ou na ausência da variável PORT, a API usará, por padrão, a porta 3000.
+4. Com algum cliente de teste de API (ex.: Postman, Insomnia e etc) faça requisições diretas à rotas da API.
+   1. Por exemplo, faça requisição GET para a URL: localhost:3000/products
+      1. *Nesse caso* (por ser GET), daria pra fazer por um browser mesmo. 
 
 ## <span id="dependencias">Dependências</span>
 <a href="#sumario">Sumário</a>
@@ -99,15 +104,15 @@ Para instalar essas dependências, estando conectado a internet e dentro da past
 
 Instalado os requisitos e as dependências necessárias, basta seguir as seguintes etapas:
 
-1. Dentro pasta do projeto, execute o comando: `npm start`.
-2. Em seguida, abra algum cliente de API (ex.: Postman, Insomnia e etc) e faça as requisições para os ENDPOINTs de **http://localhost:3000** (Essa porta 3000 está como padrão alternativo à ausência de uma variável de ambiente para porta).
-  2.1 - Recomendo usar um `127.0.0.1` ao invés de `localhost`, quando estiver executando outro servidor web, simultâneamente, na mesma máquina. Tive alguns erros com 'localhost' em mais de um servidor. Talvez seja "algo particular", mas não custa avisar. :-) 
+1. Banco de Dados MongoDB
+   1. Coloque, primeiro, o gerenciador de banco de dados MongoDB em execução.
+   2. Para que essa API não retorne um array vazio na rota _*products*_, precisa, previamente, ter dados no banco chamado _*StoreManager*_ e ter, pelo menos, a collection _*products*_. Por isso criei o script  `models/db-import.sh` o qual cria e importa dados (contidos no arquivo `models/dataTestForDb.mongodb`) para esse banco, na collection _*products*_. Assim, quando requisitado com GET, a rota _*products*_ já terá dados para teste, sem precisar criá-los manualmente. Se não quiser usar esse script, ok, mas a API não retornará dados, e você terá que cadastrar, manualmente, usando a rota de POST. 
+   **Note**: Não criei script (importador de dados) para a rota _*sales*_. 
+2. Feito (ou não) a etapa anterior, basta, dentro da pasta do projeto, executar o comando: `npm start`.
+3. Use algum software cliente de API (ex.: Postman, Insomnia e etc) e faça as requisições para os ENDPOINTs usando a URL **http://localhost:3000** 
+   1. Se for o caso, não esqueça de substituir a porta 3000 pela porta que você definiu na variávell PORT do arquivo .env.
 
-**Observação**: Você pode, manualmente, criar um banco chamado `StoreManager` com uma Collection chamada `products`, e então usar algum dos objetos que se encontram no array do arquivo `dataTestForDb.json` (na raiz do projeto) para cadastrar algum produto na API. Esse objetos são alguns produtos que já estão no formato (shape / schema) que deve se usado pelo banco para não haver problema nos retornos das requisições à API.  Se preferir, pode ainda popular o banco (usando um insertMany()) passando o array de produtos que está dentro desse mesmo arquivo, `dataTestForDb.json`.
-
-Os dados que se encontram no arquivo `dataTestForDb.json`, foi obtido do ENDPOINT de produtos _gamers_, da API pública do _Mercado Livre_: `https://api.mercadolibre.com/sites/MLB/search?category=MLB1144`.
-
-Eu apenas modifiquei alguns nomes de parâmetros nesses dados para se adaptar ao que eu queria. E lógico que fiz isso de forma automática, visto que são muito dados.
+** Observação**: Os dados que se encontram no arquivo `dataTestForDb.mongodb`, foi obtido do ENDPOINT de produtos _gamers_, da API pública do _Mercado Livre_: `https://api.mercadolibre.com/sites/MLB/search?category=MLB1144`. Apenas modifiquei alguns nomes de parâmetros para se adaptar ao projeto.
 
 ## Endpoints
 <a href="#sumario">Sumário</a>
