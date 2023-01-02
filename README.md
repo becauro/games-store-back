@@ -106,13 +106,13 @@ Instalado os requisitos e as dependências necessárias, basta seguir as seguint
 
 1. Banco de Dados MongoDB
    1. Coloque, primeiro, o gerenciador de banco de dados MongoDB em execução.
-   2. Para que essa API não retorne um array vazio na rota _*products*_, precisa, previamente, ter dados no banco chamado _*StoreManager*_ e ter, pelo menos, a collection _*products*_. Por isso criei o script  `models/db-import.sh` o qual cria e importa dados (contidos no arquivo `models/dataTestForDb.mongodb`) para esse banco, na collection _*products*_. Assim, quando requisitado com GET, a rota _*products*_ já terá dados para teste, sem precisar criá-los manualmente. Se não quiser usar esse script, ok, mas a API não retornará dados, e você terá que cadastrar, manualmente, usando a rota de POST. 
+   2. Para que essa API não retorne um array vazio na rota _*products*_, precisa, previamente, ter dados no banco chamado _*StoreManager*_ e ter, pelo menos, a collection _*products*_. Por isso criei o script  `models/db-import.sh` o qual cria e importa dados (contidos no arquivo `models/dataTestForDb.js`) para esse banco, na collection _*products*_. Assim, quando requisitado com GET, a rota _*products*_ já terá dados para teste, sem precisar criá-los manualmente. Se não quiser usar esse script, ok, mas a API não retornará dados, e você terá que cadastrar, manualmente, usando a rota de POST. 
    **Note**: Não criei script (importador de dados) para a rota _*sales*_. 
 2. Feito (ou não) a etapa anterior, basta, dentro da pasta do projeto, executar o comando: `npm start`.
 3. Use algum software cliente de API (ex.: Postman, Insomnia e etc) e faça as requisições para os ENDPOINTs usando a URL **http://localhost:3000** 
    1. Se for o caso, não esqueça de substituir a porta 3000 pela porta que você definiu na variávell PORT do arquivo .env.
 
-** Observação**: Os dados que se encontram no arquivo `dataTestForDb.mongodb`, foi obtido do ENDPOINT de produtos _gamers_, da API pública do _Mercado Livre_: `https://api.mercadolibre.com/sites/MLB/search?category=MLB1144`. Apenas modifiquei alguns nomes de parâmetros para se adaptar ao projeto.
+** Observação**: Os dados que se encontram no arquivo `dataTestForDb.js`, foi obtido do ENDPOINT de produtos _gamers_, da API pública do _Mercado Livre_: `https://api.mercadolibre.com/sites/MLB/search?category=MLB1144`. Apenas modifiquei alguns nomes de parâmetros para se adaptar ao projeto.
 
 ## Endpoints
 <a href="#sumario">Sumário</a>

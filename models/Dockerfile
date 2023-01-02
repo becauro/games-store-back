@@ -1,9 +1,10 @@
 FROM mongo:4.4.6
 
-EXPOSE 27017
+ENV DB_NAME GamesStore
 
 RUN mkdir /DataForImport
 
-COPY dataTestForDb.mongodb /DataForImport/
-
+COPY dataTestForDb.js /DataForImport/
 COPY db-import.sh /docker-entrypoint-initdb.d/
+
+EXPOSE 27017

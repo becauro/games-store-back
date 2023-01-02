@@ -6,8 +6,9 @@ const OPTIONS = {
    useNewUrlParser: true,
    useUnifiedTopology: true,
 };
-const MONGO_HOST = process.env.DB_HOST;
-const MONGO_DB_URL = `mongodb://${MONGO_HOST}:27017/StoreManager`;
+const MONGO_HOST = process.env.DB_HOST || "games-store-db";
+const MONGO_NAME = process.env.DB_NAME || "GamesStore";
+const MONGO_DB_URL = `mongodb://${MONGO_HOST}:27017/${MONGO_NAME}`;
  
 let db = null;
 

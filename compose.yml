@@ -9,6 +9,8 @@ services:
       - app-game-2 
     environment:
       - DB_HOST=database
+      - DB_NAME=GamesStore  
+      
   database:
     build: models/
     networks:

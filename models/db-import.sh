@@ -2,7 +2,7 @@
 
 cd /DataForImport
 
-mongo dataTestForDb.mongodb
+mongo --eval "var mongo_name = '$DB_NAME'"  dataTestForDb.js
 
 echo "EXECUTADO SCRIPT db-import.sh"
 

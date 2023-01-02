@@ -1,8 +1,9 @@
 FROM node:lts-buster
 
-ENV DB_URL mongodb://store-db-cont-data:27017/StoreManager
-
 WORKDIR /myapp
+
+ENV DB_NAME GamesStore
+ENV DB_HOST games-store-db
 
 COPY . .
 
