@@ -20,7 +20,7 @@ Então, corre lá pra dá uma olhada e aproveite para sentar aquele dedo nos bot
 - <a href="#arquitetura-e-padroes">Arquitetura e padrões</a>
 - <a href="#tecnologias-utilizadas">Tecnologias utilizadas</a>
 - <a href="#futuras-implementacoes">Futuras implementações</a> 
-- <a href="#requisitos-execucao">Requisitos para execução e consumo da API</a>
+- <a href="#requisitos-execucao">Requisitos para execução da API</a>
 - [Dependências](#dependencias)
 - [Como executar](#como-executar)
 - [Endpoints](#endpoints)
@@ -77,19 +77,33 @@ Da mesma forma, uma Collection para **vendas** (sales) também foi criada. Essas
 * Implantar a aplicação via Cloud ou VPS, para que possa ser consumida e testada externamente.
 * Implantar o Banco de Dados em nuvem do [MongoDB Atlas](https://www.mongodb.com/atlas) ou algo do tipo.
 
-## <span id="requisitos-execucao">Requisitos para execução e consumo da API:</span>
+## <span id="requisitos-execucao">Requisitos para execução da API</span>
 <a href="#sumario">Sumário</a>
 
-1. **Node.js**
-2. **MongoDB** na porta 27017.
-   1. Se o banco estiver em outra porta e/ou máquina, crie na raiz do projeto um arquivo chamado _*.env*_, com a variável DB_URL conforme suas necessidades, preservando a sintaxe da seguinte forma: DB_URL=mongodb://localhost:27017/StoreManager
-   2. Se não for criado esse arquivo .env, ou na ausência da variável DB_URL, a API usará, por padrão, a seguinte URI: mongodb://localhost:27017/StoreManager
-3. **Porta 3000** disponível.
-   1. Se essa porta estiver indisponível, crie na raiz do projeto um arquivo chamado _*.env*_ com a variável PORT que tenha o número da porta disponível.
-   2. Se não for criado esse arquivo .env, ou na ausência da variável PORT, a API usará, por padrão, a porta 3000.
-4. Com algum cliente de teste de API (ex.: Postman, Insomnia e etc) faça requisições diretas à rotas da API.
-   1. Por exemplo, faça requisição GET para a URL: localhost:3000/products
-      1. *Nesse caso* (por ser GET), daria pra fazer por um browser mesmo. 
+   ### Opção 1 - Via Docker
+
+   1. Ter Docker instalado e pronto para uso.
+   2. Docker deve ter acesso à internet por motivos ÓBVIOS.
+
+   ### Opção 2 - Manualmente (Via Host)
+
+   1. **Node.js**
+        1. Já testei com Node nas versões 14 e 18. Acredito que funcione nas outras versões intermediárias também.
+        2. Para instalar , configurar e gerenciar Nodejs de forma produtiva, recomendo uso da ferramenta [NVM](https://github.com/nvm-sh/nvm#intro).
+   
+   2. **MongoDB** em `localhost`, na porta `27017` ou o que você definir.
+      1. Se o banco estiver em outra porta diferente de 27017, renomeie na raiz do projeto, um arquivo chamado _*.env.model*_ para _*.env*_, e dentro dele defina a variável DB_PORT com a porta que deseja.
+      2.  Se gerenciador de banco estiver em outro local / ip que não seja localhost, renomeie na raiz do projeto um arquivo chamado _*.env.model*_ para _*.env*_, e dentro dele defina a variável DB_PORT com numero IP ou hostname correto.
+
+   3. **Nome do banco** se chama `GamesStore` ou o que você definir.
+      1. Se por algum motivo não quiser que esse seja o nome do banco,  renomeie na raiz do projeto um arquivo chamado _*.env.model*_ para _*.env*_, e dentro dele defina a variável DB_NAME com o nome desejado.
+    
+   4. **Porta 3000** disponível ou o que você definir.
+      1. A API usa a porta 3000, por padrão. Se esta porta estiver INdisponível,  renomeie na raiz do projeto um arquivo chamado _*.env.model*_ para _*.env*_, e dentro dele defina a variável PORT com o número da porta desejado.
+
+   5. **Software cliente** de teste de API (ex.: Postman, Insomnia e etc)
+      1. Por exemplo, faça requisição GET para a URL: localhost:3000/products
+         1. *Nesse caso* (por ser método GET), dá pra usar um browser mesmo. 
 
 ## <span id="dependencias">Dependências</span>
 <a href="#sumario">Sumário</a>
