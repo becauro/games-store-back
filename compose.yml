@@ -7,7 +7,7 @@ services:
   backend:   
     build: .
     ports:
-      - 3003:3006            # A porta da direita precisa ser gual a da variável PORT abaixo (linha 17). 
+      - 3000:3006            # A porta da direita precisa ser gual a da variável PORT abaixo (linha 17).
     depends_on:
       - database
     networks:
