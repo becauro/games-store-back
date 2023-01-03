@@ -116,17 +116,32 @@ Para instalar essas dependências, estando conectado a internet e dentro da past
 ## Como Executar
 <a href="#sumario">Sumário</a>
 
-Instalado os requisitos e as dependências necessárias, basta seguir as seguintes etapas:
+ ### Opção 1 - Via Docker
 
-1. Banco de Dados MongoDB
-   1. Coloque, primeiro, o gerenciador de banco de dados MongoDB em execução.
-   2. Para que essa API não retorne um array vazio na rota _*products*_, precisa, previamente, ter dados no banco chamado _*StoreManager*_ e ter, pelo menos, a collection _*products*_. Por isso criei o script  `models/db-import.sh` o qual cria e importa dados (contidos no arquivo `models/dataTestForDb.js`) para esse banco, na collection _*products*_. Assim, quando requisitado com GET, a rota _*products*_ já terá dados para teste, sem precisar criá-los manualmente. Se não quiser usar esse script, ok, mas a API não retornará dados, e você terá que cadastrar, manualmente, usando a rota de POST. 
-   **Note**: Não criei script (importador de dados) para a rota _*sales*_. 
-2. Feito (ou não) a etapa anterior, basta, dentro da pasta do projeto, executar o comando: `npm start`.
-3. Use algum software cliente de API (ex.: Postman, Insomnia e etc) e faça as requisições para os ENDPOINTs usando a URL **http://localhost:3000** 
-   1. Se for o caso, não esqueça de substituir a porta 3000 pela porta que você definiu na variávell PORT do arquivo .env.
+   Basta usar o arquivo compose.yml e ajustar o que achar necessário antes
+   Estando na pasta do arquivo, via CLI, basta digitar:
 
-** Observação**: Os dados que se encontram no arquivo `dataTestForDb.js`, foi obtido do ENDPOINT de produtos _gamers_, da API pública do _Mercado Livre_: `https://api.mercadolibre.com/sites/MLB/search?category=MLB1144`. Apenas modifiquei alguns nomes de parâmetros para se adaptar ao projeto.
+      ` docker compose up -d `
+
+   Observe se a porta exposta ( `- 3000:3006` ) está disponível e mude se for o caso.
+   Os outros dados como nome de banco (`DB_NAME`), nome de rede (`app-game-2`) e etc também podem ser mudados. Só evite mudar o contexto (`build: .` e `build: models/`),       a menos que saiba o que está fazendo.
+
+
+ ### Opção 2 - Manualmente (Via Host)
+
+   Instalado os requisitos e as dependências necessárias, basta seguir as seguintes etapas:
+
+   1. Banco de Dados MongoDB
+      1. Coloque, primeiro, o gerenciador de banco de dados MongoDB em execução.
+      2. Para que essa API não retorne um array vazio na rota _*products*_, precisa, previamente, ter dados no banco chamado _*StoreManager*_ e ter, pelo menos, a collection _*products*_. Por isso criei o script  `models/db-import.sh` o qual cria e importa dados (contidos no arquivo `models/dataTestForDb.js`) para esse banco, na collection _*products*_. Assim, quando requisitado com GET, a rota _*products*_ já terá dados para teste, sem precisar criá-los manualmente. Se não quiser usar esse script, ok, mas a API não retornará dados, e você terá que cadastrar, manualmente, usando a rota de POST. 
+      **Note**: Não criei script (importador de dados) para a rota _*sales*_. 
+   2. Feito (ou não) a etapa anterior, basta, dentro da pasta do projeto, executar o comando: `npm start`.
+   3. Use algum software cliente de API (ex.: Postman, Insomnia e etc) e faça as requisições para os ENDPOINTs usando a URL **http://localhost:3000** 
+      1. Se for o caso, não esqueça de substituir a porta 3000 pela porta que você definiu na variávell PORT do arquivo .env.
+
+   ** Observação**: Os dados que se encontram no arquivo `dataTestForDb.js`, foi obtido do ENDPOINT de produtos _gamers_, da API pública do _Mercado Livre_: `https://api.mercadolibre.com/sites/MLB/search?category=MLB1144`. Apenas modifiquei alguns nomes de parâmetros para se adaptar ao projeto.
+   
+
 
 ## Endpoints
 <a href="#sumario">Sumário</a>
