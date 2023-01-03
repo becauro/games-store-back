@@ -74,8 +74,8 @@ Da mesma forma, uma Collection para **vendas** (sales) também foi criada. Essas
 
 * Autenticação de Usuários (Login)
 * Autorizações de usuários com uso de tokens (JWT).
-* Implantar a aplicação na plataforma (PaaS) do Heroku, para que possa ser consumida e testada externamente.
-* Implantar um Banco de Dados na nuvem do [MongoDB Atlas](https://www.mongodb.com/atlas) para que possa ser utilizado via Heroku.
+* Implantar a aplicação via Cloud ou VPS, para que possa ser consumida e testada externamente.
+* Implantar o Banco de Dados em nuvem do [MongoDB Atlas](https://www.mongodb.com/atlas) ou algo do tipo.
 
 ## <span id="requisitos-execucao">Requisitos para execução e consumo da API:</span>
 <a href="#sumario">Sumário</a>
