@@ -1,6 +1,6 @@
 .editorconfig
-.env
 .eslintignore
+.env
 .eslintrc.json
 .git
 .github

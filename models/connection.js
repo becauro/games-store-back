@@ -8,7 +8,8 @@ const OPTIONS = {
 };
 const MONGO_HOST = process.env.DB_HOST || "games-store-db";
 const MONGO_NAME = process.env.DB_NAME || "GamesStore";
-const MONGO_DB_URL = `mongodb://${MONGO_HOST}:27017/${MONGO_NAME}`;
+const MONGO_PORT = process.env.DB_PORT || 27017; 
+const MONGO_DB_URL = `mongodb://${MONGO_HOST}:${MONGO_PORT}/${MONGO_NAME}`;
  
 let db = null;
 
