@@ -1,4 +1,3 @@
-
 # Variável definida em arquivo compose ou em outras maneiras de criação de containe , ... 
 # ... terá prioridade em relação a mesma variável ser definida em um dockerfile.
 # Fiz essa "dança de portas" proposital; quis testar diversas combinações possíveis a caráter de estudo e teste.
@@ -7,7 +6,7 @@ services:
   backend:   
     build: .
     ports:
-      - 3000:3006            # A porta da direita precisa ser igual a da variável PORT abaixo (linha 17).
+      - 3001:3006            # A porta da direita precisa ser igual a da variável PORT abaixo (linha 17).
     depends_on:
       - database
     networks:

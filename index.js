@@ -6,7 +6,7 @@ const sales = require('./controllers/sales');
 const errorMiddleware = require('./utils/errorMiddleware');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 
 app.use(express.json());
 
