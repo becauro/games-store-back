@@ -80,30 +80,45 @@ Da mesma forma, uma Collection para **vendas** (sales) também foi criada. Essas
 ## <span id="requisitos-execucao">Requisitos para execução da API</span>
 <a href="#sumario">Sumário</a>
 
+   Você pode rodar esse projeto de duas maneiras: 1 - Via Docker 🐳 ou 2 - Manualmente 🖐️
+   
+      
    ### Opção 1 - Via Docker
 
-   1. Ter Docker instalado e pronto para uso.
-   2. Docker deve ter acesso à internet por motivos ÓBVIOS.
+      Se não tiver, baixe-o no [site oficial](https://docs.docker.com/engine/install/)
+      
 
    ### Opção 2 - Manualmente (Via Host)
 
    1. **Node.js**
-        1. Já testei com Node nas versões 14 e 18. Acredito que funcione nas outras versões intermediárias também.
-        2. Para instalar , configurar e gerenciar Nodejs de forma produtiva, recomendo uso da ferramenta [NVM](https://github.com/nvm-sh/nvm#intro).
+
+         Nodejs é um framework que tem um engine do Chrome modificada o qual permite que exista, no lado servidor, uma aplicação Web desenvolvida em JavaScript.
+         Portanto é o primeiro sofware que permite esse projeto acontecer.
+         
+        Já testei com Node nas versões 14 à 18. Acredito que funcione nas outras versões. 
+        Para instalar , configurar e gerenciar Nodejs de forma produtiva, recomendo uso da ferramenta [NVM](https://github.com/nvm-sh/nvm#intro).
+        Com NVM você consegue, "com um dedo", instalar várias versões do Nodejs e escolher qual usá-las quando precisar.
+        Mas, se quiser ter mais trabalho, baixe o Nodejs do [site oficial](https://nodejs.org/en/).
    
-   2. **MongoDB** em `localhost`, na porta `27017` ou o que você definir.
-      1. Se o banco estiver em outra porta diferente de 27017, renomeie na raiz do projeto, um arquivo chamado _*.env.model*_ para _*.env*_, e dentro dele defina a variável DB_PORT com a porta que deseja.
-      2.  Se gerenciador de banco estiver em outro local / ip que não seja localhost, renomeie na raiz do projeto um arquivo chamado _*.env.model*_ para _*.env*_, e dentro dele defina a variável DB_HOST com numero IP ou hostname correto.
+   2. **MongoDB** 
+   
+      Essa API se comunica com um banco de dados não relacional (noSQL) implementado em MongoDB.
+      Então precisa ter em _*algum lugar*_ (local ou remotamente) o software gerenciador de servidor de banco dados, MongoDB, que se possa usar aqui.
 
-   3. **Nome do banco** se chama `GamesStore` ou o que você definir.
-      1. Se por algum motivo não quiser que esse seja o nome do banco,  renomeie na raiz do projeto um arquivo chamado _*.env.model*_ para _*.env*_, e dentro dele defina a variável DB_NAME com o nome desejado.
-    
-   4. **Porta 3000** disponível ou o que você definir.
-      1. A API usa a porta 3000, por padrão. Se esta porta estiver INdisponível por você já estar usando-a para outra coisa, renomeie na raiz do projeto um arquivo chamado _*.env.model*_ para _*.env*_, e dentro dele defina a variável PORT com o número da porta desejado.
+      Caso não o tenha, faça download e instale-o.
+      
+      [Site oficial](https://www.mongodb.com/try/download/community) para download do _*MongoDB Comunnity Edition*_.
+     
 
-   5. **Software cliente** de teste de API (ex.: Postman, Insomnia e etc)
-      1. Por exemplo, faça requisição GET para a URL: localhost:3000/products
-         1. *Nesse caso* (por ser método GET), dá pra usar um browser mesmo. 
+   3. **Software cliente** para requição de API (ex.: Postman, Insomnia e etc)
+   
+      Para testar todos os métodos de requição à essa API, se faz necessário um Software específico para isso.
+      Dentre os mais conhecidos até o momento são [Postman](https://www.postman.com/downloads) e [Insomnia](https://insomnia.rest/download).
+      
+      Se for apenas testar o método GET no endpoint, apenas com um browser comum é possível.
+      
+      Por exemplo. Fazendo uma requisição GET a partir de um Browser (Firefox, Chrome e etc) para a URL **http://localhost:3000** , funciona.
+        
 
 ## <span id="dependencias">Dependências</span>
 <a href="#sumario">Sumário</a>
