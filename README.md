@@ -128,13 +128,14 @@ Da mesma forma, uma Collection para **vendas** (sales) também foi criada. Essas
  **1. Verifique o arquivo compose.yml**
  
    Pode ser que tenha algo a ser mudado nesse aqruivo que atenda as tuas especificidades.
-   Acredito que as únicas coisas relevantes que possa ter alguma possiblidade de mudança seria: 1 - Porta exposta 2 - Nome da rede
+   Acredito que as únicas coisas relevantes que possa ter alguma possiblidade de mudança seria: _*1 - Porta exposta*_ e _*2 - Nome da rede*_
    
-   Se porta padrão exposta (3000) já esteja em uso por outra aplicação, então mude isso se for o caso.
-   Quanto ao nome da rede, acho pouquíssimo provável que já exista outra como o mesmo nome. Se for o caso, mude isso também.
+   - Se porta padrão exposta (3000) já esteja em uso por outra aplicação, então mude isso, se for o caso.
+     Quanto ao nome da rede, acho pouquíssimo provável que já exista outra como o mesmo nome. Todavia, mude se julgar necessário.
+   - Se mudar valor da variável DB_NAME no arquivo *_compose.yml*_ , tambem terá que mudar nos arquivos **Dockerfile** e **models/Dockerfile**, E VICE-VERSA.
     
    Referente as outras opções, acredito não haver muita necessidade de alteração mesmo.
-           
+  
   Mas, se for alterar algo nesses arquivos, LEIA os comentários ali para não ficar batendo cabeça à toa, uma vez que alterações incorretas inviabilizam o correto funcionamento da aplicação.
    
  
