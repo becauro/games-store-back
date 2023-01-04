@@ -123,14 +123,28 @@ Da mesma forma, uma Collection para **vendas** (sales) também foi criada. Essas
 <a href="#sumario">Sumário</a>
 
  ### Opção 1 - Via Docker
+ 
+ 
+ **1. Verifique o arquivo compose.yml**
+ 
+   Pode ser que tenha algo a ser mudado nesse aqruivo que atenda as tuas especificidades.
+   Acredito que as únicas coisas relevantes que possa ter alguma possiblidade de mudança seria: 1 - Porta exposta 2 - Nome da rede
+   
+   Se porta padrão exposta (3000) já esteja em uso por outra aplicação, então mude isso se for o caso.
+   Quanto ao nome da rede, acho pouquíssimo provável que já exista outra como o mesmo nome. Se for o caso, mude isso também.
+    
+   Referente as outras opções, acredito não haver muita necessidade de alteração mesmo.
+           
+  Mas, se for alterar algo nesses arquivos, LEIA os comentários ali para não ficar batendo cabeça à toa, uma vez que alterações incorretas inviabilizam o correto funcionamento da aplicação.
+   
+ 
+ **2.  Execute o docker compose**
 
    Basta usar o arquivo compose.yml e ajustar o que achar necessário antes
    Estando na pasta do arquivo, via CLI, basta digitar:
 
       ` docker compose up -d `
 
-   Observe se a porta exposta ( `- 3000:3006` ) está disponível e mude se for o caso.
-   Os outros dados como nome de banco (`DB_NAME`), nome de rede (`app-game-2`) e etc também podem ser mudados. Só evite mudar o contexto (`build: .` e `build: models/`),       a menos que saiba o que está fazendo.
 
 
  ### Opção 2 - Manualmente (Via Host)
