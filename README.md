@@ -120,14 +120,6 @@ Da mesma forma, uma Collection para **vendas** (sales) também foi criada. Essas
       Por exemplo. Fazendo uma requisição GET a partir de um Browser (Firefox, Chrome e etc) para a URL **http://localhost:3000** , funciona.
         
 
-## <span id="dependencias">Dependências</span>
-<a href="#sumario">Sumário</a>
-
-No arquivo `package.json` é listado as dependências necessárias.
-Para instalar essas dependências, estando conectado a internet e dentro da pasta do repositório, basta digitar o seguinte comando:
-
-    `npm install`
-
 ## Como Executar
 <a href="#sumario">Sumário</a>
 
