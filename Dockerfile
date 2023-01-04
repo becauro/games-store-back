@@ -8,8 +8,8 @@ FROM node:lts-buster
 WORKDIR /myapp
 
 ENV DB_NAME GamesStore
-ENV DB_HOST games-store-db
-ENV PORT 2999
+ENV DB_HOST localhost             # Se for fazer o build fora do compose.yml, coloque o nome do container do banco de dados nessa variável. 
+ENV PORT 3001
 COPY . .
 
 
