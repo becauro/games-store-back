@@ -93,7 +93,7 @@ Da mesma forma, uma Collection para **vendas** (sales) também foi criada. Essas
    
    2. **MongoDB** em `localhost`, na porta `27017` ou o que você definir.
       1. Se o banco estiver em outra porta diferente de 27017, renomeie na raiz do projeto, um arquivo chamado _*.env.model*_ para _*.env*_, e dentro dele defina a variável DB_PORT com a porta que deseja.
-      2.  Se gerenciador de banco estiver em outro local / ip que não seja localhost, renomeie na raiz do projeto um arquivo chamado _*.env.model*_ para _*.env*_, e dentro dele defina a variável DB_PORT com numero IP ou hostname correto.
+      2.  Se gerenciador de banco estiver em outro local / ip que não seja localhost, renomeie na raiz do projeto um arquivo chamado _*.env.model*_ para _*.env*_, e dentro dele defina a variável DB_HOST com numero IP ou hostname correto.
 
    3. **Nome do banco** se chama `GamesStore` ou o que você definir.
       1. Se por algum motivo não quiser que esse seja o nome do banco,  renomeie na raiz do projeto um arquivo chamado _*.env.model*_ para _*.env*_, e dentro dele defina a variável DB_NAME com o nome desejado.
@@ -130,16 +130,35 @@ Para instalar essas dependências, estando conectado a internet e dentro da past
  ### Opção 2 - Manualmente (Via Host)
 
    Instalado os requisitos e as dependências necessárias, basta seguir as seguintes etapas:
+   
+   1. Variáveis de ambiente
+      
+      Existe um arquivo na raiz do projeto chamado `.env.model`.
+      Apesar de já explicado no tópico "Requisitos para execução da API", não custa ratificar aqui.
+      As configurações do projeto também podem ser alteradas nesse arquivo, adicionando o valor desejado após o sinal de igual (=) em cada variável.
+      **Lógico que não é obrigado essa alteração**, desde que não exista problemas com as configurações padrões do projeto.
+      Se for usar o arquivo, terá que renomea-lo parar `.env`.
 
-   1. Banco de Dados MongoDB
+      As variáveis do arquivo .env.model são as seguintes:
+      _*PORT*_, _*DB_NAME*_, _*DB_HOST*_ e _*DB_PORT*_.
+
+      **PORT** diz respeito a porta em que o servidor irá rodar. Se nada for atribuido a essa variável, o servidor rodará na porta `3000`.
+      
+      **DB_NAME** refere-se ao nome do banco de dados que será criado. Se nada for atribuido, o nome do banco será `GamesStore`.
+      
+      **DB_HOST** refere-se ao local (hostname ou IP) do Banco de Dados. Se nada for atribuído, será considerado `localhost`.
+      
+      **DB_PORT** poderá receber a porta onde se encontra o Banco de Dados. Se nada for atribuído, será considerado a porta `27017`.
+   
+   2. Banco de Dados MongoDB
       1. Coloque, primeiro, o gerenciador de banco de dados MongoDB em execução.
-      2. Para que essa API não retorne um array vazio na rota _*products*_, precisa, previamente, ter dados no banco chamado _*StoreManager*_ e ter, pelo menos, a collection _*products*_. Por isso criei o script  `models/db-import.sh` o qual cria e importa dados (contidos no arquivo `models/dataTestForDb.js`) para esse banco, na collection _*products*_. Assim, quando requisitado com GET, a rota _*products*_ já terá dados para teste, sem precisar criá-los manualmente. Se não quiser usar esse script, ok, mas a API não retornará dados, e você terá que cadastrar, manualmente, usando a rota de POST. 
+      2. Para que essa API não retorne um array vazio na rota _*products*_, precisa, previamente, ter dados no banco chamado _*GamesStore*_ (ou o nome que vc definiu na variável DB_NAME no arquivo .env) e ter, pelo menos, a collection _*products*_. Por isso criei o script  `models/db-import.sh` o qual cria e importa dados (contidos no arquivo `models/dataTestForDb.js`) para esse banco, na collection _*products*_. Assim, quando requisitado com GET, a rota _*products*_ já terá dados para teste, sem precisar criá-los manualmente. Se não quiser usar esse script, ok, mas a API não retornará dados, e você terá que cadastrar, manualmente, usando a rota de POST. 
       **Note**: Não criei script (importador de dados) para a rota _*sales*_. 
-   2. Feito (ou não) a etapa anterior, basta, dentro da pasta do projeto, executar o comando: `npm start`.
-   3. Use algum software cliente de API (ex.: Postman, Insomnia e etc) e faça as requisições para os ENDPOINTs usando a URL **http://localhost:3000** 
-      1. Se for o caso, não esqueça de substituir a porta 3000 pela porta que você definiu na variávell PORT do arquivo .env.
+   3. Feito (ou não) a etapa anterior, basta, dentro da pasta do projeto, executar o comando: `npm start`.
+   4. Use algum software cliente de API (ex.: Postman, Insomnia e etc) e faça as requisições para os ENDPOINTs usando a URL **http://localhost:3000** 
+      1. Se for o caso, não esqueça de substituir `porta 3000` pela porta que você definiu na variável PORT do arquivo .env.
 
-   ** Observação**: Os dados que se encontram no arquivo `dataTestForDb.js`, foi obtido do ENDPOINT de produtos _gamers_, da API pública do _Mercado Livre_: `https://api.mercadolibre.com/sites/MLB/search?category=MLB1144`. Apenas modifiquei alguns nomes de parâmetros para se adaptar ao projeto.
+   ** Observação**: Os dados que se encontram no arquivo `dataTestForDb.js`, foram obtidos do ENDPOINT de produtos para _gamers_, da API pública do _Mercado Livre_: `https://api.mercadolibre.com/sites/MLB/search?category=MLB1144`. Apenas modifiquei alguns nomes de parâmetros para se adaptar ao projeto.
    
 
 
