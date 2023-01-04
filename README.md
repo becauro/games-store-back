@@ -21,7 +21,6 @@ Então, corre lá pra dá uma olhada e aproveite para sentar aquele dedo nos bot
 - <a href="#tecnologias-utilizadas">Tecnologias utilizadas</a>
 - <a href="#futuras-implementacoes">Futuras implementações</a> 
 - <a href="#requisitos-execucao">Requisitos para execução da API</a>
-- [Dependências](#dependencias)
 - [Como executar](#como-executar)
 - [Endpoints](#endpoints)
 - [Linter](#linter)
