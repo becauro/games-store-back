@@ -8,9 +8,10 @@ const errorMiddleware = require('./utils/errorMiddleware');
 const app = express();
 const PORT = process.env.PORT || 3001;
 
+
 app.use(express.json());
 
-app.use('*', cors());
+app.use(cors());
 
 app.use('/products', products);
 app.use('/sales', sales);
