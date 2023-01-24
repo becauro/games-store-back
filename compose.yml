@@ -1,23 +1,25 @@
-# Variável definida em arquivo compose ou em outras maneiras de criação de containe , ... 
-# ... terá prioridade em relação a mesma variável ser definida em um dockerfile.
-# Fiz essa "dança de portas" proposital; quis testar diversas combinações possíveis a caráter de estudo e teste.
 
 services:
+
   backend:   
     build: .
     ports:
-      - 3001:3006            # A porta da direita precisa ser igual a da variável PORT abaixo (linha 17).
+      - 3001:3001            # A porta da direita precisa ser igual a da variável PORT.
     depends_on:
       - database
-    networks:
-      - app-game-2 
     environment:
       - DB_HOST=database     # Se mudar valor dessa variável, tem que mudar o nome do serviço "database" igualmente E VICE-VERSA; remover nem pensar.  
-      - DB_NAME=GamesStore   # Se mudar o valor dessa variável, terá que mudar, tambem, nos Dockerfiles E VICE-VERSA. 
-      - PORT=3006
+      - DB_NAME=GamesStore    
+      - PORT=3001
+    networks:
+      - games-store 
+
   database:
     build: models/
     networks:
-      - app-game-2 
+      - games-store 
+
+
 networks:
-  app-game-2: 
+  games-store:
+    name: games-store
