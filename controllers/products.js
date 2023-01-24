@@ -8,7 +8,13 @@ const OK = 200;
 router.get('/', rescue(async (_req, res) => {
     const result = await products.getAll();
         res.status(result.status).json({ products: [...result.productS] });
+
+// The following comment is for dev debugging (e.g, To test whether nodemon is working):
+
+/*
+res.status(result.status).json({products:[{_id:"63b5f85dae0a4537077d63cc", name:"MICHELLLL", price:6499, thumbnail:"http://http2.mlstatic.com/D_799755-MLA47058389754_082021-I.jpg", description:"",quantity:7}]});
 }));
+*/
 
 router.get('/search', rescue(async (req, res) => {
   const { name } = req.query;
