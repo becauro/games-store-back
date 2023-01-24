@@ -1,0 +1,44 @@
+
+services:
+  frontend:
+    build: ../games-store-front
+    ports:
+      - 3000:3000
+    depends_on:
+      - backend
+    environment:
+      - REACT_APP_API_HOST=backend
+      - REACT_APP_API_PORT=3001
+      - BROWSER=none
+    volumes:
+      - ../games-store-front/.:/myapp
+    networks:
+      - games-store-1 
+
+  backend:   
+    build: . 
+    ports:
+      - 3001:3001            # A porta da direita precisa ser igual a da variável PORT.
+    depends_on:
+      - database
+    environment:
+      - DB_HOST=database     # Se mudar valor dessa variável, tem que mudar o nome do serviço "database" igualmente E VICE-VERSA; remover nem pensar.  
+      - DB_NAME=GamesStore    
+      - PORT=3001
+    volumes:
+      - .:/myapp
+    networks:
+      - games-store-1 
+      - games-store-2 
+
+  database:
+    build: models/
+    networks:
+      - games-store-2 
+
+
+networks:
+  games-store-1:
+    name: games-store-front
+  games-store-2:
+    name: games-store-db
