@@ -2,7 +2,9 @@
 services:
 
   backend:   
-    build: .
+    build: 
+      context: .
+      dockerfile: ./Dockerfile-dev  
     ports:
       - 3001:3001            # A porta da direita precisa ser igual a da variável PORT.
     depends_on:
