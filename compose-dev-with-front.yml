@@ -1,7 +1,9 @@
 
 services:
   frontend:
-    build: ../games-store-front
+    build: 
+      context: ../games-store-front
+      dockerfile: ../games-store-front/Dockerfile-with-back  
     ports:
       - 3000:3000
     depends_on:
@@ -17,7 +19,9 @@ services:
       - games-store-1 
 
   backend:   
-    build: . 
+    build: 
+      context: .
+      dockerfile: ./Dockerfile-dev  
     ports:
       - 3001:3001            # A porta da direita precisa ser igual a da variável PORT.
     depends_on:
