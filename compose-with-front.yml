@@ -1,7 +1,9 @@
 
 services:
   frontend:
-    build: ../games-store-front
+    build: 
+      context: ../games-store-front
+      dockerfile: ../games-store-front/Dockerfile-with-back  
     ports:
       - 3000:3000
     depends_on:
@@ -9,6 +11,7 @@ services:
     environment:
       - REACT_APP_API_HOST=backend
       - REACT_APP_API_PORT=3001
+      - REACT_APP_WITH_BACK=true
       - BROWSER=none
     networks:
       - games-store-1 
