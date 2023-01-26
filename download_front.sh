@@ -101,3 +101,23 @@ printf "5 - Renaming extracted folder in parent one... \n\n" ;
 
 printf "END of script!\n\n"
 
+
+
+printf "6 - Changing folder permissions ... \n\n" ;
+
+  chmod -R 777 ../games-store-front > /dev/null 2>&1 ; 
+
+  if test $? -ne 0 ; then 
+
+    printf "  FAIL - Permissions changing FAILED. \n\t Please,check the parent folder permissions, run this script with elevated privileges \
+    OR trying to change the folder permissions manually :) \n\n" ; 
+
+    printf "Step ignored ! \n\n";
+
+  else 
+    
+    printf "  OK - Folder's permissions changed ! \n\n" ;
+
+  fi
+
+printf "END of script!\n\n"
