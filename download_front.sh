@@ -42,3 +42,7 @@ printf "2 - Downloading repository ...\n\n" ;
 
   fi
 
+
+printf "3 - Unziping file ... \n\n" ;
+
+  unzip front-repo -d .. # && ../games-store-front-main ../games-store-front 
