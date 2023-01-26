@@ -45,7 +45,7 @@ printf "2 - Downloading repository ...\n\n" ;
 
 printf "3 - Unziping file ... \n\n" ;
 
-  unzip front-repo -d .. > /dev/null 2>&1 ; # && ../games-store-front-main ../games-store-front 
+  unzip front-repo -d .. > /dev/null 2>&1 ; 
 
   if test $? -ne 0 ; then 
 
@@ -60,3 +60,24 @@ printf "3 - Unziping file ... \n\n" ;
     printf "  OK - file unziped! \n\n" ;
 
   fi
+
+
+
+printf "4 - Deleting unziped file ... \n\n" ;
+
+  rm front-repo > /dev/null 2>&1 ; # && ../games-store-front-main ../games-store-front 
+
+  if test $? -ne 0 ; then 
+
+    printf "  FAIL - Deletion FAILED. \n\t Please, check the current/parent folder permissions, run this script with elevated privileges \
+    OR trying delete the file manually :) \n\n" ; 
+
+    printf "Ignored step. Moving to next one ...! \n\n";
+
+  else 
+    
+    printf "  OK - file Deleted ! \n\n" ;
+
+  fi
+
+
