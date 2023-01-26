@@ -28,7 +28,7 @@ printf "1 - Verifying if unzip is installed ...\n\n";
 
 printf "2 - Downloading repository ...\n\n" ; 
 
-    wget -O MY-REPO https://github.com/becauro/games-store-front/archive/refs/heads/main.zip > /dev/null 2>&1 ; 
+    wget -c -O front-repo  https://github.com/becauro/games-store-front/archive/refs/heads/main.zip > /dev/null 2>&1 ; 
 
   if test $? -ne 0 ; then 
 
