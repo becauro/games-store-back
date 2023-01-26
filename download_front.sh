@@ -1,4 +1,4 @@
-#!/bin/dash
+#!/bin/sh
 
 printf "STARTING script ...\n\n";
 
