@@ -65,14 +65,14 @@ printf "3 - Unziping file ... \n\n" ;
 
 printf "4 - Deleting unziped file ... \n\n" ;
 
-  rm front-repo > /dev/null 2>&1 ; # && ../games-store-front-main ../games-store-front 
+  rm front-repo > /dev/null 2>&1 ; 
 
   if test $? -ne 0 ; then 
 
     printf "  FAIL - Deletion FAILED. \n\t Please, check the current/parent folder permissions, run this script with elevated privileges \
     OR trying delete the file manually :) \n\n" ; 
 
-    printf "Ignored step. Moving to next one ...! \n\n";
+    printf "Step Ignored. Moving to next one ... \n\n";
 
   else 
     
@@ -80,4 +80,24 @@ printf "4 - Deleting unziped file ... \n\n" ;
 
   fi
 
+
+
+printf "5 - Renaming extracted folder in parent one... \n\n" ;
+
+  mv ../games-store-front-main ../games-store-front > /dev/null 2>&1 ; 
+
+  if test $? -ne 0 ; then 
+
+    printf "  FAIL - Renaming FAILED. \n\t Please, check the parent folder permissions, run this script with elevated privileges \
+    OR trying rename the folder manually as 'games-store-front' :) \n\n" ; 
+
+    printf "Step ignored ! \n\n";
+
+  else 
+    
+    printf "  OK - Folder renamed ! \n\n" ;
+
+  fi
+
+printf "END of script!\n\n"
 
