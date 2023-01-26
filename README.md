@@ -84,7 +84,7 @@ Da mesma forma, uma Collection para **vendas** (sales) também foi criada. Essas
       
    ### Opção 1 - Via Docker
 
-      Se não tiver, baixe-o no [site oficial](https://docs.docker.com/engine/install/)
+   Se não tiver, baixe-o no [site oficial](https://docs.docker.com/engine/install/)
       
 
    ### Opção 2 - Manualmente (Via Host)
