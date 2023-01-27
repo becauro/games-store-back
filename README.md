@@ -159,9 +159,9 @@ Da mesma forma, uma Collection para **vendas** (sales) também foi criada. Essas
 
    Estando na pasta do arquivo _compose.yml_, via CLI, basta digitar:
 
-      ` docker compose up -d --build `
+      ` docker compose up -d `
 
-    Eu uso logo a flag --build por costume, Já acostumei pra nunca esquecer. 👓
+  
  
  **_3. Localize o container criado_**
  
@@ -285,7 +285,15 @@ Em resumo:
     
  #### <ins> COM FRONTEND + MODO DEV </ins>
  
-   TODO
+   Esse modo herda a mesmas funcinalidades que o modo COM FRONTEND, mas com adição da característica de MODO DEV já explicada no NORMAL + MODO DEV.
+   Ou seja, você terá containers backend e frontend junto , mas poderá aplicar alterações a partir do host, em tempo real. Mais detalhes: os mesmos descritos no modo NORMAL + MODO DEV, só muda que agora envolve o frontend. 🐬 Bom , qualquer coisa leia novamente o modo NORMAL + MODO DEV ali em cima.
+   
+   Dito isso, contando que já tenhas baixado (ou clonado) o repositório de frontend para a pasta pai (ou seja, a pasta acima desta), execute o docker compose passando o arquivo **compose-dev-with-front.yml** da seguinte forma:
+  
+  
+  `docker compose -f compose-dev-with-front.yml up -d`
+   
+   
 
  ### Manualmente (Via HOST)
 
