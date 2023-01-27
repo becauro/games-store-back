@@ -126,9 +126,11 @@ Da mesma forma, uma Collection para **vendas** (sales) também foi criada. Essas
 
  ### Via DOCKER
  
+ --------------------------------------------------------------------------------------------------------------------------------------------------------
+ 
  Deixei diferentes MODOS de executar esse software via Docker. Os classifiquei assim: **"Normal (frontendless)"**, **"Normal + Modo Dev"**, **"Com Frontend"** e **"Com Frontend + Modo Dev"**.
  
- #### <ins> NORMAL </ins>
+ #### <ins> ☑️ NORMAL </ins>
  
  Esse modo é básico e padrão, sem frontend ("frontendless"); é só a API respondendo requisições e conversando com banco de dados.
  Trata-se do levantamento de um container que dá acesso a API na porta escolhida (padrão: 3001) e pronto.
@@ -212,10 +214,10 @@ Da mesma forma, uma Collection para **vendas** (sales) também foi criada. Essas
          
    Exemplo:
          
-      <IP DO GATEWAY>:3001/products
+   Com endpoint `products` seria: `<IP DO GATEWAY>:3001/products`
       
       
- #### <ins> NORMAL + MODO DEV </ins>
+ #### <ins> ☑️ NORMAL + MODO DEV </ins>
  
    Esse modo meio que herda todas observações do modo NORMAL citado anteriormente, portanto, não vou reptir quase nada, "apenas fazer algumas referências e acrescentar as diferenças" (poeta, eu ? :))).
    
@@ -237,22 +239,22 @@ Considere todas observações apresetadas no modo NORMAL.
 Aqui só trocamos o arquivo do docker compose ( que passa a ser `compose-dev.yml`)
 
 
-**_2.  Execute o docker compose**
+**_2.  Execute o docker compose_**
 
 Aqui também só muda um pouco a sintaxe. Como é um arquivo diferente do padrão, tem que usar  a flag -f passando o caminho para o arquivo do docker compose que deseja usar. Se esquecer dessa flag , o docker compose assume o arquivo errado (compose.yml) e irá levantar containers do modo NORMAL, ao invés de NORMAL + MODO DEV:
 
-` docker compose -f compose-dev.yml up -d --build `
+` docker compose -f compose-dev.yml up -d `
 
 Pra descer container também use -f , hein. 👁️
 
 **_3. Localize o container criado_**
 
-Da mesma maneira já explicada em modo NORMAL. ➿
+Da mesma maneira já explicada no modo NORMAL. ➿
 
 
 **_4. Identifique o IP do gateway do container_**
 
-Da mesma maneira já explicado em NORMAL.
+Da mesma maneira já explicado no modo NORMAL.
 
 Em resumo: 
 
@@ -267,7 +269,7 @@ Em resumo:
 
 **_5. Faça requisição para um endpoint_**
 
- Da mesma maneira já explicado em NORMAL.
+ Da mesma maneira já explicado no modo NORMAL.
 
 
  Em resumo: 
@@ -275,27 +277,154 @@ Em resumo:
  Use o ID do Gateway obtido na etapa anterior.
  Basta escolher um dos endpoints que listei mais à frente, na seção [Endpoints](#endpoints).
 
- Então: `<IP DO GATEWAY>:3001/products`
+ Exemplo:
+         
+ Com endpoint `products` seria: `<IP DO GATEWAY>:3001/products`
 
 
          
- #### <ins> COM FRONTEND </ins>
+ #### <ins> ☑️ COM FRONTEND </ins>
  
-   TODO
-    
- #### <ins> COM FRONTEND + MODO DEV </ins>
- 
-   Esse modo herda a mesmas funcinalidades que o modo COM FRONTEND, mas com adição da característica de MODO DEV já explicada no NORMAL + MODO DEV.
-   Ou seja, você terá containers backend e frontend junto , mas poderá aplicar alterações a partir do host, em tempo real. Mais detalhes: os mesmos descritos no modo NORMAL + MODO DEV, só muda que agora envolve o frontend. 🐬 Bom , qualquer coisa leia novamente o modo NORMAL + MODO DEV ali em cima.
+   Esse modo consiste em excutar a API (esse repositório atual em que estamos) juntamente com o frontend (outro repositório mencionado no começo da documentação). O backend continuará executando na porta 3001 do IP do Gateway, e o frontend executará na porta 3000 do IP do Gateway.
+   Mas o frontend consegue ser acessado, TAMBÈM, pelo localhost. Então, se usar a URL localhost:3000, já consegue acessar tudo (front, back e databse) de uma vez śó.
    
-   Dito isso, contando que já tenhas baixado (ou clonado) o repositório de frontend para a pasta pai (ou seja, a pasta acima desta), execute o docker compose passando o arquivo **compose-dev-with-front.yml** da seguinte forma:
+   No entanto, pra usar esse modo, devido as configurações feitas no arquivo do docker compose específico desse modo (COM FRONTEND), algumas condições precisam ser atendidas PREVIAMENTE. Caso contrário, não funionará: 1 - Baixar/clonar previamente o repositório de frontend, 2 - O nome da pasta raiz do repositório de frontend precisa ser "games-store-frontend", 3 - A pasta precisa estar na pasta PAI deste projeto aqui (backend) 4 - Garantir todas permisões de excução recursiva. Vou dar a opção de fazer isso tudo de duas maneiras.
+ 
+======================================================
+
+   Bom , vamos primeiro às etapas PRÈVIAS das condições:
+   
+   Duas formas de atingir essas condições
+   
+   A) Obter o repo frontend via git e preencher pré-requisitos
+   
+   * Clone o repostiório frontend ([Link do repo](https://github.com/becauro/games-store-front))
+   * Depois , para evitar problema, dê permissão recursiva para o repositório baixado: `chmod -R 777 games-store-front`
+   
+   Essas duas etapas já deveria, automaticamente, preencher todas as condições preestabelecidas. 
+   Mas se por algum motivo não puder usar git, tem a opção dois abaixo.
+   
+   
+   B) Obter repo front sem git e preencher pré-requisitos
+   
+ Acho que forma mais fácil e rápida de preencher todos os requisitos sem usar git, é usando o script em shell que eu criei. hehe 🥰
+   Esse script, baixa, extrai, move para a pasta certa, renomeia e dá as permissões necessárias. Sem git e sem meu script, essas etapas precisariam ser preenchidas MANUALMENTE. Imgine só, né ? 🙂
+   
+  Portanto, para está opção, apenas execute o script `download_front.sh` **com privilêgios elevados** (sudo , root e etc) e veja se a saída do script dá OK em todas etapas.
   
+======================================================
   
-  `docker compose -f compose-dev-with-front.yml up -d`
+   
+Com o repositório baixado, voltamos a seguir as mesmas etapas dos modos anteriores. Vou deixar o "resumo do resumo" delas.
+ 
+São praticamente as mesmas etapas do modo NORMAL com "pífias" exceções:
+   
+**_1. Verifique o arquivo compose-with-front.yml_**
+
+Considere todas observações apresetadas no modo NORMAL.
+
+Aqui só trocamos o arquivo do docker compose ( que passa a ser `compose-with-front.yml`)
+
+**_2.  Execute o docker compose_**
+
+Aqui também só muda um pouco a sintaxe. Como é um arquivo diferente do padrão, tem que usar  a flag -f passando o caminho para o arquivo do docker compose que deseja usar. Se esquecer dessa flag , o docker compose assume o arquivo errado (compose.yml) e irá levantar containers do modo NORMAL, ao invés de COM FRONTEND:
+
+` docker compose -f compose-with-front.yml up -d `
+
+Pra descer container também use -f , hein. 👁️
+
+**_3. Localize o container criado_**
+
+Da mesma maneira já explicada no modo NORMAL. ➿
+
+
+**_4. Identifique o IP do gateway do container_**
+
+Da mesma maneira já explicado no modo NORMAL.
+
+Em resumo: 
+
+      Sintaxe:
+
+         sudo docker network inspect < nome ou id da rede > | grep Gateway
+
+
+**_5. Faça requisição para um endpoint_**
+
+ Da mesma maneira já explicado no modo NORMAL.
+
+
+ Em resumo: 
+
+ Use o IP do Gateway obtido na etapa anterior.
+ Basta escolher um dos endpoints que listei mais à frente, na seção [Endpoints](#endpoints).
+
+Exemplo:
+         
+Com endpoint `products` seria: `<IP DO GATEWAY>:3001/products`
+   
+   
+    
+ #### <ins> ☑️ COM FRONTEND + MODO DEV </ins>
+ 
+   Esse modo herda a mesmas funcinalidades **E PRÈ_REQUISITOS** do modo COM FRONTEND, mas com adição das características de **"modo-dev"** já explicadas no modo NORMAL + MODO DEV.
+   Ou seja, você terá containers backend e frontend juntos, mas poderá aplicar alterações a partir do host, e ver mudanças repercurtirem em tempo real devido ao **nodemon**. Mais detalhes: os mesmos descritos no modo NORMAL + MODO DEV. Bom, qualquer coisa leia novamente o modo NORMAL + MODO DEV ali em cima e modo COM FRONTEND.
+   
+   Dito isso, contando que já tenhas baixado (ou clonado) o repositório de frontend para a pasta pai (ou seja, uma pasta acima da pasta raíz deste repositório em que estamos) e que tenha sido preenchido todos pré-requisitos mencionados no modo COM FRONTEND, execute as mesmas etapas dos modos anteriores considerando a alteraçao no nome do arquivo, que deverá agora ser o `compose-dev-with-front.yml`. 
+      
+  Com o repositório frontend baixado, voltamos a seguir as mesmas etapas dos modos anteriores. Vou deixar o "resumo do resumo" delas.
+ 
+São praticamente as mesmas etapas do modo NORMAL com "pífias" exceções:
+   
+**_1. Verifique o arquivo compose-dev-with-front.yml_**
+
+Considere todas observações apresetadas no modo NORMAL.
+
+Aqui só trocamos o arquivo do docker compose ( que passa a ser `compose-dev-with-front.yml`)
+
+**_2.  Execute o docker compose_**
+
+Aqui também só muda um pouco a sintaxe. Como é um arquivo diferente do padrão, tem que usar  a flag -f passando o caminho para o arquivo do docker compose que deseja usar. Se esquecer dessa flag , o docker compose assume o arquivo errado (compose.yml) e irá levantar containers do modo NORMAL, ao invés de COM FRONTEND + MODO DEV:
+
+` docker compose -f compose-dev-with-front.yml up -d `
+
+Pra descer container também use -f , hein. 👁️
+
+**_3. Localize o container criado_**
+
+Da mesma maneira já explicada no modo NORMAL. ➿
+
+
+**_4. Identifique o IP do gateway do container_**
+
+Da mesma maneira já explicado no modo NORMAL.
+
+Em resumo: 
+
+      Sintaxe:
+
+         sudo docker network inspect < nome ou id da rede > | grep Gateway
+
+
+**_5. Faça requisição para um endpoint_**
+
+ Da mesma maneira já explicado no modo NORMAL.
+
+
+ Em resumo: 
+
+ Use o IP do Gateway obtido na etapa anterior.
+ Basta escolher um dos endpoints que listei mais à frente, na seção [Endpoints](#endpoints).
+
+Exemplo:
+         
+Com endpoint `products` seria: `<IP DO GATEWAY>:3001/products`
    
    
 
  ### Manualmente (Via HOST)
+ 
+ --------------------------------------------------------------------------------------------------------------------------------------------------------
 
    Instalado os requisitos e as dependências necessárias, basta seguir as seguintes etapas:
    
