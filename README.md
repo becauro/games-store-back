@@ -124,19 +124,22 @@ Da mesma forma, uma Collection para **vendas** (sales) também foi criada. Essas
 
  ### Opção 1 - Via Docker
  
+ Em Docker deixei várias maneiras de executar que classifiquei como: **"Normal (frontendless)"**, **"Normal em modo dev"**, **"Com frontend"** e **"Com Frontend e em modo dev"**.
+ 
+ #### Normal
  
  **1. Verifique o arquivo compose.yml**
  
    Pode ser que tenha algo a ser mudado nesse aqruivo que atenda as tuas especificidades.
    Acredito que as únicas coisas relevantes que possa ter alguma possiblidade de mudança seria: _*1 - Porta exposta*_ e _*2 - Nome da rede*_
    
-   - Se porta padrão exposta (3000) já esteja em uso por outra aplicação, então mude isso, se for o caso.
-     Quanto ao nome da rede, acho pouquíssimo provável que já exista outra como o mesmo nome. Todavia, mude se julgar necessário.
-   - Se mudar valor da variável DB_NAME no arquivo *_compose.yml*_ , tambem terá que mudar nos arquivos **Dockerfile** e **models/Dockerfile**, E VICE-VERSA.
+   - Se porta padrão exposta (3001) do host já estetiver em uso por outra aplicação, mude para outra porta disponível, usando o arquivo compose.yml.
+     Quanto ao nome da rede, acho pouquíssimo provável que já exista outra como o mesmo nome. Todavia, mude se achar necessário.
+   - Se mudar valor da variável DB_NAME no arquivo *_compose.yml*_ , acredito ser boa prática também trocar nos arquivos **Dockerfile** e **models/Dockerfile** e VICE-VERSA em prol da legibilidade e documentação.
     
    Referente as outras opções, acredito não haver muita necessidade de alteração mesmo.
   
-  Mas, se for alterar algo nesses arquivos, LEIA os comentários ali para não ficar batendo cabeça à toa, uma vez que alterações incorretas inviabilizam o correto funcionamento da aplicação.
+  Mas se for alterar algo nesses arquivos, LEIA os comentários ali para não ficar batendo cabeça à toa, uma vez que alterações incorretas inviabilizam o correto funcionamento da aplicação. O valor de uma variável pode está vinculado a uma lógica usada em em outro local do código, à exemplo da variável DB_HOST no serviço de backend, que seu valor como sendo o mesmo nome do serviço database. Ou seja, o nome do serviço (database) precisa constar nessa variável e vice-versa.
    
  
  **2.  Execute o docker compose**
