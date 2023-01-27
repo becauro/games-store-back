@@ -126,40 +126,43 @@ Da mesma forma, uma Collection para **vendas** (sales) também foi criada. Essas
 
  ### Via DOCKER
  
- Deixei diferentes maneiras de executar esse software via Docker. As classifiquei como: **"Normal (frontendless)"**, **"Normal + Modo Dev"**, **"Com Frontend"** e **"Com Frontend + Modo Dev"**.
+ Deixei diferentes MODOS de executar esse software via Docker. Os classifiquei assim: **"Normal (frontendless)"**, **"Normal + Modo Dev"**, **"Com Frontend"** e **"Com Frontend + Modo Dev"**.
  
  #### <ins> NORMAL </ins>
  
- Esse modo é básico e padrão, e sem frontend ("frontendless"); é apenas a API respondendo as requisições e conversando com banco de dados.
- Trata-se do levantamento de um container que dá acesso a API na porta escolhida (padrão: 3001).
- Com isso, basta verificar o número IP que o docker atribuiu ao container, e então fazer a requisição para o(s) endpoint(s) desejado(s).
+ Esse modo é básico e padrão, sem frontend ("frontendless"); é só a API respondendo requisições e conversando com banco de dados.
+ Trata-se do levantamento de um container que dá acesso a API na porta escolhida (padrão: 3001) e pronto.
+ Com isso, basta verificar o número IP que o docker atribuiu ao gateway da rede do tipo bridge que foi criada e fazer a requisição para o(s) endpoint(s) desejado(s). 
+ Mostro como fazer tudo isso mais a frente. NADA DEMAIS. ;-)
  
- A seguir temos os passos para usar esse modo ("Normal"), junto de algumas recomendações técnicas.
+ A seguir temos os passos de como usar esse modo ("Normal"), de acordo com a introdução que fiz acima. Junto deixei algumas recomendações técnicas que possivelmente você só precisa ler uma vez na vida ( 😃 rs ) , já que se aplica aos demais modos e não precisou repetílos na íntegra.
   
+ Bom, a seguir o passo a passo para usar o modo NORMAL. Apesar de tudo girar em torno do Dockerfile e/ou compose.yml, saber alguns detalhes do autor, pode ajudar, principalemnte, quem pretende alterar o projeto ou é curioso para entender os detalhes de como as coisas realmente funcionam por baixo dos panos. 
+ 
+ 
  **_1. Verifique o arquivo compose.yml_**
  
-   Pode ser que tenha algo a ser mudado nesse aquivo para atender às especificidades de quem irá executar o projeto.
-   Acredito que as únicas coisas relevantes que tem mais possiblidade de mudança em arquivos de docker compose são: _*1 - Porta exposta*_ e _*2 - Nome da rede*_ .
-  
-   
-   - Se a porta padrão (3001) vinculada ao host já estiver em uso por outra aplicação deste, mude-a (em _compose.yml_, na chave ports, no número à esquerda) para um porta disponível no host.
+   Pode ser que tenha algo a ser mudado nesse aquivo para atender às especificidades da pessoa que irá executar o projeto.
+   Mas acredito que as únicas coisas relevantes que têm mais possibilidade de mudança nesses arquivos de docker compose aqui são: _*1 - Porta exposta*_ e _*2 - Nome da rede*_ . Ahh !.. a imagem também. Sei lá. Colocar uma mais "levinha" e tal ..🌩️
+     
+   - Se a porta padrão (3001) vinculada ao host já estiver em uso por outra aplicação deste, mude-a (em _compose.yml_, na chave ports, no número à esquerda) para uma porta que esteja disponível no host.
      Quanto ao nome da rede ("games-store"), acho pouquíssimo provável que já exista outra rede como o mesmo nome. Todavia mude-o, se achar necessário.
      
    - Caso também decida trocar o valor da variável DB_NAME no arquivo, penso ser boa prática também fazer a trocar nos arquivos **Dockerfile** e **models/Dockerfile** e VICE-VERSA em prol da legibilidade e documentação. Principamente se precisar fazer testes ou depurações subindo container, manualemnte, sem auxílio do **docker compose**.
     
      
-  Dito isso, precisando alterar algo mais nesses arquivos ("compose" e "Dockerfiles"), LEIA, antes, seus comentários para não cometer algum tipo de equívoco que invibialize a execuçao do software. O valor de uma variável pode está vinculado à uma lógica usada em outro local, à exemplo das variáveis DB_HOST e PORT no serviço de **_backend_**.
+  Dito isso, se precisas alterar algo mais nesses arquivos ("compose" e "Dockerfiles"), LEIA, antes, as linhas comentadas para não cometer um "ato falho" que que inviabialize a execuçao do software. Sei que é básico dizer isso mas não custa lembrar que: O valor de uma variável pode está vinculado à uma lógica usada em outro local que ler dessa variável. Um exemplo disso são as variáveis de ambientes DB_HOST e PORT do serviço de **_backend_**.
   
- NOTE: Não esqueça que algumas configurações de arquivos do _docker compose_ sobrescrevem as dos arquivos _Dockerfiles_.
-    
+  Ok... próximo
  
- **_2.  Execute o docker compose_**
+ **_2.  Execute o docker compose**
 
-   Basta usar o arquivo compose.yml e ajustar o que achar necessário antes
-   Estando na pasta do arquivo, via CLI, basta digitar:
+   Estando na pasta do arquivo _compose.yml_, via CLI, basta digitar:
 
-      ` docker compose up -d `
+      ` docker compose up -d --build `
 
+    Eu uso logo a flag --build por costume, Já acostumei pra nunca esquecer. 👓
+ 
  **_3. Localize o container criado_**
  
    O nome do container eu deixei com estrutura padrão mesmo, que é formado por:
@@ -168,7 +171,7 @@ Da mesma forma, uma Collection para **vendas** (sales) também foi criada. Essas
       
    Sendo assim...
       
-   O primeiro container do projeto o compose provavelmente nomeará o serviço de backend com algo parecido com: `games-store-back-backend-1`.
+   O primeiro container do projeto, o compose, provavelmente, nomeará o serviço de backend com algo parecido com: `games-store-back-backend-1`.
    Já o container de banco de dados seria algo como: `games-store-back-database-1`.
    
        
@@ -208,12 +211,65 @@ Da mesma forma, uma Collection para **vendas** (sales) também foi criada. Essas
          
    Exemplo:
          
-      <IP DO CONTAINER>:3001/products
+      <IP DO GATEWAY>:3001/products
+      
       
  #### <ins> NORMAL + MODO DEV </ins>
  
-   TODO
+   Herda todas observações do modo NORMAL.
    
+   A diferença de funcionalidade desse modo consiste em usar um diferente arquivo de docker compose, a saber _compos-dev.yml_ e um diferente Dockerfile, a saber, _Dockerfile-dev_, configurados de forma que as alterações no código feitas no host, reflita, em tempo real, dentro do container e vice-versa.
+   Isso facilita para quem está desenvolvendo ou fazendo alteraçoes no projeto, pois não precisa ficar de rebuild a cada alteraçã, nem reiniciar o container, bastando, apenas, fazer uma nova requisiçao para o endpoint desejado. Lógico que em porduçao , irá ser considerado o arquivo compose NORMAL.
+   
+   O **compose-dev.yml** usa como contexto de build o arquivo **Dockergile-dev**. O Dockerfile-dev tem apenas um comando diferente no entrypoint, que é o comando `npm run dev`, ao invés de `npm stat`. Esse comando _npm run dev_ que executa o script que tem **nodemon** no `package.json` no lugar do **node**.   
+   O **_nodemon_** que monitora em tempo real mudanças ocorridas no código e, automaticamente, reinicia o servidor quado qualquer alteração é salva.
+    
+   No **compose-dev.yml** também foi adicionado um volume do tipo **bind mount**. Isso que permite vincular a pasta raiz do projeto entre host e container, sem precisar fazer rebuild toda hora só pra desenvolvimento. As mudanças em qualquer parte do projeto no host, reflite, diretamente, dento do container e VICE-VERSA. 
+   
+   
+   Dito isso, para executar nesse faça as seguintes etapas (as mesmas do modo NORMAL):
+   
+   **_1. Verifique o arquivo compose-dev.yml_**
+   
+   Aqui só trocamos o arquivo do docker compose ( que passa a ser `compose-dev.yml` ), mas cabe todas observações levantadas, anteriormente, no modo NORMAL.
+   
+   
+   **_2.  Execute o docker compose**
+ 
+   Aqui também só muda um pouco a sintaxe. Como é um arquivo difenente do padrão, tem que usar  a flag -f passando o caminho para o arquivo do docker compose que deseja usar. Se esquecer dessa flag e não passar o arquivo, irá levantar containers do modo NORMAL, ao invés de NORMAL + MODO DEV:
+   
+   ` docker compose -f compose-dev.yml up -d --build `
+   
+   **_3. Localize o container criado_**
+   
+   Da mesma maneira já explicado em NORMAL.
+      
+      
+   **_4. Identifique o IP do gateway do container_**
+     
+   Da mesma maneira já explicado em NORMAL.
+      
+   Em resumo: 
+   
+         Sintaxe:
+
+            sudo docker network inspect < nome ou id da rede > | grep Gateway
+
+         Exemplo:
+
+            sudo docker network inspect games-store | grep Gateway
+       
+   
+   **_5. Faça requisição para um endpoint_**
+         
+    Da mesma maneira já explicado em NORMAL.
+    
+    Em resumo: 
+    
+      <IP DO CONTAINER>:3001/products
+      
+      
+         
  #### <ins> COM FRONTEND </ins>
  
    TODO
@@ -237,7 +293,7 @@ Da mesma forma, uma Collection para **vendas** (sales) também foi criada. Essas
    As variáveis do arquivo .env.model são as seguintes:
    _*PORT*_, _*DB_NAME*_, _*DB_HOST*_ e _*DB_PORT*_.
 
-   **PORT** diz respeito a porta em que o servidor irá rodar. Se nada for atribuido a essa variável, o servidor rodará na porta `3000`.
+   **PORT** diz respeito a porta em que o servidor irá rodar. Se nada for atribuido a essa variável, o servidor rodará na porta `3001`.
 
    **DB_NAME** refere-se ao nome do banco de dados que será criado. Se nada for atribuido, o nome do banco será `GamesStore`.
 
@@ -272,8 +328,8 @@ Da mesma forma, uma Collection para **vendas** (sales) também foi criada. Essas
        
    **6. Fazendo requisições**
    
-   Use algum software cliente de API (ex.: Postman, Insomnia e etc) e faça as requisições para os ENDPOINTs usando a URL **http://localhost:3000** 
-   Se for o caso, não esqueça de substituir `porta 3000` pela porta que você definiu na variável PORT do arquivo `.env`.
+   Use algum software cliente de API (ex.: Postman, Insomnia e etc) e faça as requisições para os ENDPOINTs usando a URL **http://localhost:3001** 
+   Se for o caso, não esqueça de substituir `porta 3001` pela porta que você definiu na variável PORT do arquivo `.env`.
   
 
 ## Endpoints
