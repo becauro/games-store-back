@@ -135,7 +135,7 @@ Da mesma forma, uma Collection para **vendas** (sales) também foi criada. Essas
  Com isso, basta verificar o número IP que o docker atribuiu ao gateway da rede do tipo bridge que foi criada e fazer a requisição para o(s) endpoint(s) desejado(s). 
  Mostro como fazer tudo isso mais a frente. NADA DEMAIS. ;-)
  
- A seguir temos os passos de como usar esse modo ("Normal"), de acordo com a introdução que fiz acima. Junto deixei algumas recomendações técnicas que possivelmente você só precisa ler uma vez na vida ( 😃 rs ) , já que se aplica aos demais modos e não precisou repetílos na íntegra.
+ A seguir temos os passos de como usar esse modo ("Normal"), de acordo com a introdução que fiz acima. Junto deixei algumas recomendações técnicas que possivelmente você só precisa ler uma vez, já que se aplica aos demais modos também.
   
  Bom, a seguir o passo a passo para usar o modo NORMAL. Apesar de tudo girar em torno do Dockerfile e/ou compose.yml, saber alguns detalhes do autor, pode ajudar, principalemnte, quem pretende alterar o projeto ou é curioso para entender os detalhes de como as coisas realmente funcionam por baixo dos panos. 
  
@@ -206,7 +206,8 @@ Da mesma forma, uma Collection para **vendas** (sales) também foi criada. Essas
  **_5. Faça requisição para um endpoint_**
  
    De posse do ńumero IP, usando alguma ferramenta de requisição como [Postman](https://www.postman.com/downloads) e [Insomnia](https://insomnia.rest/download), faça requisição para um endpoint da API.
-         
+   
+   Use o ID do Gateway obtido na etapa anterior.
    Basta escolher um dos endpoints que listei mais à frente, na seção [Endpoints](#endpoints).
          
    Exemplo:
@@ -216,59 +217,67 @@ Da mesma forma, uma Collection para **vendas** (sales) também foi criada. Essas
       
  #### <ins> NORMAL + MODO DEV </ins>
  
-   Herda todas observações do modo NORMAL.
+   Esse modo meio que herda todas observações do modo NORMAL citado anteriormente, portanto, não vou reptir quase nada, "apenas fazer algumas referências e acrescentar as diferenças" (poeta, eu ? :))).
    
-   A diferença de funcionalidade desse modo consiste em usar um diferente arquivo de docker compose, a saber _compos-dev.yml_ e um diferente Dockerfile, a saber, _Dockerfile-dev_, configurados de forma que as alterações no código feitas no host, reflita, em tempo real, dentro do container e vice-versa.
-   Isso facilita para quem está desenvolvendo ou fazendo alteraçoes no projeto, pois não precisa ficar de rebuild a cada alteraçã, nem reiniciar o container, bastando, apenas, fazer uma nova requisiçao para o endpoint desejado. Lógico que em porduçao , irá ser considerado o arquivo compose NORMAL.
+   A diferença de funcionalidade desse modo consiste em usar um outro arquivo de docker compose, a saber _**compose-dev.yml**_ e um diferente Dockerfile, a saber, _**Dockerfile-dev**_, configurados de forma que permita que as alterações no código feitas no host, reflita, em tempo real, dentro do container e vice-versa.
+   Esse modo facilita para quem está desenvolvendo (daí o sobrenome "modo dev") ou fazendo alterações no projeto, pois não precisa ficar fazendo rebuild a cada alteração, nem reiniciar o container, bastando, apenas, fazer uma nova requisição para o endpoint desejado. Lógico que em produção seriaa usado o arquivo compose do modo NORMAL por exemplo.
    
-   O **compose-dev.yml** usa como contexto de build o arquivo **Dockergile-dev**. O Dockerfile-dev tem apenas um comando diferente no entrypoint, que é o comando `npm run dev`, ao invés de `npm stat`. Esse comando _npm run dev_ que executa o script que tem **nodemon** no `package.json` no lugar do **node**.   
-   O **_nodemon_** que monitora em tempo real mudanças ocorridas no código e, automaticamente, reinicia o servidor quado qualquer alteração é salva.
+   Como menionado, o **compose-dev.yml** usa como contexto de build o arquivo **Dockergile-dev**. Esse Dockerfile-dev tem nada menos   ue um comando diferente no entrypoint, que é o comando `npm run dev`, ao invés de `npm stat`. Esse comando _npm run dev_ que executa o script que tem **nodemon** no `package.json` no lugar do **node**.   
+   O **_nodemon_** é uma ferremnta que executar script JS mas monitora em tempo real mudanças ocorridas no código e, automaticamente, reinicia o servidor quado qualquer alteração é salva.
     
-   No **compose-dev.yml** também foi adicionado um volume do tipo **bind mount**. Isso que permite vincular a pasta raiz do projeto entre host e container, sem precisar fazer rebuild toda hora só pra desenvolvimento. As mudanças em qualquer parte do projeto no host, reflite, diretamente, dento do container e VICE-VERSA. 
+   No **compose-dev.yml** também foi adicionado um volume do tipo **bind mount**. Isso que permite vincular a pasta raiz do projeto entre host e container, sem precisar fazer rebuild toda hora só pra desenvolvimento. As mudanças em qualquer parte do projeto no host, refletem, diretamente, dento do container e VICE-VERSA. 
    
    
-   Dito isso, para executar nesse faça as seguintes etapas (as mesmas do modo NORMAL):
+  Para executar o sofware desse projeto nesse modo, faça as seguintes etapas (as mesmas do modo NORMAL com "pífias" exceções):
    
-   **_1. Verifique o arquivo compose-dev.yml_**
-   
-   Aqui só trocamos o arquivo do docker compose ( que passa a ser `compose-dev.yml` ), mas cabe todas observações levantadas, anteriormente, no modo NORMAL.
-   
-   
-   **_2.  Execute o docker compose**
- 
-   Aqui também só muda um pouco a sintaxe. Como é um arquivo difenente do padrão, tem que usar  a flag -f passando o caminho para o arquivo do docker compose que deseja usar. Se esquecer dessa flag e não passar o arquivo, irá levantar containers do modo NORMAL, ao invés de NORMAL + MODO DEV:
-   
-   ` docker compose -f compose-dev.yml up -d --build `
-   
-   **_3. Localize o container criado_**
-   
-   Da mesma maneira já explicado em NORMAL.
-      
-      
-   **_4. Identifique o IP do gateway do container_**
-     
-   Da mesma maneira já explicado em NORMAL.
-      
-   Em resumo: 
-   
-         Sintaxe:
+**_1. Verifique o arquivo compose-dev.yml_**
 
-            sudo docker network inspect < nome ou id da rede > | grep Gateway
+Considere todas observações apresetadas no modo NORMAL.
 
-         Exemplo:
+Aqui só trocamos o arquivo do docker compose ( que passa a ser `compose-dev.yml`)
 
-            sudo docker network inspect games-store | grep Gateway
-       
-   
-   **_5. Faça requisição para um endpoint_**
-         
-    Da mesma maneira já explicado em NORMAL.
-    
-    Em resumo: 
-    
-      <IP DO CONTAINER>:3001/products
-      
-      
+
+**_2.  Execute o docker compose**
+
+Aqui também só muda um pouco a sintaxe. Como é um arquivo diferente do padrão, tem que usar  a flag -f passando o caminho para o arquivo do docker compose que deseja usar. Se esquecer dessa flag , o docker compose assume o arquivo errado (compose.yml) e irá levantar containers do modo NORMAL, ao invés de NORMAL + MODO DEV:
+
+` docker compose -f compose-dev.yml up -d --build `
+
+Pra descer container também use -f , hein. 👁️
+
+**_3. Localize o container criado_**
+
+Da mesma maneira já explicada em modo NORMAL. ➿
+
+
+**_4. Identifique o IP do gateway do container_**
+
+Da mesma maneira já explicado em NORMAL.
+
+Em resumo: 
+
+      Sintaxe:
+
+         sudo docker network inspect < nome ou id da rede > | grep Gateway
+
+      Exemplo:
+
+         sudo docker network inspect games-store | grep Gateway
+
+
+**_5. Faça requisição para um endpoint_**
+
+ Da mesma maneira já explicado em NORMAL.
+
+
+ Em resumo: 
+
+ Use o ID do Gateway obtido na etapa anterior.
+ Basta escolher um dos endpoints que listei mais à frente, na seção [Endpoints](#endpoints).
+
+ Então: `<IP DO GATEWAY>:3001/products`
+
+
          
  #### <ins> COM FRONTEND </ins>
  
