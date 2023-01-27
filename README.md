@@ -22,6 +22,8 @@ Então, corre lá pra dá uma olhada e aproveite para sentar aquele dedo nos bot
 - <a href="#futuras-implementacoes">Futuras implementações</a> 
 - <a href="#requisitos-execucao">Requisitos para execução da API</a>
 - [Como executar](#como-executar)
+   - [Via DOCKER](#via-docker)
+   - [Manualmente](#manualmente-via-host)
 - [Endpoints](#endpoints)
 - [Linter](#linter)
 - [Observações](#observações)
@@ -116,42 +118,111 @@ Da mesma forma, uma Collection para **vendas** (sales) também foi criada. Essas
       
       Se for apenas testar o método GET no endpoint, apenas com um browser comum é possível.
       
-      Por exemplo. Fazendo uma requisição GET a partir de um Browser (Firefox, Chrome e etc) para a URL **http://localhost:3000** , funciona.
+      Por exemplo. Fazendo uma requisição GET a partir de um Browser (Firefox, Chrome e etc) para a URL **http://localhost:3001/products** , funciona.
         
 
 ## Como Executar
 <a href="#sumario">Sumário</a>
 
- ### Opção 1 - Via Docker
+ ### Via DOCKER
  
- Em Docker deixei várias maneiras de executar que classifiquei como: **"Normal (frontendless)"**, **"Normal em modo dev"**, **"Com frontend"** e **"Com Frontend e em modo dev"**.
+ Deixei diferentes maneiras de executar esse software via Docker. As classifiquei como: **"Normal (frontendless)"**, **"Normal + Modo Dev"**, **"Com Frontend"** e **"Com Frontend + Modo Dev"**.
  
- #### Normal
+ #### <ins> NORMAL </ins>
  
- **1. Verifique o arquivo compose.yml**
+ Esse modo é básico e padrão, e sem frontend ("frontendless"); é apenas a API respondendo as requisições e conversando com banco de dados.
+ Trata-se do levantamento de um container que dá acesso a API na porta escolhida (padrão: 3001).
+ Com isso, basta verificar o número IP que o docker atribuiu ao container, e então fazer a requisição para o(s) endpoint(s) desejado(s).
  
-   Pode ser que tenha algo a ser mudado nesse aqruivo que atenda as tuas especificidades.
-   Acredito que as únicas coisas relevantes que possa ter alguma possiblidade de mudança seria: _*1 - Porta exposta*_ e _*2 - Nome da rede*_
-   
-   - Se porta padrão exposta (3001) do host já estetiver em uso por outra aplicação, mude para outra porta disponível, usando o arquivo compose.yml.
-     Quanto ao nome da rede, acho pouquíssimo provável que já exista outra como o mesmo nome. Todavia, mude se achar necessário.
-   - Se mudar valor da variável DB_NAME no arquivo *_compose.yml*_ , acredito ser boa prática também trocar nos arquivos **Dockerfile** e **models/Dockerfile** e VICE-VERSA em prol da legibilidade e documentação.
-    
-   Referente as outras opções, acredito não haver muita necessidade de alteração mesmo.
+ A seguir temos os passos para usar esse modo ("Normal"), junto de algumas recomendações técnicas.
   
-  Mas se for alterar algo nesses arquivos, LEIA os comentários ali para não ficar batendo cabeça à toa, uma vez que alterações incorretas inviabilizam o correto funcionamento da aplicação. O valor de uma variável pode está vinculado a uma lógica usada em em outro local do código, à exemplo da variável DB_HOST no serviço de backend, que seu valor como sendo o mesmo nome do serviço database. Ou seja, o nome do serviço (database) precisa constar nessa variável e vice-versa.
-   
+ **_1. Verifique o arquivo compose.yml_**
  
- **2.  Execute o docker compose**
+   Pode ser que tenha algo a ser mudado nesse aquivo para atender às especificidades de quem irá executar o projeto.
+   Acredito que as únicas coisas relevantes que tem mais possiblidade de mudança em arquivos de docker compose são: _*1 - Porta exposta*_ e _*2 - Nome da rede*_ .
+  
+   
+   - Se a porta padrão (3001) vinculada ao host já estiver em uso por outra aplicação deste, mude-a (em _compose.yml_, na chave ports, no número à esquerda) para um porta disponível no host.
+     Quanto ao nome da rede ("games-store"), acho pouquíssimo provável que já exista outra rede como o mesmo nome. Todavia mude-o, se achar necessário.
+     
+   - Caso também decida trocar o valor da variável DB_NAME no arquivo, penso ser boa prática também fazer a trocar nos arquivos **Dockerfile** e **models/Dockerfile** e VICE-VERSA em prol da legibilidade e documentação. Principamente se precisar fazer testes ou depurações subindo container, manualemnte, sem auxílio do **docker compose**.
+    
+     
+  Dito isso, precisando alterar algo mais nesses arquivos ("compose" e "Dockerfiles"), LEIA, antes, seus comentários para não cometer algum tipo de equívoco que invibialize a execuçao do software. O valor de uma variável pode está vinculado à uma lógica usada em outro local, à exemplo das variáveis DB_HOST e PORT no serviço de **_backend_**.
+  
+ NOTE: Não esqueça que algumas configurações de arquivos do _docker compose_ sobrescrevem as dos arquivos _Dockerfiles_.
+    
+ 
+ **_2.  Execute o docker compose_**
 
    Basta usar o arquivo compose.yml e ajustar o que achar necessário antes
    Estando na pasta do arquivo, via CLI, basta digitar:
 
       ` docker compose up -d `
 
+ **_3. Localize o container criado_**
+ 
+   O nome do container eu deixei com estrutura padrão mesmo, que é formado por:
+      
+      `nome_da_PASTA + nome do SERVIÇO + um NÚMERO`
+      
+   Sendo assim...
+      
+   O primeiro container do projeto o compose provavelmente nomeará o serviço de backend com algo parecido com: `games-store-back-backend-1`.
+   Já o container de banco de dados seria algo como: `games-store-back-database-1`.
+   
+       
+ **_4. Identifique o IP do gateway do container_**
+ 
+   Como usa-se nesse projeto o driver bridge, o acesso direto ao container a partir do hostf é vinculado ao ip que Docker define. Sendo assim , para acesso externo ao container, que seja a partir do host, precisa localizar o número IP do gateway do container e fazer requisição para esse IP.
+   Existem diversas maneiras de fazer isso, se usar o CLI do Docke. As que acho mais fáceis são: 
+      
+   1 - Inspecionando a rede do container e, com auxílio do grep filtrar a palavra "Gateway"
 
+      Sintaxe:
 
- ### Opção 2 - Manualmente (Via Host)
+         sudo docker network inspect < nome ou id da rede > | grep Gateway
+
+      Exemplo:
+
+         sudo docker network inspect games-store | grep Gateway
+
+  
+  2 - Ou inspecionar o próprio container e, com auxílio do grep filtrar a palavra "Gateway"
+
+      Sintaxe:
+
+         sudo docker container inspect < nome ou id do container > | grep Gateway
+
+       Exemplo:
+
+         sudo docker container inspect games-store-back-backend-1 | grep Gateway
+      
+
+ 
+ **_5. Faça requisição para um endpoint_**
+ 
+   De posse do ńumero IP, usando alguma ferramenta de requisição como [Postman](https://www.postman.com/downloads) e [Insomnia](https://insomnia.rest/download), faça requisição para um endpoint da API.
+         
+   Basta escolher um dos endpoints que listei mais à frente, na seção [Endpoints](#endpoints).
+         
+   Exemplo:
+         
+      <IP DO CONTAINER>:3001/products
+      
+ #### <ins> NORMAL + MODO DEV </ins>
+ 
+   TODO
+   
+ #### <ins> COM FRONTEND </ins>
+ 
+   TODO
+    
+ #### <ins> COM FRONTEND + MODO DEV </ins>
+ 
+   TODO
+
+ ### Manualmente (Via HOST)
 
    Instalado os requisitos e as dependências necessárias, basta seguir as seguintes etapas:
    
