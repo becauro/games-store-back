@@ -134,26 +134,19 @@ Da mesma forma, uma Collection para **vendas** (sales) também foi criada. Essas
  
  Esse modo é básico e padrão, sem frontend ("frontendless"); é só a API respondendo requisições e conversando com banco de dados.
  Trata-se do levantamento de um container que dá acesso a API na porta escolhida (padrão: 3001) e pronto.
- Com isso, basta verificar o número IP que o docker atribuiu ao gateway da rede do tipo bridge que foi criada e fazer a requisição para o(s) endpoint(s) desejado(s). 
+ Com isso, basta verificar o número IP do gateway da rede docker criada e fazer a requisição para o(s) endpoint(s) desejado(s). 
  Mostro como fazer tudo isso mais a frente. NADA DEMAIS. ;-)
  
  A seguir temos os passos de como usar esse modo ("Normal"), de acordo com a introdução que fiz acima. Junto deixei algumas recomendações técnicas que possivelmente você só precisa ler uma vez, já que se aplica aos demais modos também.
-  
- Bom, a seguir o passo a passo para usar o modo NORMAL. Apesar de tudo girar em torno do Dockerfile e/ou compose.yml, saber alguns detalhes do autor, pode ajudar, principalemnte, quem pretende alterar o projeto ou é curioso para entender os detalhes de como as coisas realmente funcionam por baixo dos panos. 
  
  
  **_1. Verifique o arquivo compose.yml_**
  
-   Pode ser que tenha algo a ser mudado nesse aquivo para atender às especificidades da pessoa que irá executar o projeto.
-   Mas acredito que as únicas coisas relevantes que têm mais possibilidade de mudança nesses arquivos de docker compose aqui são: _*1 - Porta exposta*_ e _*2 - Nome da rede*_ . Ahh !.. a imagem também. Sei lá. Colocar uma mais "levinha" e tal ..🌩️
-     
-   - Se a porta padrão (3001) vinculada ao host já estiver em uso por outra aplicação deste, mude-a (em _compose.yml_, na chave ports, no número à esquerda) para uma porta que esteja disponível no host.
-     Quanto ao nome da rede ("games-store"), acho pouquíssimo provável que já exista outra rede como o mesmo nome. Todavia mude-o, se achar necessário.
-     
-   - Caso também decida trocar o valor da variável DB_NAME no arquivo, penso ser boa prática também fazer a trocar nos arquivos **Dockerfile** e **models/Dockerfile** e VICE-VERSA em prol da legibilidade e documentação. Principamente se precisar fazer testes ou depurações subindo container, manualemnte, sem auxílio do **docker compose**.
-    
-     
-  Dito isso, se precisas alterar algo mais nesses arquivos ("compose" e "Dockerfiles"), LEIA, antes, as linhas comentadas para não cometer um "ato falho" que que inviabialize a execuçao do software. Sei que é básico dizer isso mas não custa lembrar que: O valor de uma variável pode está vinculado à uma lógica usada em outro local que ler dessa variável. Um exemplo disso são as variáveis de ambientes DB_HOST e PORT do serviço de **_backend_**.
+  Se você for um desenvolvedor, talvez queria mudar algo nesse aquivo para atender às tuas especificidades, como por exemplo _*1 - Porta exposta*_ e _*2 - Nome da rede*_ . Ahh !.. talvez tu queira colocar uma outra imagem também nos dockerfiles. Sei lá. Umas imagens mais "levinhas" e tal ..🌩️ . Depois vou trocar também.
+        
+   - Caso decida trocar o valor da variável DB_NAME no arquivo, penso ser boa prática também trocá-las nos arquivos **Dockerfile** e **models/Dockerfile** e VICE-VERSA em prol da legibilidade e documentação. Principalmente se precisar fazer testes ou depurações subindo container, manualmente, sem auxílio do **docker compose**.
+       
+  Dito isso, se precisas alterar algo mais nesses arquivos ("compose" e "Dockerfiles"), LEIA, antes, as linhas comentadas para não cometer um "ato falho" que que inviabialize a execuçao do software. O valor de uma variável pode está vinculado à uma lógica usada em outro local que ler essa variável. Um exemplo disso são as variáveis de ambientes DB_HOST e PORT do serviço de **_backend_**.
   
   Ok... próximo
  
@@ -163,7 +156,6 @@ Da mesma forma, uma Collection para **vendas** (sales) também foi criada. Essas
 
       ` docker compose up -d `
 
-  
  
  **_3. Localize o container criado_**
  
