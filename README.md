@@ -150,53 +150,45 @@ Da mesma forma, uma Collection para **vendas** (sales) também foi criada. Essas
        
   Dito isso, se precisas alterar algo mais nesses arquivos ("compose" e "Dockerfiles"), LEIA, antes, as linhas comentadas para não cometer um "ato falho" que que inviabialize a execuçao do software. O valor de uma variável pode está vinculado à uma lógica usada em outro local que ler essa variável. Um exemplo disso são as variáveis de ambientes DB_HOST e PORT do serviço de **_backend_**.
   
-  Ok... próximo
+  Ok! Próximo ...
  
  **_2.  Execute o docker compose**
 
    Estando na pasta do arquivo _compose.yml_, via CLI, basta digitar:
 
-      ` docker compose up -d `
-
+~~~shell
+   docker compose up -d
+~~~
  
  **_3. Localize o container criado_**
  
-   O nome do container eu deixei com estrutura padrão mesmo, que é formado por:
+  O nome do container deixei ser gerado automaticamente, com estrutura padrão, formado por:
       
-      `nome_da_PASTA + nome do SERVIÇO + um NÚMERO`
-      
-   Sendo assim...
-      
-   O primeiro container do projeto, o compose, provavelmente, nomeará o serviço de backend com algo parecido com: `games-store-back-backend-1`.
-   Já o container de banco de dados seria algo como: `games-store-back-database-1`.
-   
+     `nome_da_PASTA + nome do SERVIÇO + um NÚMERO`
+         
+  Então o primeiro container do projeto para o serviço de backend, por exemplo, terá nome parecido com: `games-store-back-backend-1`.
+
        
  **_4. Identifique o IP do gateway do container_**
  
    Como usei nesse projeto um rede que a documentação docker classifica como "user-defiend bridge", para acesssar o container a partir do host precisamos usar o ip que Docker define para o gateway que o docker atribuiu para a rede que criamos. Portanto, depois que subimos o(s) container(s), precisamos localizar o número IP do gateway do container e fazer requisição para esse IP.
    
-Existem diversas maneiras de fazer isso se estiver usando o Docke via CLI. As que acho mais fácil é inspecionar o próprio container e, com auxílio do grep, filtrar a palavra "Gateway" que já vem acompanhado com seu número IP.
+Existem diversas maneiras de fazer isso se estiver usando o Docke via CLI. A que acho mais fácil é inspecionar o próprio container e, com auxílio do grep, filtrar a palavra "Gateway" que já vem acompanhado com seu número IP.
 
-      Sintaxe:
+Sintaxe:
 
-         sudo docker container inspect < nome ou id do container > | grep Gateway
-
-       Exemplo:
-
-         sudo docker container inspect games-store-back-backend-1 | grep Gateway
-      
-
+~~~shell
+   sudo docker container inspect < nome ou id do container > | grep Gateway      
+~~~
  
  **_5. Faça requisição para um endpoint_**
  
    De posse do ńumero IP, usando alguma ferramenta de requisição como [Postman](https://www.postman.com/downloads) e [Insomnia](https://insomnia.rest/download), faça requisição para um endpoint da API.
    
    Use o ID do Gateway obtido na etapa anterior.
-   Basta escolher um dos endpoints que listei mais à frente, na seção [Endpoints](#endpoints).
+   Escolha um dos endpoints que listei mais à frente, na seção [Endpoints](#endpoints).
          
-   Exemplo:
-         
-   Com endpoint `products` seria: `<IP DO GATEWAY>:3001/products`
+   Exemplo com endpoint `products` seria: `<IP DO GATEWAY>:3001/products`
       
       
  #### <ins> ☑️ NORMAL + MODO DEV </ins>
@@ -219,7 +211,7 @@ Existem diversas maneiras de fazer isso se estiver usando o Docke via CLI. As qu
    
 **_1. Verifique o arquivo compose-dev.yml_**
 
-Considere todas observações apresetadas no modo NORMAL.
+Considere todas observações apresetadas no modo NORMAL.➿
 
 Aqui só trocamos o arquivo do docker compose ( que passa a ser `compose-dev.yml`)
 
@@ -228,43 +220,39 @@ Aqui só trocamos o arquivo do docker compose ( que passa a ser `compose-dev.yml
 
 Aqui também só muda um pouco a sintaxe. Como é um arquivo diferente do padrão, tem que usar  a flag -f passando o caminho para o arquivo do docker compose que deseja usar. Se esquecer dessa flag , o docker compose assume o arquivo errado (compose.yml) e irá levantar containers do modo NORMAL, ao invés de NORMAL + MODO DEV:
 
-` docker compose -f compose-dev.yml up -d `
+~~~shell
+   docker compose -f compose-dev.yml up -d
+~~~
 
-Pra descer container também use a flag -f , hein. 👁️
+Note: Pra descer container também use a flag -f , hein. 👁️
 
 **_3. Localize o container criado_**
 
 Da mesma maneira já explicada no modo NORMAL. ➿
-
-
+O nome do container deixei ser gerado automaticamente, com estrutura padrão, formado por:
+      
+     `nome_da_PASTA + nome do SERVIÇO + um NÚMERO`
+     
+ 
 **_4. Identifique o IP do gateway do container_**
 
-Da mesma maneira já explicado no modo NORMAL.
+Da mesma maneira já explicado no modo NORMAL.➿
 
-Em resumo: 
+Resumindo... 
 
-      Sintaxe:
-
-         sudo docker network inspect < nome ou id da rede > | grep Gateway
-
-      Exemplo:
-
-         sudo docker network inspect games-store | grep Gateway
+~~~shell
+   sudo docker network inspect < nome ou id da rede > | grep Gateway
+~~~
 
 
 **_5. Faça requisição para um endpoint_**
-
- Da mesma maneira já explicado no modo NORMAL.
-
-
- Em resumo: 
-
+ 
+ Da mesma maneira já explicado no modo NORMAL.➿
+ 
  Use o ID do Gateway obtido na etapa anterior.
- Basta escolher um dos endpoints que listei mais à frente, na seção [Endpoints](#endpoints).
+ Escolha um dos endpoints que listei mais à frente, na seção [Endpoints](#endpoints).
 
- Exemplo:
-         
- Com endpoint `products` seria: `<IP DO GATEWAY>:3001/products`
+ Exemplo com endpoint `products` seria: `<IP DO GATEWAY>:3001/products`
 
 
          
@@ -288,18 +276,22 @@ Em resumo:
    Mas se por algum motivo não puder usar git, tem a opção dois abaixo.
    
    
-   B) Obter frontend sem git, usando meu script em shell
+   B) Obter frontend sem git clone, usando meu script em shell
    
- Acho que forma mais fácil e rápida de preencher todos os requisitos sem usar git, é executando script em shell que eu criei: `download_front.sh`. hehe 🥰
- Esse script encontra-se na pasta raíz do projeto. Ele automanticamente baixa, extrai, move para a pasta certa, renomeia e dá as permissões necessárias para o repositório frontend.
+ Acho que forma mais fácil e rápida de preencher todos os requisitos sem usar git, é executando script em shell (em padrão POSIX) que criei: `download_front.sh`. hehe 🥰
+ Esse script encontra-se na raíz do projeto. O que ele basicamente faz é baixar, extrair, mover para a pasta certa, renomear e configura as permissões necessárias para o repositório frontend baixado.
    
-  Portanto, se for usar o script, apenas execute-o  **com privilêgios elevados** (sudo , root e etc) e veja se na saída ele emite vários "OK" em cada etapa.
-  Se for emitido alguma marcação de "FAIL" após a execução do script, siga instruções dadas e execute-o noavamente até que todas as suas etapas sejam marcadas com "OK".
-  
-  O script em shell se executa, basicamente, assim:
-  
-  `./download_front.sh`
-  
+  Portanto, se for utilizá-lo, não esqueça de o executar **com privilêgios elevados** (sudo , root e etc) e verifique se na sua saída são emitidos vários "OK" em cada etapa.
+  Se houver alguma marcação de "FAIL" após a execução do script, siga instruções apresentadas e execute o script novamente, comentando, ANTES, etapas que já foram executadas com sucesso ( ou seja, que deram "OK"). Mas acho difícil dá error.
+  Caso precise mesmo comentar, só fazer assim:
+
+~~~shell
+ : '
+ 
+   Bloco de código a ser comentado!
+   
+ '
+~~~
   
 ========= COMO USAR =========  
    
@@ -309,48 +301,46 @@ São praticamente as mesmas etapas do modo NORMAL com pequenas exceções:
    
 **_1. Verifique o arquivo compose-with-front.yml_**
 
-Considere todas observações apresetadas no modo NORMAL.
+Considere todas observações apresentadas no modo NORMAL. ➿
 
-Aqui só trocamos o arquivo do docker compose ( que passa a ser `compose-with-front.yml`)
+Só trocamos o arquivo do docker compose, que passa a ser o `compose-with-front.yml`.
 
 **_2.  Execute o docker compose_**
 
 Aqui também só muda um pouco a sintaxe. Como é um arquivo diferente do padrão, tem que usar  a flag -f passando o caminho para o arquivo do docker compose que deseja usar. Se esquecer dessa flag , o docker compose assume o arquivo errado (compose.yml) e irá levantar containers do modo NORMAL, ao invés de COM FRONTEND:
 
-` docker compose -f compose-with-front.yml up -d `
+~~~shell
+   docker compose -f compose-with-front.yml up -d
+~~~
 
-Pra descer container também use a flag -f , hein. 👁️
+Note: Pra descer container também use a flag -f , hein. 👁️
 
 **_3. Localize o container criado_**
 
 Da mesma maneira já explicada no modo NORMAL. ➿
+O nome do container deixei ser gerado automaticamente, com estrutura padrão, formado por:
+      
+     `nome_da_PASTA + nome do SERVIÇO + um NÚMERO`
 
 
 **_4. Identifique o IP do gateway do container_**
 
-Da mesma maneira já explicado no modo NORMAL.
+Da mesma maneira já explicado no modo NORMAL. ➿
 
-Em resumo: 
+Resumindo...
 
-      Sintaxe:
-
-         sudo docker network inspect < nome ou id da rede > | grep Gateway
-
+~~~shell
+   sudo docker network inspect < nome ou id da rede > | grep Gateway
+~~~
 
 **_5. Faça requisição para um endpoint_**
 
- Da mesma maneira já explicado no modo NORMAL.
+ Da mesma maneira já explicado no modo NORMAL.➿
+ 
+ Use o ID do Gateway obtido na etapa anterior.
+ Escolha um dos endpoints que listei mais à frente, na seção [Endpoints](#endpoints).
 
-
- Em resumo: 
-
- Use o IP do Gateway obtido na etapa anterior.
- Basta escolher um dos endpoints que listei mais à frente, na seção [Endpoints](#endpoints).
-
-Exemplo:
-         
-Com endpoint `products` seria: `<IP DO GATEWAY>:3001/products`
-   
+ Exemplo com endpoint `products` seria: `<IP DO GATEWAY>:3001/products`
    
     
  #### <ins> ☑️ COM FRONTEND + MODO DEV </ins>
@@ -367,47 +357,45 @@ São praticamente as mesmas etapas do modo NORMAL com pequenas exceções:
    
 **_1. Verifique o arquivo compose-dev-with-front.yml_**
 
-Considere todas observações apresetadas no modo NORMAL.
+Considere todas observações apresentadas no modo NORMAL. ➿
 
-Aqui só trocamos o arquivo do docker compose ( que passa a ser `compose-dev-with-front.yml`)
+Só trocamos o arquivo do docker compose (que passa a ser `compose-dev-with-front.yml`)
 
 **_2.  Execute o docker compose_**
 
 Aqui também só muda um pouco a sintaxe. Como é um arquivo diferente do padrão, tem que usar  a flag -f passando o caminho para o arquivo do docker compose que deseja usar. Se esquecer dessa flag , o docker compose assume o arquivo errado (compose.yml) e irá levantar containers do modo NORMAL, ao invés de COM FRONTEND + MODO DEV:
 
-` docker compose -f compose-dev-with-front.yml up -d `
+~~~shell
+   docker compose -f compose-dev-with-front.yml up -d 
+~~~
 
-Pra descer container também use a flag -f , hein. 👁️
+Note: Pra descer container também use a flag -f , hein. 👁️
 
 **_3. Localize o container criado_**
 
 Da mesma maneira já explicada no modo NORMAL. ➿
-
+O nome do container deixei ser gerado automaticamente, com estrutura padrão, formado por:
+      
+     `nome_da_PASTA + nome do SERVIÇO + um NÚMERO`
 
 **_4. Identifique o IP do gateway do container_**
 
-Da mesma maneira já explicado no modo NORMAL.
+Da mesma maneira já explicado no modo NORMAL. ➿
 
-Em resumo: 
+Resumindo...
 
-      Sintaxe:
-
-         sudo docker network inspect < nome ou id da rede > | grep Gateway
-
+~~~shell
+   sudo docker network inspect < nome ou id da rede > | grep Gateway
+~~~
 
 **_5. Faça requisição para um endpoint_**
 
- Da mesma maneira já explicado no modo NORMAL.
+ Da mesma maneira já explicado no modo NORMAL.➿
+ 
+ Use o ID do Gateway obtido na etapa anterior.
+ Escolha um dos endpoints que listei mais à frente, na seção [Endpoints](#endpoints).
 
-
- Em resumo: 
-
- Use o IP do Gateway obtido na etapa anterior.
- Basta escolher um dos endpoints que listei mais à frente, na seção [Endpoints](#endpoints).
-
-Exemplo:
-         
-Com endpoint `products` seria: `<IP DO GATEWAY>:3001/products`
+ Exemplo com endpoint `products` seria: `<IP DO GATEWAY>:3001/products`
    
    
 
