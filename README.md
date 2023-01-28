@@ -7,10 +7,9 @@ Ainda em fase de desenvolvimento, porém é possível já utilizar.
 
 ### Tem FRONT ?
 
-Aqui está o [link](https://github.com/becauro/games-store-front) do repositório **frontend** que também fiz para usar com essa API.
-Desenvolvi algumas interfaces para interagir com essa API.
+Aqui está o [link](https://github.com/becauro/games-store-front) do repositório **frontend** que também fiz para usar com essa API, onde desenvolvi algumas interfaces para interagir com essa API.
 
-Então, corre lá pra dá uma olhada e aproveite para sentar aquele dedo nos botões de `Code Review` pra ajudar o projeto.
+No entanto é possível executar esse frontend por aqui também, basta seguir a correta opção ("COM FRONT") que deixei na seção [Via DOCKER](#via-docker).
 
 ## <span id="sumario">Sumário</span>
 
