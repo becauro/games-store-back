@@ -198,7 +198,7 @@ Sintaxe:
    Esse modo consiste em usar outro arquivo de docker compose (_**compose-dev.yml**_) o qual se conecta a outro arquivo Dockerfile (_**Dockerfile-dev**_) configurados de forma que permita que as alterações de código feitas no host, reflita, em tempo real, dentro do container e vice-versa.
    Esse modo facilita para quem está desenvolvendo (daí o sobrenome "modo dev") ou fazendo alterações no projeto, pois não precisa ficar fazendo rebuild a cada alteração, nem reiniciar o container, bastando, apenas, fazer uma nova requisição para o endpoint desejado. Lógico que em produção seriaa usado o arquivo compose do modo NORMAL por exemplo.
   
-========= Como o modo funciona por baixo dos panos =========
+========= COMO ISSO FUNCIONA =========
 
    Como menionado, o **compose-dev.yml** usa como contexto de build o arquivo **Dockergile-dev**. Esse Dockerfile-dev tem nada menos   ue um comando diferente no entrypoint, que é o comando `npm run dev`, ao invés de `npm stat`. Esse comando _npm run dev_ que executa o script que tem **nodemon** no `package.json` no lugar do **node**.   
    O **_nodemon_** é uma ferremnta que executar script JS mas monitora em tempo real mudanças ocorridas no código e, automaticamente, reinicia o servidor quado qualquer alteração é salva.
@@ -229,6 +229,7 @@ Note: Pra descer container também use a flag -f , hein. 👁️
 **_3. Localize o container criado_**
 
 Da mesma maneira já explicada no modo NORMAL. ➿
+
 O nome do container deixei ser gerado automaticamente, com estrutura padrão, formado por:
       
      `nome_da_PASTA + nome do SERVIÇO + um NÚMERO`
@@ -265,9 +266,9 @@ Resumindo...
  
 ========= COMO ATENDER PRÉ-REQUISITOS =========
    
-   Duas formas de fzer isso são:
+   As duas que acho melhor de conseguir isso são:
    
-   A) Usando o git clone e mais um rápido comando
+   A) Usando o git clone e depois um simples comando:
    
    * Clone o repostiório frontend ([Link do repo](https://github.com/becauro/games-store-front))
    * Depois , para evitar problema, dê permissão recursiva para o repositório baixado: `chmod -R 777 games-store-front`
@@ -276,7 +277,7 @@ Resumindo...
    Mas se por algum motivo não puder usar git, tem a opção dois abaixo.
    
    
-   B) Obter frontend sem git clone, usando meu script em shell
+   B) Obter frontend sem git clone, usando meu script shell:
    
  Acho que forma mais fácil e rápida de preencher todos os requisitos sem usar git, é executando script em shell (em padrão POSIX) que criei: `download_front.sh`. hehe 🥰
  Esse script encontra-se na raíz do projeto. O que ele basicamente faz é baixar, extrair, mover para a pasta certa, renomear e configura as permissões necessárias para o repositório frontend baixado.
@@ -318,6 +319,7 @@ Note: Pra descer container também use a flag -f , hein. 👁️
 **_3. Localize o container criado_**
 
 Da mesma maneira já explicada no modo NORMAL. ➿
+
 O nome do container deixei ser gerado automaticamente, com estrutura padrão, formado por:
       
      `nome_da_PASTA + nome do SERVIÇO + um NÚMERO`
@@ -374,6 +376,7 @@ Note: Pra descer container também use a flag -f , hein. 👁️
 **_3. Localize o container criado_**
 
 Da mesma maneira já explicada no modo NORMAL. ➿
+
 O nome do container deixei ser gerado automaticamente, com estrutura padrão, formado por:
       
      `nome_da_PASTA + nome do SERVIÇO + um NÚMERO`
