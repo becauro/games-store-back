@@ -283,16 +283,7 @@ Resumindo...
  Esse script encontra-se na raíz do projeto. O que ele basicamente faz é baixar, extrair, mover para a pasta certa, renomear e configura as permissões necessárias para o repositório frontend baixado.
    
   Portanto, se for utilizá-lo, não esqueça de o executar **com privilêgios elevados** (sudo , root e etc) e verifique se na sua saída são emitidos vários "OK" em cada etapa.
-  Se houver alguma marcação de "FAIL" após a execução do script, siga instruções apresentadas e execute o script novamente, comentando, ANTES, etapas que já foram executadas com sucesso ( ou seja, que deram "OK"). Mas acho difícil dá error.
-  Caso precise mesmo comentar, só fazer assim:
-
-~~~shell
- : '
- 
-   Bloco de código a ser comentado!
-   
- '
-~~~
+  Se houver alguma marcação de "FAIL" após a execução do script, siga instruções apresentadas e execute o script novamente, se for o caso.
   
 ========= COMO USAR =========  
    
