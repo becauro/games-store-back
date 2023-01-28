@@ -144,11 +144,11 @@ Da mesma forma, uma Collection para **vendas** (sales) também foi criada. Essas
     
  **_1. Verifique o arquivo compose.yml_**
  
-  Se você for um desenvolvedor, talvez queria mudar algo nesse aquivo para atender às tuas especificidades, como por exemplo _*1 - Porta exposta*_ e _*2 - Nome da rede*_ . Ahh !.. talvez tu queira colocar uma outra imagem também nos dockerfiles. Sei lá. Umas imagens mais "levinhas" e tal ..🌩️ . Depois vou trocar também.
+  Se você for um desenvolvedor, talvez queira mudar algo nesse aquivo para atender às tuas especificidades, como por exemplo _*1 - Porta exposta*_ e _*2 - Nome da rede*_ . Ahh !.. talvez queira, tmbém, colocar uma outra images nos dockerfiles. Sei lá. Umas imagens mais "levinhas" e tal ..🌩️ . Depois vou trocar também.
         
    - Caso decida trocar o valor da variável DB_NAME no arquivo, penso ser boa prática também trocá-las nos arquivos **Dockerfile** e **models/Dockerfile** e VICE-VERSA em prol da legibilidade e documentação. Principalmente se precisar fazer testes ou depurações subindo container, manualmente, sem auxílio do **docker compose**.
        
-  Dito isso, se precisas alterar algo mais nesses arquivos ("compose" e "Dockerfiles"), LEIA, antes, as linhas comentadas para não cometer um "ato falho" que que inviabialize a execuçao do software. O valor de uma variável pode está vinculado à uma lógica usada em outro local que ler essa variável. Um exemplo disso são as variáveis de ambientes DB_HOST e PORT do serviço de **_backend_**.
+  Dito isso, se precisas alterar algo mais nesses arquivos ("compose" e "Dockerfiles"), LEIA, antes, as linhas comentadas dentro dos arquivos para não cometer um "ato falho" que inviabilize a execuçao do software. O valor de uma variável pode está vinculado à uma lógica usada em outro local que ler essa variável. Um exemplo disso são as variáveis de ambientes DB_HOST e PORT do serviço de **_backend_**.
   
   Ok! Próximo ...
  
@@ -162,18 +162,18 @@ Da mesma forma, uma Collection para **vendas** (sales) também foi criada. Essas
  
  **_3. Localize o container criado_**
  
-  O nome do container deixei ser gerado automaticamente, com estrutura padrão, formado por:
+  O nome do container deixei que fosse gerado automaticamente, com estrutura padrão, formado por:
       
      `nome_da_PASTA + nome do SERVIÇO + um NÚMERO`
          
-  Então o primeiro container do projeto para o serviço de backend, por exemplo, terá nome parecido com: `games-store-back-backend-1`.
+  Então o primeiro container do projeto para o serviço de backend, por exemplo, terá um nome parecido com: `games-store-back-backend-1`.
 
        
  **_4. Identifique o IP do gateway do container_**
  
-   Como usei nesse projeto um rede que a documentação docker classifica como "user-defiend bridge", para acesssar o container a partir do host precisamos usar o ip que Docker define para o gateway que o docker atribuiu para a rede que criamos. Portanto, depois que subimos o(s) container(s), precisamos localizar o número IP do gateway do container e fazer requisição para esse IP.
+   Como criei numa rede nesse projeto, a documentação docker classifica isso como "user-defined bridge", logo para acessar o container a partir do host, precisamos usar o ip que Docker define para o gateway dessa rede que criamos. Portanto, depois que subimos o(s) container(s), precisamos localizar o número IP do gateway desse container para poder conseguir fazer requisição usando esse IP.
    
-Existem diversas maneiras de fazer isso se estiver usando o Docke via CLI. A que acho mais fácil é inspecionar o próprio container e, com auxílio do grep, filtrar a palavra "Gateway" que já vem acompanhado com seu número IP.
+Existem diversas maneiras de fazer isso se estiver usando o Docke via CLI. A que acho mais fácil é inspecionar o próprio container e, com auxílio do grep, filtrar a palavra "Gateway" que já vem acompanhado com seu repspectivo número IP. Veja abaixo:
 
 Sintaxe:
 
@@ -183,9 +183,9 @@ Sintaxe:
  
  **_5. Faça requisição para um endpoint_**
  
-   De posse do ńumero IP, usando alguma ferramenta de requisição como [Postman](https://www.postman.com/downloads) e [Insomnia](https://insomnia.rest/download), faça requisição para um endpoint da API.
+   De posse do número IP, usando alguma ferramenta de requisição como [Postman](https://www.postman.com/downloads) e [Insomnia](https://insomnia.rest/download), faça requisição para um endpoint da API.
    
-   Use o ID do Gateway obtido na etapa anterior.
+   Use o IP do Gateway obtido na etapa anterior.
    Escolha um dos endpoints que listei mais à frente, na seção [Endpoints](#endpoints).
          
    Exemplo com endpoint `products` seria: `<IP DO GATEWAY>:3001/products`
@@ -250,7 +250,7 @@ Resumindo...
  
  Da mesma maneira já explicado no modo NORMAL.➿
  
- Use o ID do Gateway obtido na etapa anterior.
+ Use o IP do Gateway obtido na etapa anterior.
  Escolha um dos endpoints que listei mais à frente, na seção [Endpoints](#endpoints).
 
  Exemplo com endpoint `products` seria: `<IP DO GATEWAY>:3001/products`
@@ -330,7 +330,7 @@ Resumindo...
 
  Da mesma maneira já explicado no modo NORMAL.➿
  
- Use o ID do Gateway obtido na etapa anterior.
+ Use o IP do Gateway obtido na etapa anterior.
  Escolha um dos endpoints que listei mais à frente, na seção [Endpoints](#endpoints).
 
  Exemplo com endpoint `products` seria: `<IP DO GATEWAY>:3001/products`
@@ -386,7 +386,7 @@ Resumindo...
 
  Da mesma maneira já explicado no modo NORMAL.➿
  
- Use o ID do Gateway obtido na etapa anterior.
+ Use o IP do Gateway obtido na etapa anterior.
  Escolha um dos endpoints que listei mais à frente, na seção [Endpoints](#endpoints).
 
  Exemplo com endpoint `products` seria: `<IP DO GATEWAY>:3001/products`
