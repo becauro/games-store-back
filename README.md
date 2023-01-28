@@ -139,7 +139,10 @@ Da mesma forma, uma Collection para **vendas** (sales) também foi criada. Essas
  
  A seguir temos os passos de como usar esse modo ("Normal"), de acordo com a introdução que fiz acima. Junto deixei algumas recomendações técnicas que possivelmente você só precisa ler uma vez, já que se aplica aos demais modos também.
  
- 
+========= COMO USAR =========
+   
+  Para executar o sofware nesse modo, faça as seguintes etapas:
+    
  **_1. Verifique o arquivo compose.yml_**
  
   Se você for um desenvolvedor, talvez queria mudar algo nesse aquivo para atender às tuas especificidades, como por exemplo _*1 - Porta exposta*_ e _*2 - Nome da rede*_ . Ahh !.. talvez tu queira colocar uma outra imagem também nos dockerfiles. Sei lá. Umas imagens mais "levinhas" e tal ..🌩️ . Depois vou trocar também.
@@ -171,21 +174,9 @@ Da mesma forma, uma Collection para **vendas** (sales) também foi criada. Essas
        
  **_4. Identifique o IP do gateway do container_**
  
-   Como usa-se nesse projeto o driver bridge, o acesso direto ao container a partir do hostf é vinculado ao ip que Docker define. Sendo assim , para acesso externo ao container, que seja a partir do host, precisa localizar o número IP do gateway do container e fazer requisição para esse IP.
-   Existem diversas maneiras de fazer isso, se usar o CLI do Docke. As que acho mais fáceis são: 
-      
-   1 - Inspecionando a rede do container e, com auxílio do grep filtrar a palavra "Gateway"
-
-      Sintaxe:
-
-         sudo docker network inspect < nome ou id da rede > | grep Gateway
-
-      Exemplo:
-
-         sudo docker network inspect games-store | grep Gateway
-
-  
-  2 - Ou inspecionar o próprio container e, com auxílio do grep filtrar a palavra "Gateway"
+   Como usei nesse projeto um rede que a documentação docker classifica como "user-defiend bridge", para acesssar o container a partir do host precisamos usar o ip que Docker define para o gateway que o docker atribuiu para a rede que criamos. Portanto, depois que subimos o(s) container(s), precisamos localizar o número IP do gateway do container e fazer requisição para esse IP.
+   
+Existem diversas maneiras de fazer isso se estiver usando o Docke via CLI. As que acho mais fácil é inspecionar o próprio container e, com auxílio do grep, filtrar a palavra "Gateway" que já vem acompanhado com seu número IP.
 
       Sintaxe:
 
@@ -211,18 +202,21 @@ Da mesma forma, uma Collection para **vendas** (sales) também foi criada. Essas
       
  #### <ins> ☑️ NORMAL + MODO DEV </ins>
  
-   Esse modo meio que herda todas observações do modo NORMAL citado anteriormente, portanto, não vou reptir quase nada, "apenas fazer algumas referências e acrescentar as diferenças" (poeta, eu ? :))).
+   Esse modo meio que herda todas observações do modo NORMAL citado anteriormente, portanto, não vou reptir quase nada, "apenas fazer algumas referências e acrescentar as diferenças" (poeta, eu ?).
    
-   A diferença de funcionalidade desse modo consiste em usar um outro arquivo de docker compose, a saber _**compose-dev.yml**_ e um diferente Dockerfile, a saber, _**Dockerfile-dev**_, configurados de forma que permita que as alterações no código feitas no host, reflita, em tempo real, dentro do container e vice-versa.
+   Esse modo consiste em usar outro arquivo de docker compose (_**compose-dev.yml**_) o qual se conecta a outro arquivo Dockerfile (_**Dockerfile-dev**_) configurados de forma que permita que as alterações de código feitas no host, reflita, em tempo real, dentro do container e vice-versa.
    Esse modo facilita para quem está desenvolvendo (daí o sobrenome "modo dev") ou fazendo alterações no projeto, pois não precisa ficar fazendo rebuild a cada alteração, nem reiniciar o container, bastando, apenas, fazer uma nova requisição para o endpoint desejado. Lógico que em produção seriaa usado o arquivo compose do modo NORMAL por exemplo.
-   
+  
+========= Como o modo funciona por baixo dos panos =========
+
    Como menionado, o **compose-dev.yml** usa como contexto de build o arquivo **Dockergile-dev**. Esse Dockerfile-dev tem nada menos   ue um comando diferente no entrypoint, que é o comando `npm run dev`, ao invés de `npm stat`. Esse comando _npm run dev_ que executa o script que tem **nodemon** no `package.json` no lugar do **node**.   
    O **_nodemon_** é uma ferremnta que executar script JS mas monitora em tempo real mudanças ocorridas no código e, automaticamente, reinicia o servidor quado qualquer alteração é salva.
     
    No **compose-dev.yml** também foi adicionado um volume do tipo **bind mount**. Isso que permite vincular a pasta raiz do projeto entre host e container, sem precisar fazer rebuild toda hora só pra desenvolvimento. As mudanças em qualquer parte do projeto no host, refletem, diretamente, dento do container e VICE-VERSA. 
    
+========= COMO USAR =========
    
-  Para executar o sofware desse projeto nesse modo, faça as seguintes etapas (as mesmas do modo NORMAL com "pífias" exceções):
+  Para executar o sofware nesse modo, faça as seguintes etapas (as mesmas do modo NORMAL com "pífias" exceções):
    
 **_1. Verifique o arquivo compose-dev.yml_**
 
@@ -280,15 +274,13 @@ Em resumo:
    Esse modo consiste em excutar a API (esse repositório atual em que estamos) juntamente com o frontend (outro repositório mencionado no começo da documentação). O backend continuará executando na porta 3001 do IP do Gateway, e o frontend executará na porta 3000 do IP do Gateway.
    Mas o frontend consegue ser acessado, TAMBÈM, pelo localhost. Então, se usar a URL localhost:3000, já consegue acessar tudo (front, back e databse) de uma vez śó.
    
-   No entanto, pra usar esse modo, devido as configurações feitas no arquivo do docker compose específico desse modo (COM FRONTEND), algumas condições precisam ser atendidas PREVIAMENTE. Caso contrário, não funionará: 1 - Baixar/clonar previamente o repositório de frontend, 2 - O nome da pasta raiz do repositório de frontend precisa ser "games-store-frontend", 3 - A pasta precisa estar na pasta PAI deste projeto aqui (backend) 4 - Garantir todas permisões de excução recursiva. Vou dar a opção de fazer isso tudo de duas maneiras.
+   No entanto, **há pré-requisitos** para se usar esse modo, devido as configurações feitas no arquivo do docker compose. Caso não sejam atendidos, o modo não funionará. Os pré-requisitos são: 1 - Baixar/clonar previamente o repositório de frontend, 2 - O nome da pasta raiz do repositório de frontend precisa ser "games-store-frontend", 3 - A pasta precisa estar na pasta PAI deste projeto aqui (backend) 4 - Garantir todas permisões de excução recursiva. A seguir vou dar a opção de como preencher esses requistos de uma vez só, e de duas maneiras. 😺
  
-======================================================
-
-   Bom , vamos primeiro às etapas PRÈVIAS das condições:
+========= COMO ATENDER PRÉ-REQUISITOS =========
    
-   Duas formas de atingir essas condições
+   Duas formas de fzer isso são:
    
-   A) Obter o repo frontend via git e preencher pré-requisitos
+   A) Usando o git clone e mais um rápido comando
    
    * Clone o repostiório frontend ([Link do repo](https://github.com/becauro/games-store-front))
    * Depois , para evitar problema, dê permissão recursiva para o repositório baixado: `chmod -R 777 games-store-front`
@@ -297,19 +289,24 @@ Em resumo:
    Mas se por algum motivo não puder usar git, tem a opção dois abaixo.
    
    
-   B) Obter repo front sem git e preencher pré-requisitos
+   B) Obter frontend sem git, usando meu script em shell
    
- Acho que forma mais fácil e rápida de preencher todos os requisitos sem usar git, é usando o script em shell que eu criei. hehe 🥰
-   Esse script, baixa, extrai, move para a pasta certa, renomeia e dá as permissões necessárias. Sem git e sem meu script, essas etapas precisariam ser preenchidas MANUALMENTE. Imgine só, né ? 🙂
+ Acho que forma mais fácil e rápida de preencher todos os requisitos sem usar git, é executando script em shell que eu criei: `download_front.sh`. hehe 🥰
+ Esse script encontra-se na pasta raíz do projeto. Ele automanticamente baixa, extrai, move para a pasta certa, renomeia e dá as permissões necessárias para o repositório frontend.
    
-  Portanto, para está opção, apenas execute o script `download_front.sh` **com privilêgios elevados** (sudo , root e etc) e veja se a saída do script dá OK em todas etapas.
+  Portanto, se for usar o script, apenas execute-o  **com privilêgios elevados** (sudo , root e etc) e veja se na saída ele emite vários "OK" em cada etapa.
+  Se for emitido alguma marcação de "FAIL" após a execução do script, siga instruções dadas e execute-o noavamente até que todas as suas etapas sejam marcadas com "OK".
   
-======================================================
+  O script em shell se executa, basicamente, assim:
   
+  `./download_front.sh`
+  
+  
+========= COMO USAR =========  
    
-Com o repositório baixado, voltamos a seguir as mesmas etapas dos modos anteriores. Vou deixar o "resumo do resumo" delas.
+Com o repositório baixado, seguimos as mesmas etapas descritas nos modos anteriores. Aqui vai um "resumo do resumo" delas.
  
-São praticamente as mesmas etapas do modo NORMAL com "pífias" exceções:
+São praticamente as mesmas etapas do modo NORMAL com pequenas exceções:
    
 **_1. Verifique o arquivo compose-with-front.yml_**
 
