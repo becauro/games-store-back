@@ -127,7 +127,7 @@ Da mesma forma, uma Collection para **vendas** (sales) também foi criada. Essas
  
  --------------------------------------------------------------------------------------------------------------------------------------------------------
  
- Deixei diferentes MODOS de executar esse software via Docker. Os classifiquei assim: **"Normal (frontendless)"**, **"Normal + Modo Dev"**, **"Com Frontend"** e **"Com Frontend + Modo Dev"**.
+ Criei diferentes MODOS para executar esse software via Docker. Os classifiquei assim: **"Normal (frontendless)"**, **"Normal + Modo Dev"**, **"Com Frontend"** e **"Com Frontend + Modo Dev"**.
  
  #### <ins> ☑️ NORMAL </ins>
  
