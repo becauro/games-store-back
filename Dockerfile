@@ -2,7 +2,7 @@
 # Essa porta, em EXPOSE, é a padrão, mas poderia ser modificado, por  definir numa variavel PORT -- como feito na linha 19, por exemplo.
 # Se for fazer o build fora do compose.yml e com rede separada, o nome do container precisa ser o mesmo da variável DB_HOST. 
 
-FROM node:lts-buster
+FROM node:lts-bullseye-slim
 
 WORKDIR /myapp
 
