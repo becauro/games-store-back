@@ -73,9 +73,9 @@ Da mesma forma, uma Collection para **vendas** (sales) também foi criada. Essas
 <a href="#sumario">Sumário</a>
 
 * Autenticação de Usuários (Login)
-* Autorizações de usuários com uso de tokens (JWT).
+* Autorizações de usuários com uso de tokens (JWT). Parecido com o que fiz no projeto [Blog API](https://github.com/becauro/blog_api).
 * Implantar a aplicação via Cloud ou VPS, para que possa ser consumida e testada externamente.
-* Implantar o Banco de Dados em nuvem do [MongoDB Atlas](https://www.mongodb.com/atlas) ou algo do tipo.
+* Implantar o Banco de Dados em nuvem.
 
 ## <span id="requisitos-execucao">Requisitos para execução da API</span>
 <a href="#sumario">Sumário</a>
