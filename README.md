@@ -19,7 +19,7 @@ No entanto, é possível executar esse frontend por aqui também, se seguir a co
 - <a href="#arquitetura-e-padroes">Arquitetura e padrões</a>
 - <a href="#tecnologias-utilizadas">Tecnologias utilizadas</a>
 - <a href="#futuras-implementacoes">Futuras implementações</a> 
-- <a href="#requisitos-execucao">Requisitos para execução da API</a>
+- <a href="#requisitos-dep">Requisitos / dependências </a>
 - [Como executar](#como-executar)
    - [Via DOCKER](#via-docker)
    - [Manualmente](#manualmente-via-host)
@@ -77,7 +77,7 @@ Da mesma forma, uma Collection para **vendas** (sales) também foi criada. Essas
 * Implantar a aplicação via Cloud ou VPS, para que possa ser consumida e testada externamente.
 * Implantar o Banco de Dados em nuvem.
 
-## <span id="requisitos-execucao">Requisitos para execução da API</span>
+## <span id="requisitos-dep">Requisitos / dependências </span>
 <a href="#sumario">Sumário</a>
 
    Você pode rodar esse projeto de duas maneiras: 1 - Via Docker 🐳 ou 2 - Manualmente 🖐️
@@ -144,13 +144,12 @@ Da mesma forma, uma Collection para **vendas** (sales) também foi criada. Essas
     
  **_1. Verifique o arquivo compose.yml_**
  
-  Se você for um desenvolvedor, talvez queira mudar algo nesse aquivo para atender às tuas especificidades, como por exemplo _*1 - Porta exposta*_ e _*2 - Nome da rede*_ . Ahh !.. talvez queira, tmbém, colocar uma outra images nos dockerfiles. Sei lá. Umas imagens mais "levinhas" e tal ..🌩️ . Depois vou trocar também.
+  Se você for um desenvolvedor, talvez queira mudar algo nesse aquivo para atender às tuas especificidades, como por exemplo _*1 - Porta exposta*_ e _*2 - Nome da rede*_ . Ahh !.. talvez queira, também, colocar uma outra images nos dockerfiles. Sei lá. Umas imagem mais "levinhas" e tal ..🌩️ . Depois vou trocar também.
         
    - Caso decida trocar o valor da variável DB_NAME no arquivo, penso ser boa prática também trocá-las nos arquivos **Dockerfile** e **models/Dockerfile** e VICE-VERSA em prol da legibilidade e documentação. Principalmente se precisar fazer testes ou depurações subindo container, manualmente, sem auxílio do **docker compose**.
        
-  Dito isso, se precisas alterar algo mais nesses arquivos ("compose" e "Dockerfiles"), LEIA, antes, as linhas comentadas dentro dos arquivos para não cometer um "ato falho" que inviabilize a execuçao do software. O valor de uma variável pode está vinculado à uma lógica usada em outro local que ler essa variável. Um exemplo disso são as variáveis de ambientes DB_HOST e PORT do serviço de **_backend_**.
+  Dito isso, se precisas alterar algo mais nesses arquivos ("compose" e "Dockerfiles"), LEIA, antes, as linhas comentadas dentro dos arquivos para não cometer um erro que inviabilize a execuçao do software. O valor de uma variável pode está vinculado à uma lógica usada em outro local que ler essa variável. Um exemplo disso são as variáveis de ambientes DB_HOST e PORT do serviço de **_backend_**.
   
-  Ok! Próximo ...
  
  **_2.  Execute o docker compose**
 
@@ -171,7 +170,7 @@ Da mesma forma, uma Collection para **vendas** (sales) também foi criada. Essas
        
  **_4. Identifique o IP do gateway do container_**
  
-   Como criei numa rede nesse projeto, a documentação docker classifica isso como "user-defined bridge", logo para acessar o container a partir do host, precisamos usar o ip que Docker define para o gateway dessa rede que criamos. Portanto, depois que subimos o(s) container(s), precisamos localizar o número IP do gateway desse container para poder conseguir fazer requisição usando esse IP.
+   Como criei numa rede nesse projeto, a documentação docker classifica isso como "user-defined bridge". Sendo assim, para acessar o container a partir do host, precisamos usar o ip que Docker define para o gateway dessa rede que criamos. Portanto, depois que subimos o(s) container(s), precisamos localizar o número IP do gateway desse container para poder conseguir fazer requisição usando esse IP.
    
 Existem diversas maneiras de fazer isso se estiver usando o Docke via CLI. A que acho mais fácil é inspecionar o próprio container e, com auxílio do grep, filtrar a palavra "Gateway" que já vem acompanhado com seu repspectivo número IP. Veja abaixo:
 
@@ -193,44 +192,44 @@ Sintaxe:
       
  #### <ins> ☑️ NORMAL + MODO DEV </ins>
  
-   Esse modo meio que herda todas observações do modo NORMAL citado anteriormente, portanto, não vou reptir quase nada, "apenas fazer algumas referências e acrescentar as diferenças" (poeta, eu ?).
+   Esse modo meio que herda todas observações do modo NORMAL citado anteriormente, portanto, não vou reptir quase nada, "apenas fazer algumas referências e acrescentar as diferenças" (...essa rimou, poeta!).
    
-   Esse modo consiste em usar outro arquivo de docker compose (_**compose-dev.yml**_) o qual se conecta a outro arquivo Dockerfile (_**Dockerfile-dev**_) configurados de forma que permita que as alterações de código feitas no host, reflita, em tempo real, dentro do container e vice-versa.
-   Esse modo facilita para quem está desenvolvendo (daí o sobrenome "modo dev") ou fazendo alterações no projeto, pois não precisa ficar fazendo rebuild a cada alteração, nem reiniciar o container, bastando, apenas, fazer uma nova requisição para o endpoint desejado. Lógico que em produção seriaa usado o arquivo compose do modo NORMAL por exemplo.
+   Esse modo consiste em usar outro arquivo de docker compose (_**compose-dev.yml**_) o qual se conecta a outro arquivo Dockerfile (_**Dockerfile-dev**_) configurados de forma que permita que as alterações de código feitas no host, reflitam, em tempo real, dentro do container e vice-versa.
+   Esse modo facilita para quem está desenvolvendo (daí o sobrenome "modo dev") ou está fazendo alterações no projeto, pois não precisa ficar fazendo rebuild da imagem docker a cada alteração, nem reiniciar o container; basta, apenas, crair uma nova requisição para o endpoint desejado. Lógico que em produção deveria usar o arquivo compose do modo NORMAL, por exemplo.
   
 ========= COMO ISSO FUNCIONA =========
 
-   Como menionado, o **compose-dev.yml** usa como contexto de build o arquivo **Dockergile-dev**. Esse Dockerfile-dev tem nada menos   ue um comando diferente no entrypoint, que é o comando `npm run dev`, ao invés de `npm stat`. Esse comando _npm run dev_ que executa o script que tem **nodemon** no `package.json` no lugar do **node**.   
-   O **_nodemon_** é uma ferremnta que executar script JS mas monitora em tempo real mudanças ocorridas no código e, automaticamente, reinicia o servidor quado qualquer alteração é salva.
+   Como menionado, o **compose-dev.yml** usa como contexto de build o arquivo **Dockergile-dev**. Esse Dockerfile-dev tem nada menos que um comando diferente no entrypoint, que é o comando `npm run dev`, ao invés de `npm stat`. Esse comando _npm run dev_ é quem executa o script que tem **nodemon** no `package.json`.   
+   O **_nodemon_** é uma ferramenta que executa script JS , mas ao mesmo tempo também monitora --- em tempo real --- mudanças ocorridas no código e, automaticamente, reinicia o servidor quando qualquer alteração é salva.
     
-   No **compose-dev.yml** também foi adicionado um volume do tipo **bind mount**. Isso que permite vincular a pasta raiz do projeto entre host e container, sem precisar fazer rebuild toda hora só pra desenvolvimento. As mudanças em qualquer parte do projeto no host, refletem, diretamente, dento do container e VICE-VERSA. 
+   No **compose-dev.yml** também foi adicionado um volume do tipo **bind mount**. Isso que permite vincular a pasta raiz do projeto entre host e container, sem precisar fazer rebuild da imagem toda hora só pra desenvolvimento. Como disse no começo, essa foi a lógica de como que as mudanças no host , em qualquer parte do projeto,  refletem, diretamente, dentro do software que roda no container e VICE-VERSA. 
    
 ========= COMO USAR =========
    
-  Para executar o sofware nesse modo, faça as seguintes etapas (as mesmas do modo NORMAL com "pífias" exceções):
+  Para executar o sofware nesse modo, faça as seguintes etapas (além das etapas já mencionadas no modo NORMAL):
    
 **_1. Verifique o arquivo compose-dev.yml_**
 
-Considere todas observações apresetadas no modo NORMAL.➿
+Considere todas observações apresentadas no modo NORMAL.➿
 
 Aqui só trocamos o arquivo do docker compose ( que passa a ser `compose-dev.yml`)
 
 
 **_2.  Execute o docker compose_**
 
-Aqui também só muda um pouco a sintaxe. Como é um arquivo diferente do padrão, tem que usar  a flag -f passando o caminho para o arquivo do docker compose que deseja usar. Se esquecer dessa flag , o docker compose assume o arquivo errado (compose.yml) e irá levantar containers do modo NORMAL, ao invés de NORMAL + MODO DEV:
+Aqui também só muda um pouco a sintaxe. Como é um arquivo diferente do padrão, tem que usar  a flag `-f` passando o caminho para o arquivo do docker compose que deseja usar. Se esquecer dessa flag , o docker compose assume o arquivo errado (compose.yml) e irá levantar containers do modo NORMAL, ao invés de NORMAL + MODO DEV:
 
 ~~~shell
    docker compose -f compose-dev.yml up -d
 ~~~
 
-Note: Pra descer container também use a flag -f , hein. 👁️
+Note: Pra parar container também use a flag -f , hein (👁️)!
 
 **_3. Localize o container criado_**
 
-Da mesma maneira já explicada no modo NORMAL. ➿
+Considere, também, as estapas já explicadas no modo NORMAL para isso. ➿
 
-O nome do container deixei ser gerado automaticamente, com estrutura padrão, formado por:
+O nome de container deixei que fosse gerado automaticamente, com estrutura padrão formado por:
       
      `nome_da_PASTA + nome do SERVIÇO + um NÚMERO`
      
@@ -402,7 +401,7 @@ Resumindo...
    **1. Variáveis de ambiente**
       
    Existe um arquivo na raiz do projeto chamado `.env.model`.
-   Apesar de já explicado no tópico "Requisitos para execução da API", não custa ratificar aqui.
+   Apesar de já explicado no tópico <a href="#requisitos-dep"> "Requisitos / dependências" </a>, não custa ratificar aqui.
    As configurações do projeto também podem ser alteradas nesse arquivo, adicionando o valor desejado após o sinal de igual (=) em cada variável.
    **Lógico que não é obrigado essa alteração**, desde que não exista problemas com as configurações padrões do projeto.
    Se for usar o arquivo, terá que renomea-lo parar `.env`.
