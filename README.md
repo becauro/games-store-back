@@ -82,11 +82,18 @@ Da mesma forma, uma Collection para **vendas** (sales) também foi criada. Essas
 
    Você pode rodar esse projeto de duas maneiras: 1 - Via Docker 🐳 ou 2 - Manualmente 🖐️
    
-      
+   Já adianto que a melhor maneira é usando docker. Ninguém merece ter que configurar tudo manualmente só pra testar um projeto, né ? 
+   Se for pra estudar o projeto, até vai a pessoa querer fazer tudo manualmente. Agora só pra testar ou usar o software, em pleno século 21 ? 
+   Sem contar as questões de segurança, visto que o docker funciona como uma "sandbox" ... ENFIM.
+   
+  P.S: Viver sem docker, pra mim, é coisa da idade média. :-)
+
+   
    ### Opção 1 - Via Docker
 
-   Se não tiver, baixe-o no [site oficial](https://docs.docker.com/engine/install/)
-      
+   Só precisa ter docker. Se não o tiver, baixe-o: [site oficial](https://docs.docker.com/engine/install/).
+   O banco de dados necessário já é baixando e configurado na hora que usa o docker; isso graças ao `docker compose` e o Dockerfile que deixei dentro da pasta do model.
+
 
    ### Opção 2 - Manualmente (Via Host)
 
@@ -144,7 +151,7 @@ Da mesma forma, uma Collection para **vendas** (sales) também foi criada. Essas
     
  **_1. Verifique o arquivo compose.yml_**
  
-  Se você for um desenvolvedor, talvez queira mudar algo nesse aquivo para atender às tuas especificidades, como por exemplo _*1 - Porta exposta*_ e _*2 - Nome da rede*_ . Ahh !.. talvez queira, também, colocar uma outra images nos dockerfiles. Sei lá. Umas imagem mais "levinhas" e tal ..🌩️ . Depois vou trocar também.
+  Se você for um desenvolvedor, talvez queira mudar algo nesse aquivo para atender às tuas especificidades, como por exemplo _*1 - Porta exposta*_ e _*2 - Nome da rede*_ . Ahh !.. talvez queira, também, colocar outra imagem GNU/Linux nos Dockerfiles. Sei lá. Umas imagem mais "leves" e tal ..🌩️ . Tipo Alpine. Inclusive depois vou trocar também.
         
    - Caso decida trocar o valor da variável DB_NAME no arquivo, penso ser boa prática também trocá-las nos arquivos **Dockerfile** e **models/Dockerfile** e VICE-VERSA em prol da legibilidade e documentação. Principalmente se precisar fazer testes ou depurações subindo container, manualmente, sem auxílio do **docker compose**.
        
@@ -179,6 +186,8 @@ Sintaxe:
 ~~~shell
    sudo docker container inspect < nome ou id do container > | grep Gateway      
 ~~~
+
+P.S: Pretendo criar uma maneira de, assim que o container ser executado, imprimir na tela esse IP do Gateway automaticamente já mostranto IP e Porta que tem que usar pra acessar a aplicação. Seria muito mais prático.
  
  **_5. Faça requisição para um endpoint_**
  
