@@ -92,7 +92,7 @@ Da mesma forma, uma Collection para **vendas** (sales) também foi criada. Essas
    ### Opção 1 - Via Docker
 
    Só precisa ter docker. Se não o tiver, baixe-o: [site oficial](https://docs.docker.com/engine/install/).
-   O banco de dados necessário já é baixando e configurado na hora que usa o docker; isso graças ao `docker compose` e o Dockerfile que deixei dentro da pasta do model.
+   O banco de dados necessário já é, automaticamente, baixando e configurado na hora que usa o docker; isso graças ao `Dockerfile` que deixei dentro da pasta do model para o `docker compose`.
 
 
    ### Opção 2 - Manualmente (Via Host)
