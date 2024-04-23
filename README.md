@@ -91,11 +91,15 @@ Da mesma forma, uma Collection para **vendas** (sales) também foi criada. Essas
    
    ### Opção 1 - Via Docker
 
-   Só precisa ter docker. Se não o tiver, baixe-o: [site oficial](https://docs.docker.com/engine/install/).
-   O banco de dados necessário já é, automaticamente, baixando e configurado na hora que usa o docker; isso graças ao `Dockerfile` que deixei dentro da pasta do model para o `docker compose`.
+   Se executar via docker, só precisa ter docker. Baixe-o: [site oficial](https://docs.docker.com/engine/install/) se seguir os procedimentos descritos em [Via DOCKER](#via-docker) .
+   
+   O gerenciador de banco de dados (MongoDB), bem como alguns dados necessários, já são, automaticamente, baixandos e configurados na hora que usa o docker.
+   Isso graças a outro `Dockerfile` que deixei dentro da pasta `models` para o `docker compose` usar, e também graças ao shellscript, ali, que lida com a configuração e importação de dados.
 
 
    ### Opção 2 - Manualmente (Via Host)
+
+    Se não for executar via docker, tem que ter as dependências listadas abaixo e ainda tem que configurar uma a uma.
 
    1. **Node.js**
 
