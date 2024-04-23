@@ -166,9 +166,9 @@ Da mesma forma, uma Collection para **vendas** (sales) também foi criada. Essas
  
  **_3. Localize o container criado_**
  
-    É sempre bom verificar quais containers foram realmente criados: `docker container ls -a`
+   É sempre bom verificar quais containers foram realmente criados: `docker container ls -a`
 
-    O nome de container foi gerado, automaticamente, com a seguinte estrutura:
+   O nome de container foi gerado, automaticamente, com a seguinte estrutura:
       
      `nome_da_PASTA + nome do SERVIÇO + um NÚMERO`
          
@@ -221,9 +221,9 @@ Note: Pra parar container também use a flag -f , hein (👁️)!
 
 **_3. Localize o container criado_**
 
-    É sempre bom verificar quais containers foram realmente criados: `docker container ls -a`
+   É sempre bom verificar quais containers foram realmente criados: `docker container ls -a`
 
-    O nome de container foi gerado, automaticamente, com a seguinte estrutura:
+   O nome de container foi gerado, automaticamente, com a seguinte estrutura:
       
      `nome_da_PASTA + nome do SERVIÇO + um NÚMERO`
          
@@ -291,9 +291,9 @@ Note: Pra descer container também use a flag -f , hein. 👁️
 
 **_3. Localize o container criado_**
 
-    É sempre bom verificar quais containers foram realmente criados: `docker container ls -a`
+   É sempre bom verificar quais containers foram realmente criados: `docker container ls -a`
 
-    O nome de container foi gerado, automaticamente, com a seguinte estrutura:
+   O nome de container foi gerado, automaticamente, com a seguinte estrutura:
       
      `nome_da_PASTA + nome do SERVIÇO + um NÚMERO`
          
@@ -338,9 +338,9 @@ Note: Pra descer container também use a flag -f , hein. 👁️
 
 **_3. Localize o container criado_**
 
-    É sempre bom verificar quais containers foram realmente criados: `docker container ls -a`
+   É sempre bom verificar quais containers foram realmente criados: `docker container ls -a`
 
-    O nome de container foi gerado, automaticamente, com a seguinte estrutura:
+   O nome de container foi gerado, automaticamente, com a seguinte estrutura:
       
      `nome_da_PASTA + nome do SERVIÇO + um NÚMERO`
          
