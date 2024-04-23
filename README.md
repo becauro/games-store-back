@@ -187,7 +187,7 @@ Da mesma forma, uma Collection para **vendas** (sales) também foi criada. Essas
   
 ========= COMO ISSO FUNCIONA =========
 
-   Como menionado, o **compose-dev.yml** usa como contexto de build o arquivo **Dockergile-dev**. Esse Dockerfile-dev tem nada menos que um comando diferente no entrypoint, que é o comando `npm run dev`, ao invés de `npm stat`. Esse comando _npm run dev_ é quem executa o script que tem **nodemon** no `package.json`.   
+   Como menionado, o **compose-dev.yml** usa como contexto de build o arquivo **Dockerfile-dev**. Esse Dockerfile-dev tem nada menos que um comando diferente no entrypoint, que é o comando `npm run dev`, ao invés de `npm stat`. Esse comando _npm run dev_ é quem executa o script que tem **nodemon** no `package.json`.   
    O **_nodemon_** é uma ferramenta que executa script JS , mas ao mesmo tempo também monitora --- em tempo real --- mudanças ocorridas no código e, automaticamente, reinicia o servidor quando qualquer alteração é salva.
     
    No **compose-dev.yml** também foi adicionado um volume do tipo **bind mount**. Isso que permite vincular a pasta raiz do projeto entre host e container, sem precisar fazer rebuild da imagem toda hora só pra desenvolvimento. Como disse no começo, essa foi a lógica de como que as mudanças no host , em qualquer parte do projeto,  refletem, diretamente, dentro do software que roda no container e VICE-VERSA. 
