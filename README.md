@@ -13,7 +13,6 @@ No entanto, é possível executar esse frontend por aqui também, se seguir a co
 
 ## <span id="sumario">Sumário</span>
 
-- [Habilidades](#habilidades)
 - [Descrição](#descrição)
 - [Requisitos de usuário](#requisitos-de-usuário)
 - <a href="#arquitetura-e-padroes">Arquitetura e padrões</a>
@@ -28,16 +27,6 @@ No entanto, é possível executar esse frontend por aqui também, se seguir a co
 - [Observações](#observações)
 - [Requisitos funcionais](#requisitos-funcionais)
 
-## Habilidades
-
-Esse projeto teve como objetivo praticar as seguintes hardskills:
-
-- Estruturação de uma aplicação em camadas (Arquitetura MSC);
-- Delegação de responsabilidades específicas para cada parte do app;
-- Melhora da manutenibilidade e reusabilidade do código;
-- Aplicação dos padrões REST;
-- Implementação de uma API intuitiva e facilmente entendível.
----
 
 ## Descrição
 
@@ -51,7 +40,7 @@ Da mesma forma, uma Collection para **vendas** (sales) também foi criada. Essas
 
 ## Requisitos de Usuário
 
-* Deve ser possível que a pessoa usuária, independente de cadastramento ou login, possa adicionar, ler, deletar e atualizar produtos no seu estoque. (Mas irei implantar Login e autorizações de usuários também brevemente)
+* Deve ser possível que a pessoa usuária, independente de cadastramento ou login, possa adicionar, ler, deletar e atualizar produtos no seu estoque. (Mas irei implantar Login e autorizações de usuários, também, brevemente)
 * O usuário deve poder também enviar vendas para o sistema. Essas vendas devem validar se o produto em questão existe.
 * Deve, também, ser possível ler, deletar e atualizar vendas.
 
