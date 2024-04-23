@@ -138,10 +138,8 @@ Da mesma forma, uma Collection para **vendas** (sales) também foi criada. Essas
  
  #### <ins> ☑️ NORMAL </ins>
  
- Esse modo é básico e padrão, sem frontend ("frontendless"); é só a API respondendo requisições e conversando com banco de dados.
+ Esse modo é básico e padrão, sem frontend ("frontendless"); é só uma API respondendo requisições e conversando com banco de dados.
  Trata-se do levantamento de um container que dá acesso a API na porta escolhida (padrão: 3001) e pronto.
- Com isso, basta verificar o número IP do gateway da rede docker criada e fazer a requisição para o(s) endpoint(s) desejado(s). 
- Mostro como fazer tudo isso mais a frente. NADA DEMAIS. ;-)
  
  A seguir temos os passos de como usar esse modo ("Normal"), de acordo com a introdução que fiz acima. Junto deixei algumas recomendações técnicas que possivelmente você só precisa ler uma vez, já que se aplica aos demais modos também.
  
@@ -168,35 +166,22 @@ Da mesma forma, uma Collection para **vendas** (sales) também foi criada. Essas
  
  **_3. Localize o container criado_**
  
-  O nome do container deixei que fosse gerado automaticamente, com estrutura padrão, formado por:
+    É sempre bom verificar quais containers foram realmente criados: `docker container ls -a`
+
+    O nome de container foi gerado, automaticamente, com a seguinte estrutura:
       
      `nome_da_PASTA + nome do SERVIÇO + um NÚMERO`
          
   Então o primeiro container do projeto para o serviço de backend, por exemplo, terá um nome parecido com: `games-store-back-backend-1`.
-
-       
- **_4. Identifique o IP do gateway do container_**
  
-   Como criei numa rede nesse projeto, a documentação docker classifica isso como "user-defined bridge". Sendo assim, para acessar o container a partir do host, precisamos usar o ip que Docker define para o gateway dessa rede que criamos. Portanto, depois que subimos o(s) container(s), precisamos localizar o número IP do gateway desse container para poder conseguir fazer requisição usando esse IP.
-   
-Existem diversas maneiras de fazer isso se estiver usando o Docke via CLI. A que acho mais fácil é inspecionar o próprio container e, com auxílio do grep, filtrar a palavra "Gateway" que já vem acompanhado com seu repspectivo número IP. Veja abaixo:
-
-Sintaxe:
-
-~~~shell
-   sudo docker container inspect < nome ou id do container > | grep Gateway      
-~~~
-
-P.S: Pretendo criar uma maneira de, assim que o container ser executado, imprimir na tela esse IP do Gateway automaticamente já mostranto IP e Porta que tem que usar pra acessar a aplicação. Seria muito mais prático.
  
- **_5. Faça requisição para um endpoint_**
+ **_4. Faça requisição para um endpoint_**
  
    De posse do número IP, usando alguma ferramenta de requisição como [Postman](https://www.postman.com/downloads) e [Insomnia](https://insomnia.rest/download), faça requisição para um endpoint da API.
    
-   Use o IP do Gateway obtido na etapa anterior.
    Escolha um dos endpoints que listei mais à frente, na seção [Endpoints](#endpoints).
          
-   Exemplo com endpoint `products` seria: `<IP DO GATEWAY>:3001/products`
+   Por exemplo, para obter (GET) a lista de `products` da loja, seria: `localhost:3001/products` .
       
       
  #### <ins> ☑️ NORMAL + MODO DEV </ins>
@@ -236,38 +221,27 @@ Note: Pra parar container também use a flag -f , hein (👁️)!
 
 **_3. Localize o container criado_**
 
-Considere, também, as estapas já explicadas no modo NORMAL para isso. ➿
+    É sempre bom verificar quais containers foram realmente criados: `docker container ls -a`
 
-O nome de container deixei que fosse gerado automaticamente, com estrutura padrão formado por:
+    O nome de container foi gerado, automaticamente, com a seguinte estrutura:
       
      `nome_da_PASTA + nome do SERVIÇO + um NÚMERO`
+         
+  Então o primeiro container do projeto para o serviço de backend, por exemplo, terá um nome parecido com: `games-store-back-backend-1`.
      
+**_4. Faça requisição para um endpoint_**
  
-**_4. Identifique o IP do gateway do container_**
-
-Da mesma maneira já explicado no modo NORMAL.➿
-
-Resumindo... 
-
-~~~shell
-   sudo docker network inspect < nome ou id da rede > | grep Gateway
-~~~
-
-
-**_5. Faça requisição para um endpoint_**
- 
- Da mesma maneira já explicado no modo NORMAL.➿
- 
- Use o IP do Gateway obtido na etapa anterior.
- Escolha um dos endpoints que listei mais à frente, na seção [Endpoints](#endpoints).
-
- Exemplo com endpoint `products` seria: `<IP DO GATEWAY>:3001/products`
+  De posse do número IP, usando alguma ferramenta de requisição como [Postman](https://www.postman.com/downloads) e [Insomnia](https://insomnia.rest/download), faça requisição para um endpoint da API.
+   
+   Escolha um dos endpoints que listei mais à frente, na seção [Endpoints](#endpoints).
+         
+   Por exemplo, para obter (GET) a lista de `products` da loja, seria: `localhost:3001/products` .
 
 
          
  #### <ins> ☑️ COM FRONTEND </ins>
- 
-   Esse modo consiste em excutar a API (esse repositório atual em que estamos) juntamente com o frontend (outro repositório mencionado no começo da documentação). O backend continuará executando na porta 3001 do IP do Gateway, e o frontend executará na porta 3000 do IP do Gateway.
+
+   Esse modo consiste em excutar a API (esse repositório atual em que estamos) juntamente com o frontend (outro repositório mencionado no começo da documentação). O backend continuará executando na porta 3001, mas o frontend executará na porta 3000.
    Mas o frontend consegue ser acessado, TAMBÈM, pelo localhost. Então, se usar a URL localhost:3000, já consegue acessar tudo (front, back e databse) de uma vez śó.
    
    No entanto, **há pré-requisitos** para se usar esse modo, devido as configurações feitas no arquivo do docker compose. Caso não sejam atendidos, o modo não funionará. Os pré-requisitos são: 1 - Baixar/clonar previamente o repositório de frontend, 2 - O nome da pasta raiz do repositório de frontend precisa ser "games-store-frontend", 3 - A pasta precisa estar na pasta PAI deste projeto aqui (backend) 4 - Garantir todas permisões de excução recursiva. A seguir vou dar a opção de como preencher esses requistos de uma vez só, e de duas maneiras. 😺
@@ -317,31 +291,21 @@ Note: Pra descer container também use a flag -f , hein. 👁️
 
 **_3. Localize o container criado_**
 
-Da mesma maneira já explicada no modo NORMAL. ➿
+    É sempre bom verificar quais containers foram realmente criados: `docker container ls -a`
 
-O nome do container deixei ser gerado automaticamente, com estrutura padrão, formado por:
+    O nome de container foi gerado, automaticamente, com a seguinte estrutura:
       
      `nome_da_PASTA + nome do SERVIÇO + um NÚMERO`
+         
+  Então o primeiro container do projeto para o serviço de backend, por exemplo, terá um nome parecido com: `games-store-back-backend-1`.
 
+**_4. Faça requisição para um endpoint_**
 
-**_4. Identifique o IP do gateway do container_**
-
-Da mesma maneira já explicado no modo NORMAL. ➿
-
-Resumindo...
-
-~~~shell
-   sudo docker network inspect < nome ou id da rede > | grep Gateway
-~~~
-
-**_5. Faça requisição para um endpoint_**
-
- Da mesma maneira já explicado no modo NORMAL.➿
- 
- Use o IP do Gateway obtido na etapa anterior.
- Escolha um dos endpoints que listei mais à frente, na seção [Endpoints](#endpoints).
-
- Exemplo com endpoint `products` seria: `<IP DO GATEWAY>:3001/products`
+   De posse do número IP, usando alguma ferramenta de requisição como [Postman](https://www.postman.com/downloads) e [Insomnia](https://insomnia.rest/download), faça requisição para um endpoint da API.
+   
+   Escolha um dos endpoints que listei mais à frente, na seção [Endpoints](#endpoints).
+         
+   Por exemplo, para obter (GET) a lista de `products` da loja, seria: `localhost:3001/products` .
    
     
  #### <ins> ☑️ COM FRONTEND + MODO DEV </ins>
@@ -374,30 +338,21 @@ Note: Pra descer container também use a flag -f , hein. 👁️
 
 **_3. Localize o container criado_**
 
-Da mesma maneira já explicada no modo NORMAL. ➿
+    É sempre bom verificar quais containers foram realmente criados: `docker container ls -a`
 
-O nome do container deixei ser gerado automaticamente, com estrutura padrão, formado por:
+    O nome de container foi gerado, automaticamente, com a seguinte estrutura:
       
      `nome_da_PASTA + nome do SERVIÇO + um NÚMERO`
+         
+  Então o primeiro container do projeto para o serviço de backend, por exemplo, terá um nome parecido com: `games-store-back-backend-1`.
 
-**_4. Identifique o IP do gateway do container_**
+**_4. Faça requisição para um endpoint_**
 
-Da mesma maneira já explicado no modo NORMAL. ➿
-
-Resumindo...
-
-~~~shell
-   sudo docker network inspect < nome ou id da rede > | grep Gateway
-~~~
-
-**_5. Faça requisição para um endpoint_**
-
- Da mesma maneira já explicado no modo NORMAL.➿
- 
- Use o IP do Gateway obtido na etapa anterior.
- Escolha um dos endpoints que listei mais à frente, na seção [Endpoints](#endpoints).
-
- Exemplo com endpoint `products` seria: `<IP DO GATEWAY>:3001/products`
+  De posse do número IP, usando alguma ferramenta de requisição como [Postman](https://www.postman.com/downloads) e [Insomnia](https://insomnia.rest/download), faça requisição para um endpoint da API.
+   
+   Escolha um dos endpoints que listei mais à frente, na seção [Endpoints](#endpoints).
+         
+   Por exemplo, para obter (GET) a lista de `products` da loja, seria: `localhost:3001/products` .
    
    
 
