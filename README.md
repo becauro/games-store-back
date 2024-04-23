@@ -91,7 +91,8 @@ Da mesma forma, uma Collection para **vendas** (sales) também foi criada. Essas
    
    ### Opção 1 - Via Docker
 
-   Se executar via docker, só precisa ter docker. Baixe-o: [site oficial](https://docs.docker.com/engine/install/) se seguir os procedimentos descritos em [Via DOCKER](#via-docker) .
+   Se executar via docker, só precisa ter docker. Baixe-o: [site oficial](https://docs.docker.com/engine/install/).
+   Daí basta seguir os procedimentos descritos em [Via DOCKER](#via-docker).
    
    O gerenciador de banco de dados (MongoDB), bem como alguns dados necessários, já são, automaticamente, baixandos e configurados na hora que usa o docker.
    Isso graças a outro `Dockerfile` que deixei dentro da pasta `models` para o `docker compose` usar, e também graças ao shellscript, ali, que lida com a configuração e importação de dados.
