@@ -21,6 +21,7 @@ No entanto, é possível executar esse frontend por aqui também, se seguir a co
 - <a href="#requisitos-dep">Requisitos / dependências </a>
 - [Como executar](#como-executar)
    - [Via DOCKER](#via-docker)
+   - [Via DOCKER Compose](#via-docker-compose)
    - [Manualmente](#manualmente-via-host)
 - [Endpoints](#endpoints)
 - [Linter](#linter)
@@ -124,12 +125,43 @@ Da mesma forma, uma Collection para **vendas** (sales) também foi criada. Essas
 ## Como Executar
 <a href="#sumario">Sumário</a>
 
+ 
+ 
  ### Via DOCKER
- 
  --------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Como esse projeto não é de arquitetura monolítica, achei viável, também, usar com plugin `docker compose` para automatizar processo de build e criação de container. É até mais recomendado pela praticidade. Mas tudo pode ser manualmente também, óbvio.
+Todavia, usar docker manualmente (sem `docker compose`) é preciso considerar, antes, uns detalhes abaixo:
+
+
+- Precisará então criar uma imagem docker do banco de dados (MongoDB) usando o arquivo Dockerfile que está dentro da pasta `models/`
+
+- Já que o uso de docker em uma aplicação que não tem arquitetura monolitica deixa o deployment de microserviço mais explícito, vale lembrar que, sem docker compose, precisará seguir a ordem certa de levantar os containers: 1 - Conteiner de banco de dados; 2 - container de Bankend 3 - Se for usar front, tem que baixar o outro repositório de front e levantar o container dele por último.
+
+- Precisa-se ter as variáveis de ambiente e portas configuradas corretamente nos respectivos Dockerfiles; ou via shell, na hora de levantar os containers. 
  
- Criei diferentes MODOS para executar esse software via Docker. Os classifiquei assim: **"Normal (frontendless)"**, **"Normal + Modo Dev"**, **"Com Frontend"** e **"Com Frontend + Modo Dev"**.
  
+ ### Via DOCKER Compose
+  --------------------------------------------------------------------------------------------------------------------------------------------------------
+ 
+ - Criei diferentes MODOS para executar esse software via Docker. Os classifiquei assim: **"Normal"**, **"Developer"**, **"Normal + Frontend"** e **"Developer + Frontend"**.
+
+   Algumas REVISÕES básicas sobre uso do _Docker Compose_:
+   
+ - Interromper (down) e remover os containers criados:
+
+   Basta usar a flag `down` no lugar da flag `up`; não precisa do `-d`, é claro. Vou deixar dois exemplos:
+
+   -  (Modo: Normal): `docker compose down`
+   -  (Modo: Developer + Frontend): `docker compose -f compose-dev-with-front down`
+
+ - Para criar container, mas antes reconstruir (build) os Dockerfiles alterados:
+
+   Basta somente incluir a flag `--build` no final do comando que sobe (up) o container. Vou deixar dois exemplos:
+
+   - (Modo: Normal): `docker compose up -d --build`
+   - (Modo: Developer + Frontend): `docker compose -f compose-dev-with-front up -d --build` 
+
  #### <ins> ☑️ NORMAL </ins>
  
  Esse modo é básico e padrão, sem frontend ("frontendless"); é só uma API respondendo requisições e conversando com banco de dados.
@@ -141,13 +173,10 @@ Da mesma forma, uma Collection para **vendas** (sales) também foi criada. Essas
    
   Para executar o sofware nesse modo, faça as seguintes etapas:
     
- **_1. Verifique o arquivo compose.yml_**
+ **_1. (OPCIONAL) Verifique o arquivo compose.yml_**
  
-  Se você for um desenvolvedor, talvez queira mudar algo nesse aquivo para atender às tuas especificidades, como por exemplo _*1 - Porta exposta*_ e _*2 - Nome da rede*_ . Talvez queira, também, colocar outra imagem GNU/Linux nos Dockerfiles. 
-        
-   - Caso decida trocar o valor da variável DB_NAME no arquivo, penso ser boa prática também trocá-las nos arquivos **Dockerfile** e **models/Dockerfile** e VICE-VERSA em prol da legibilidade e documentação. Principalmente se precisar fazer testes ou depurações subindo container, manualmente, sem auxílio do **docker compose**.
-       
-  Dito isso, se precisas alterar algo mais nesses arquivos ("compose" e "Dockerfiles"), LEIA, antes, as linhas comentadas dentro dos arquivos para não cometer um erro que inviabilize a execuçao do software. O valor de uma variável pode está vinculado à uma lógica usada em outro local que ler essa variável. Um exemplo disso são as variáveis de ambientes DB_HOST e PORT do serviço de **_backend_**.
+   Acho que importante sempre olhar o arquivo `compose.yml`. 
+   Só pra ver as portas , variáveis, nomes de de rede, ou pra ver se tem algo que queira mudar.
   
  
  **_2.  Execute o docker compose**
@@ -178,7 +207,7 @@ Da mesma forma, uma Collection para **vendas** (sales) também foi criada. Essas
    Por exemplo, para obter (GET) a lista de `products` da loja, seria: `localhost:3001/products` .
       
       
- #### <ins> ☑️ NORMAL + MODO DEV </ins>
+ #### <ins> ☑️ DEVELOPER </ins>
  
    Esse modo meio que herda todas observações do modo NORMAL citado anteriormente, portanto, não vou reptir quase nada, "apenas fazer algumas referências e acrescentar as diferenças" (...essa rimou, poeta!).
    
@@ -199,14 +228,16 @@ Da mesma forma, uma Collection para **vendas** (sales) também foi criada. Essas
    
 **_1. Verifique o arquivo compose-dev.yml_**
 
-   Considere todas observações apresentadas no modo NORMAL.➿
+    Se você for um desenvolvedor, talvez queira mudar algo nesse aquivo para atender às tuas especificidades, como por exemplo _*1 - Porta exposta*_ e _*2 - Nome da rede*_ . Talvez queira, também, colocar outra imagem GNU/Linux nos Dockerfiles. 
+        
+   - Caso decida trocar o valor da variável DB_NAME no arquivo, penso ser boa prática também trocá-las nos arquivos **Dockerfile** e **models/Dockerfile** e VICE-VERSA em prol da legibilidade e documentação. Principalmente se precisar fazer testes ou depurações subindo container, manualmente, sem auxílio do **docker compose**.
+       
+  Dito isso, se precisas alterar algo mais nesses arquivos ("compose" e "Dockerfiles"), leia, antes, as linhas comentadas dentro dos arquivos para não cometer um erro que inviabilize a execuçao do software. O valor de uma variável pode está vinculado à uma lógica usada em outro local que ler essa variável. Um exemplo disso são as variáveis de ambientes DB_HOST e PORT do serviço de **_backend_**.
 
-   Aqui só trocamos o arquivo do docker compose ( que passa a ser `compose-dev.yml`)
-
-
+  
 **_2.  Execute o docker compose_**
 
-Aqui também só muda um pouco a sintaxe. Como é um arquivo diferente do padrão, tem que usar  a flag `-f` passando o caminho para o arquivo do docker compose que deseja usar. Se esquecer dessa flag , o docker compose assume o arquivo errado (compose.yml) e irá levantar containers do modo NORMAL, ao invés de NORMAL + MODO DEV:
+Aqui também só muda um pouco a sintaxe. Como é um arquivo diferente do padrão, tem que usar  a flag `-f` passando o caminho para o arquivo do docker compose que deseja usar. Se esquecer dessa flag , o docker compose assume o arquivo errado (compose.yml) e irá levantar containers do modo NORMAL, ao invés de Developer:
 
 ~~~shell
    docker compose -f compose-dev.yml up -d
@@ -234,7 +265,7 @@ Note: Pra parar container também use a flag -f , hein (👁️)!
 
 
          
- #### <ins> ☑️ COM FRONTEND </ins>
+ #### <ins> ☑️ Normal + Frontend </ins>
 
    Esse modo consiste em excutar a API (esse repositório atual em que estamos) juntamente com o frontend (outro repositório mencionado no começo da documentação). O backend continuará executando na porta 3001, mas o frontend executará na porta 3000.
    Mas o frontend consegue ser acessado, TAMBÈM, pelo localhost. Então, se usar a URL localhost:3000, já consegue acessar tudo (front, back e databse) de uma vez śó.
@@ -286,19 +317,16 @@ São praticamente as mesmas etapas do modo NORMAL com pequenas exceções:
    
 **_1. Verifique o arquivo compose-with-front.yml_**
 
-Considere todas observações apresentadas no modo NORMAL. ➿
-
 Só trocamos o arquivo do docker compose, que passa a ser o `compose-with-front.yml`.
 
 **_2.  Execute o docker compose_**
 
-Aqui também só muda um pouco a sintaxe. Como é um arquivo diferente do padrão, tem que usar  a flag -f passando o caminho para o arquivo do docker compose que deseja usar. Se esquecer dessa flag , o docker compose assume o arquivo errado (compose.yml) e irá levantar containers do modo NORMAL, ao invés de COM FRONTEND:
+Aqui também só muda um pouco a sintaxe. Como é um arquivo diferente do padrão, tem que usar  a flag -f passando o caminho para o arquivo do docker compose que deseja usar. Se esquecer dessa flag , o docker compose assume o arquivo errado (compose.yml) e irá levantar containers do modo NORMAL, ao invés de Normal + Frontend:
 
 ~~~shell
    docker compose -f compose-with-front.yml up -d
 ~~~
 
-Note: Pra descer container também use a flag -f , hein. 👁️
 
 **_3. Localize o container criado_**
 
@@ -319,27 +347,27 @@ Note: Pra descer container também use a flag -f , hein. 👁️
    Por exemplo, para obter (GET) a lista de `products` da loja, seria: `localhost:3001/products` .
    
     
- #### <ins> ☑️ COM FRONTEND + MODO DEV </ins>
+ #### <ins> ☑️ Developer + Frontend </ins>
  
-   Esse modo herda a mesmas funcionalidades **E PRÉ_REQUISITOS** do modo COM FRONTEND, mas com adição das características de **"modo-dev"** já explicadas no modo NORMAL + MODO DEV.
-   Ou seja, você terá containers backend e frontend juntos, mas poderá aplicar alterações a partir do host, e ver mudanças repercurtirem em tempo real devido ao **nodemon**. Mais detalhes: os mesmos descritos no modo NORMAL + MODO DEV. Bom, qualquer coisa leia novamente o modo NORMAL + MODO DEV ali em cima e modo COM FRONTEND.
+   Esse modo herda a mesmas funcionalidades e **PRÉ_REQUISITOS** do modo Normal + Frontend, mas com adição das características de **"modo-dev"** já explicadas no modo Developer.
+   Ou seja, você terá containers backend e frontend juntos, mas poderá aplicar alterações a partir do host, e ver mudanças repercurtirem em tempo real devido ao **nodemon**. Mais detalhes: os mesmos descritos no modo Developer. Bom, qualquer coisa leia novamente o modo Developer ali em cima e modo Normal + Frontend.
    
 
 ========= COMO USAR =========  
    
-Com os **PRÉ_REQUISITOS** atendidos seguimos as mesmas etapas descritas nos modos anteriores. Aqui vai um "resumo do resumo" delas.
+Com os **PRÉ_REQUISITOS** atendidos, seguimos as mesmas etapas descritas nos modos anteriores. Aqui vai um "resumo do resumo" delas.
  
 São praticamente as mesmas etapas do modo NORMAL com pequenas exceções:
    
 **_1. Verifique o arquivo compose-dev-with-front.yml_**
 
-Considere todas observações apresentadas no modo NORMAL. ➿
+Considere todas observações apresentadas no modo DEVELOPER.
 
 Só trocamos o arquivo do docker compose (que passa a ser `compose-dev-with-front.yml`)
 
 **_2.  Execute o docker compose_**
 
-Aqui também só muda um pouco a sintaxe. Como é um arquivo diferente do padrão, tem que usar  a flag -f passando o caminho para o arquivo do docker compose que deseja usar. Se esquecer dessa flag , o docker compose assume o arquivo errado (compose.yml) e irá levantar containers do modo NORMAL, ao invés de COM FRONTEND + MODO DEV:
+Aqui também só muda um pouco a sintaxe. Como é um arquivo diferente do padrão, tem que usar  a flag -f passando o caminho para o arquivo do docker compose que deseja usar. Se esquecer dessa flag , o docker compose assume o arquivo errado (compose.yml) e irá levantar containers do modo NORMAL, ao invés de Developer + Frontend:
 
 ~~~shell
    docker compose -f compose-dev-with-front.yml up -d 
