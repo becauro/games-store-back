@@ -143,7 +143,7 @@ Da mesma forma, uma Collection para **vendas** (sales) também foi criada. Essas
     
  **_1. Verifique o arquivo compose.yml_**
  
-  Se você for um desenvolvedor, talvez queira mudar algo nesse aquivo para atender às tuas especificidades, como por exemplo _*1 - Porta exposta*_ e _*2 - Nome da rede*_ . Ahh !.. talvez queira, também, colocar outra imagem GNU/Linux nos Dockerfiles. Sei lá. Umas imagem mais "leves" e tal ..🌩️ . Tipo Alpine. Inclusive depois vou trocar também.
+  Se você for um desenvolvedor, talvez queira mudar algo nesse aquivo para atender às tuas especificidades, como por exemplo _*1 - Porta exposta*_ e _*2 - Nome da rede*_ . Talvez queira, também, colocar outra imagem GNU/Linux nos Dockerfiles. 
         
    - Caso decida trocar o valor da variável DB_NAME no arquivo, penso ser boa prática também trocá-las nos arquivos **Dockerfile** e **models/Dockerfile** e VICE-VERSA em prol da legibilidade e documentação. Principalmente se precisar fazer testes ou depurações subindo container, manualmente, sem auxílio do **docker compose**.
        
@@ -158,9 +158,9 @@ Da mesma forma, uma Collection para **vendas** (sales) também foi criada. Essas
    docker compose up -d
 ~~~
  
- **_3. Localize o container criado_**
+ **_3. Procure o container criado_**
  
-   É sempre bom verificar quais containers foram realmente criados: `docker container ls -a`
+   É sempre bom saber quais containers foram realmente criados: `docker container ls -a`
 
    O nome de container foi gerado, automaticamente, com a seguinte estrutura:
       
@@ -182,15 +182,16 @@ Da mesma forma, uma Collection para **vendas** (sales) também foi criada. Essas
  
    Esse modo meio que herda todas observações do modo NORMAL citado anteriormente, portanto, não vou reptir quase nada, "apenas fazer algumas referências e acrescentar as diferenças" (...essa rimou, poeta!).
    
-   Esse modo consiste em usar outro arquivo de docker compose (_**compose-dev.yml**_) o qual se conecta a outro arquivo Dockerfile (_**Dockerfile-dev**_) configurados de forma que permita que as alterações de código feitas no host, reflitam, em tempo real, dentro do container e vice-versa.
-   Esse modo facilita para quem está desenvolvendo (daí o sobrenome "modo dev") ou está fazendo alterações no projeto, pois não precisa ficar fazendo rebuild da imagem docker a cada alteração, nem reiniciar o container; basta, apenas, crair uma nova requisição para o endpoint desejado. Lógico que em produção deveria usar o arquivo compose do modo NORMAL, por exemplo.
   
-========= COMO ISSO FUNCIONA =========
+========= COMO FUNCIONA =========
 
-   Como menionado, o **compose-dev.yml** usa como contexto de build o arquivo **Dockerfile-dev**. Esse Dockerfile-dev tem nada menos que um comando diferente no entrypoint, que é o comando `npm run dev`, ao invés de `npm stat`. Esse comando _npm run dev_ é quem executa o script que tem **nodemon** no `package.json`.   
+   Esse modo consiste em usar outro arquivo de docker compose (_**compose-dev.yml**_) o qual se conecta a outro arquivo Dockerfile (_**Dockerfile-dev**_) configurados de forma que permita que as alterações de código feitas no host, reflitam, em           tempo real, dentro do container e vice-versa.
+   Esse modo facilita para quem está desenvolvendo, pois não precisa ficar fazendo rebuild da imagem docker a cada alteração, nem reiniciar o container; Lógico que em produção deveria se usar o arquivo compose do modo NORMAL, por exemplo.
+
+   Como menionado, o **compose-dev.yml** usa como contexto de build o arquivo **Dockerfile-dev**. Esse Dockerfile-dev tem nada menos que um comando diferente no entrypoint, que é o comando `npm run dev`, ao invés de `npm stat`. Esse comando _npm run      dev_ é quem executa o script que tem **nodemon** no `package.json`.   
    O **_nodemon_** é uma ferramenta que executa script JS , mas ao mesmo tempo também monitora --- em tempo real --- mudanças ocorridas no código e, automaticamente, reinicia o servidor quando qualquer alteração é salva.
     
-   No **compose-dev.yml** também foi adicionado um volume do tipo **bind mount**. Isso que permite vincular a pasta raiz do projeto entre host e container, sem precisar fazer rebuild da imagem toda hora só pra desenvolvimento. Como disse no começo, essa foi a lógica de como que as mudanças no host , em qualquer parte do projeto,  refletem, diretamente, dentro do software que roda no container e VICE-VERSA. 
+   No **compose-dev.yml** também foi adicionado um volume do tipo **bind mount**, pois essa isso que permite vincular a pasta raiz do projeto entre host e container, sem precisar fazer rebuild da imagem toda hora só pra desenvolvimento.
    
 ========= COMO USAR =========
    
@@ -198,9 +199,9 @@ Da mesma forma, uma Collection para **vendas** (sales) também foi criada. Essas
    
 **_1. Verifique o arquivo compose-dev.yml_**
 
-Considere todas observações apresentadas no modo NORMAL.➿
+   Considere todas observações apresentadas no modo NORMAL.➿
 
-Aqui só trocamos o arquivo do docker compose ( que passa a ser `compose-dev.yml`)
+   Aqui só trocamos o arquivo do docker compose ( que passa a ser `compose-dev.yml`)
 
 
 **_2.  Execute o docker compose_**
@@ -237,33 +238,49 @@ Note: Pra parar container também use a flag -f , hein (👁️)!
 
    Esse modo consiste em excutar a API (esse repositório atual em que estamos) juntamente com o frontend (outro repositório mencionado no começo da documentação). O backend continuará executando na porta 3001, mas o frontend executará na porta 3000.
    Mas o frontend consegue ser acessado, TAMBÈM, pelo localhost. Então, se usar a URL localhost:3000, já consegue acessar tudo (front, back e databse) de uma vez śó.
+
+========= PRÉ-REQUISITOS =========
    
-   No entanto, **há pré-requisitos** para se usar esse modo, devido as configurações feitas no arquivo do docker compose. Caso não sejam atendidos, o modo não funionará. Os pré-requisitos são: 1 - Baixar/clonar previamente o repositório de frontend, 2 - O nome da pasta raiz do repositório de frontend precisa ser "games-store-frontend", 3 - A pasta precisa estar na pasta PAI deste projeto aqui (backend) 4 - Garantir todas permisões de excução recursiva. A seguir vou dar a opção de como preencher esses requistos de uma vez só, e de duas maneiras. 😺
+   No entanto, **há pré-requisitos** para se usar esse modo, devido as configurações feitas no arquivo do docker compose. Caso não sejam atendidos, o modo não funionará. 
+   Os pré-requisitos são:
+   
+   1. Baixar/clonar previamente o repositório de frontend,
+   2. O nome da pasta raiz desse repositório de frontend baixado precisa ser "games-store-frontend",
+   3. A pasta do repositório baixado (do FRONTEND) precisa estar uma pasta acima desta aqui (do BACKEND),
+   4. Todas permisões de excução recursiva precisam ser feita na pasta baixada. (Algo como: `sudo chmod -R 777  <pasta front baixada>)` 
+   
+   A seguir vou dar a opção de como preencher esses requistos de uma vez só, e de duas maneiras. 😺
  
 ========= COMO ATENDER PRÉ-REQUISITOS =========
    
-   As duas que acho melhor de conseguir isso são:
+   Algumas formas de atender isso. Escolha uma:
+
+   A) `Sem git clone`, usando um script shell:
    
-   A) Usando o git clone e depois um simples comando:
+   Acho que forma mais fácil e rápida de preencher todos os requisitos sem usar git, é executando script em shell (em padrão POSIX) que criei: `download_front.sh`.
+   Esse script encontra-se na raíz do projeto. O que ele basicamente faz é baixar, extrair, mover para a pasta certa, renomear e configura as permissões necessárias para o repositório frontend baixado.
+   
+   Portanto, se for utilizá-lo, não esqueça de o executar **com privilêgios elevados** (sudo , root e etc) e verifique se na sua saída são emitidos vários "OK" em cada etapa.
+   Se houver alguma marcação de "FAIL" após a execução do script, siga instruções apresentadas e execute o script novamente, se for o caso.
+   
+   
+   B) Usando o git clone e depois um simples comando:
    
    * Clone o repostiório frontend ([Link do repo](https://github.com/becauro/games-store-front))
    * Depois , para evitar problema, dê permissão recursiva para o repositório baixado: `chmod -R 777 games-store-front`
    
    Essas duas etapas já deveria, automaticamente, preencher todas as condições preestabelecidas. 
-   Mas se por algum motivo não puder usar git, tem a opção dois abaixo.
+   É uma opção mais pra quem for desenvolver em cima do código. Se for só pra usar, a opção, aterior, via shell script é melhor.
    
-   
-   B) Obter frontend sem git clone, usando meu script shell:
-   
- Acho que forma mais fácil e rápida de preencher todos os requisitos sem usar git, é executando script em shell (em padrão POSIX) que criei: `download_front.sh`. hehe 🥰
- Esse script encontra-se na raíz do projeto. O que ele basicamente faz é baixar, extrair, mover para a pasta certa, renomear e configura as permissões necessárias para o repositório frontend baixado.
-   
-  Portanto, se for utilizá-lo, não esqueça de o executar **com privilêgios elevados** (sudo , root e etc) e verifique se na sua saída são emitidos vários "OK" em cada etapa.
-  Se houver alguma marcação de "FAIL" após a execução do script, siga instruções apresentadas e execute o script novamente, se for o caso.
+
+   C) Via Docker compose (TODO)
+
+      Depois vou criar uma imagem docker do front em algum registry (e.g. DockerHub, github e etc) e passar para a arquivo `compose-with-front.yml`. 
+      Essa forma seria interessantes também
   
 ========= COMO USAR =========  
    
-Com o repositório frontend baixado em uma pasta acima da que se encontramos, seguimos as mesmas etapas descritas nos modos anteriores. Aqui vai um "resumo do resumo" delas.
+_Com o repositório frontend já baixado_ em uma pasta acima da pasta raiz deste projeto, seguimos as mesmas etapas descritas nos modos anteriores. Aqui vai um "resumo do resumo" delas.
  
 São praticamente as mesmas etapas do modo NORMAL com pequenas exceções:
    
