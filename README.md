@@ -138,7 +138,7 @@ Todavia, usar docker manualmente (sem `docker compose`) é preciso considerar, a
 - Precisará então criar uma imagem docker do banco de dados (MongoDB) usando o arquivo Dockerfile que está dentro da pasta `models/`
 
 - Já que o uso de docker em uma aplicação que não tem arquitetura monolitica deixa o deployment de microserviço mais explícito, vale lembrar que, sem docker compose, precisará seguir a ordem certa de levantar os containers. Ou seja: 1 - Container de banco de dados; 2 - Container de Bankend; 3 - Se for usar frontend, baixar/clonar o [outro repositório de front](https://github.com/becauro/games-store-front)  e levante por último.
-- Sendo que, se for usar o _repositório de frontend_, precisa atender os pré-requisitos que deixei listado em [Via DOCKER Compose > Normal + Frontend](#--normal--frontend).
+- Sendo que, se for usar o _repositório de frontend_, precisa atender os pré-requisitos que deixei listado em [Via DOCKER Compose > Normal + Frontend](#-%EF%B8%8F-normal--frontend-).
 
 - Precisa-se ter as variáveis de ambiente e portas configuradas corretamente nos respectivos Dockerfiles; ou via shell, na hora de levantar os containers. 
  
