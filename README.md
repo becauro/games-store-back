@@ -5,11 +5,11 @@ Ainda em fase de desenvolvimento, porém é possível já utilizar.
 
 ---
 
-### Tem FRONT ?
+### Tem FRONTEND ?
 
-Aqui está o [link](https://github.com/becauro/games-store-front) do repositório **frontend**, onde desenvolvi algumas interfaces para interagir com esta API.
-
-No entanto, é possível executar esse frontend por aqui também, se seguir a correta opção ("COM FRONT") que deixei na seção [Via DOCKER](#via-docker).
+Sim, mas em outro [repositorio](https://github.com/becauro/games-store-front) , que é um projeto **frontend** que fiz em React, o qual tem algumas interfaces. Mas, por padrão, ele não interage com este projeto aqui.
+Até porque, ainda existem pré-perequisitos, para vincular ambos projetos (front e back). 
+De qualquer forma, os detalhes para fazer isso já é parte deste readme; especificamente no topico [Via DOCKER Compose > Normal + Frontend](#-%EF%B8%8F-normal--frontend-).
 
 ## <span id="sumario">Sumário</span>
 
