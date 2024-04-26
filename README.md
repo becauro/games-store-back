@@ -70,15 +70,11 @@ Da mesma forma, uma Collection para **vendas** (sales) também foi criada. Essas
 ## <span id="requisitos-dep">Requisitos / dependências </span>
 <a href="#sumario">Sumário</a>
 
-   Você pode rodar esse projeto de duas maneiras: 1 - Via Docker 🐳 ou 2 - Manualmente 🖐️
+   Você pode rodar esse projeto de duas maneiras: 1 - Via Docker 🐳 ; 2 - via Docker Compose; 3 - Manualmente 🖐️
    
-   Já adianto que a melhor maneira é usando docker. Ninguém merece ter que configurar tudo manualmente só pra testar um projeto, né ? 
-   Se for pra estudar o projeto, até vai a pessoa querer fazer tudo manualmente. Agora só pra testar ou usar o software, em pleno século 21 ? 
-   Sem contar as questões de segurança, visto que o docker funciona como uma "sandbox" ... ENFIM.
-   
-  P.S: Viver sem docker, pra mim, é coisa da idade média. :-)
-
-   
+  Lógico que, se for apenas querer ver o projeto rodando, a forma manual não seria muito interessante.
+  
+      
    ### Opção 1 - Via Docker
 
    Se executar via docker, só precisa ter docker. Baixe-o: [site oficial](https://docs.docker.com/engine/install/).
@@ -87,8 +83,13 @@ Da mesma forma, uma Collection para **vendas** (sales) também foi criada. Essas
    O gerenciador de banco de dados (MongoDB), bem como alguns dados necessários, já são, automaticamente, baixandos e configurados na hora que usa o docker.
    Isso graças a outro `Dockerfile` que deixei dentro da pasta `models` para o `docker compose` usar, e também graças ao shellscript, ali, que lida com a configuração e importação de dados.
 
+   ### Opção 2 - Via Docker Compose
+   
+   Mesma coisas que falei acima. Mas além do docker, tem que ter o plugin Docker compose.
+      
+   Então é seguir os requisitos mostrado em [Via DOCKER Compose](#via-docker).
 
-   ### Opção 2 - Manualmente (Via Host)
+   ### Opção 3 - Manualmente (Via Host)
 
     Se não for executar via docker, tem que ter as dependências listadas abaixo e ainda tem que configurar uma a uma.
 
@@ -136,7 +137,8 @@ Todavia, usar docker manualmente (sem `docker compose`) é preciso considerar, a
 
 - Precisará então criar uma imagem docker do banco de dados (MongoDB) usando o arquivo Dockerfile que está dentro da pasta `models/`
 
-- Já que o uso de docker em uma aplicação que não tem arquitetura monolitica deixa o deployment de microserviço mais explícito, vale lembrar que, sem docker compose, precisará seguir a ordem certa de levantar os containers: 1 - Conteiner de banco de dados; 2 - container de Bankend 3 - Se for usar front, tem que baixar o outro repositório de front e levantar o container dele por último.
+- Já que o uso de docker em uma aplicação que não tem arquitetura monolitica deixa o deployment de microserviço mais explícito, vale lembrar que, sem docker compose, precisará seguir a ordem certa de levantar os containers. Ou seja: 1 - Container de banco de dados; 2 - Container de Bankend; 3 - Se for usar frontend, baixar/clonar o [outro repositório de front](https://github.com/becauro/games-store-front)  e levante por último.
+- Sendo que, se for usar o _repositório de frontend_, precisa atender os pré-requisitos que deixei listado em [Via DOCKER Compose > Normal + Frontend](#--normal--frontend).
 
 - Precisa-se ter as variáveis de ambiente e portas configuradas corretamente nos respectivos Dockerfiles; ou via shell, na hora de levantar os containers. 
  
