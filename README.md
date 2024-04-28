@@ -137,7 +137,7 @@ Todavia, usar docker manualmente (sem `docker compose`) é preciso considerar, a
 
 - Precisará então criar uma imagem docker do banco de dados (MongoDB) usando o arquivo Dockerfile que está dentro da pasta `models/`
 
-- Já que o uso de docker em uma aplicação que não tem arquitetura monolitica deixa o deployment de microserviço mais explícito, vale lembrar que, sem docker compose, precisará seguir a ordem certa de levantar os containers. Ou seja: 1 - Container de banco de dados; 2 - Container de Bankend; 3 - Se for usar frontend, baixar/clonar o [outro repositório de front](https://github.com/becauro/games-store-front)  e levante por último.
+- Já que o projeto usa arquitetura MSC (Model , Service e Control), na hora de rodar / executar sem auxílio do plugin **docker compose**, será preciso seguir uma ordem específica na incialização dos containers. Ou seja, na seguinte ordem: 1 - Container de banco de dados; 2 - Container de Bankend; 3 - Se for usar frontend, baixar/clonar o [outro repositório de front](https://github.com/becauro/games-store-front)  e levante por último.
 - Sendo que, se for usar o _repositório de frontend_, precisa atender os pré-requisitos que deixei listado em [Via DOCKER Compose > Normal + Frontend](#-%EF%B8%8F-normal--frontend-).
 
 - Precisa-se ter as variáveis de ambiente e portas configuradas corretamente nos respectivos Dockerfiles; ou via shell, na hora de levantar os containers. 
@@ -227,7 +227,7 @@ Para executar o sofware nesse modo, faça as seguintes etapas (além das etapas 
    
 **_1. Verifique o arquivo compose-dev.yml_**
 
-    Se você for um desenvolvedor, talvez queira mudar algo nesse aquivo para atender às tuas especificidades, como por exemplo _*1 - Porta exposta*_ e _*2 - Nome da rede*_ . Talvez queira, também, colocar outra imagem GNU/Linux nos Dockerfiles. 
+Se você for um desenvolvedor, talvez queira mudar algo nesse aquivo para atender às tuas especificidades, como por exemplo _*1 - Porta exposta*_ e _*2 - Nome da rede*_ . Talvez queira, também, colocar outra imagem GNU/Linux nos Dockerfiles. 
         
    - Caso decida trocar o valor da variável DB_NAME no arquivo, penso ser boa prática também trocá-las nos arquivos **Dockerfile** e **models/Dockerfile** e VICE-VERSA em prol da legibilidade e documentação. Principalmente se precisar fazer testes ou depurações subindo container, manualmente, sem auxílio do **docker compose**.
        
@@ -398,12 +398,14 @@ Note: Pra descer container também use a flag -f , hein. 👁️
  
  --------------------------------------------------------------------------------------------------------------------------------------------------------
 
-   Instalado os requisitos e as dependências necessárias, basta seguir as seguintes etapas:
+   Tendo instalado os requisitos e as dependências necessárias, basta seguir as etapas numeradas abaixo.
+   Atente para a ordem de execução dos serviços. Ou seja, primeiro precisa executar o banco de dados, visto que a API precisa consumir o conteúdo desse banco. 
+   Se for usar o projeto frontend, tanto o banco de dados quanto a API já precisam estar em execução. Uma coisa depende da outra. 
+   
    
    **1. Variáveis de ambiente**
       
    Existe um arquivo na raiz do projeto chamado `.env.model`.
-   Apesar de já explicado no tópico <a href="#requisitos-dep"> "Requisitos / dependências" </a>, não custa ratificar aqui.
    As configurações do projeto também podem ser alteradas nesse arquivo, adicionando o valor desejado após o sinal de igual (=) em cada variável.
    **Lógico que não é obrigado essa alteração**, desde que não exista problemas com as configurações padrões do projeto.
    Se for usar o arquivo, terá que renomea-lo parar `.env`.
@@ -426,7 +428,7 @@ Note: Pra descer container também use a flag -f , hein. 👁️
       Para que essa API retorne dados na rota _*products*_, precisa, obviamente, ter dados no banco chamado _*GamesStore*_ (ou no banco com nome que você definiu na variável DB_NAME no arquivo .env) na coleção ("tabela") _*products*_. Por isso criei um shell script  `models/db-import-for-host.sh` para automatizar a importação de dados, o qual cria o banco, a collection e importa dados que estão em outro script (arquivo `models/dataTestForDb.js`) para o banco criado. Assim, quando requisitado com GET no ENDPOINT _*products*_ será retornado esses dados previamente importados no banco, isentando a necessidade de criá-los manualmente para testar a API. **Se não quiser usar esse script, ok, a API funciona**, mas sem retornar dados; a menos que, alternativamente, cadastre-os, manualmente, usando a rota de POST, por exemplo.
       
       
-   **Note**: Não criei script (importador de dados) para a rota _*sales*_. Se requisitares algo para esse ENDPOINT, sem ter dados na collection _*sales*_ no banco, não terás retorno de dados.
+   **Note 1**: Não criei script (importador de dados) para a rota _*sales*_. Se requisitares algo para esse ENDPOINT, sem ter dados na collection _*sales*_ no banco, não terás retorno de dados.
    
    **Note 2**: Os dados que se encontram no arquivo `models/dataTestForDb.js`, foram obtidos do [ENDPOINT de produtos para gamers, de uma API pública do Mercado Livre](https://api.mercadolibre.com/sites/MLB/search?category=MLB1144). Apenas modifiquei alguns pontos e parâmetros para se adaptar ao meu projeto.
    
