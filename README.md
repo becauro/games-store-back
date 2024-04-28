@@ -93,7 +93,7 @@ Da mesma forma, uma Collection para **vendas** (sales) também foi criada. Essas
 
    ### Opção 3 - Manualmente (Via Host)
 
-    Se não for executar via docker, tem que ter as dependências listadas abaixo e ainda tem que configurar uma a uma.
+   Se não for executar via docker, tem que ter as dependências listadas abaixo e ainda tem que configurar uma a uma.
 
    1. **Node.js**
 
@@ -224,7 +224,7 @@ Todavia, usar docker manualmente (sem `docker compose`) é preciso considerar, a
    
 ========= COMO USAR =========
    
-  Para executar o sofware nesse modo, faça as seguintes etapas (além das etapas já mencionadas no modo NORMAL):
+Para executar o sofware nesse modo, faça as seguintes etapas (além das etapas já mencionadas no modo NORMAL):
    
 **_1. Verifique o arquivo compose-dev.yml_**
 
@@ -303,10 +303,11 @@ Note: Pra parar container também use a flag -f , hein (👁️)!
    É uma opção mais pra quem for desenvolver em cima do código. Se for só pra ver como o projeto funciona, sem querer fazer alterações com git, talvez a opção anterior (via shell script) seja melhor.
    
 
-   C) Via Docker compose (TODO)
+   C) Via Docker compose (TODO):
 
-      Depois vou criar uma imagem docker do front em algum registry (e.g. DockerHub, github e etc) e passar para a arquivo `compose-with-front.yml`. 
-      Essa forma seria interessantes também
+   Depois vou criar uma imagem docker do projeto de frontend em algum registry (e.g. DockerHub, github e etc), e passar a referência dessa imagem para um arquivo de "compose" parecido com o `compose-with-front.yml`. Assim deixo mais uma opção de uso, sem precisar clonar com git, nem usar script shell para baixar o projeto frontend. 
+   Talvez para um desenvolvedor isso não seja muito interessante, se ele tiver desejo de alterar o projeto registrando seus commits no git.
+   
   
 ========= COMO USAR =========  
    
