@@ -65,9 +65,8 @@ Da mesma forma, uma Collection para **vendas** (sales) também foi criada. Essas
 <a href="#sumario">Sumário</a>
 
 * Autenticação de Usuários (Login)
-* Autorizações de usuários com uso de tokens (JWT). Parecido com o que fiz no projeto [Blog API](https://github.com/becauro/blog_api).
+* Autorizações de usuários com uso de tokens (JWT).
 * Implantar a aplicação via Cloud ou VPS, para que possa ser consumida e testada externamente.
-* Implantar o Banco de Dados em nuvem.
 
 ## <span id="requisitos-dep">Requisitos / dependências </span>
 <a href="#sumario">Sumário</a>
