@@ -31,10 +31,12 @@ De qualquer forma, os detalhes para fazer isso já é parte deste readme; especi
 
 ## Descrição
 
-Se trata de uma API de gerenciamento de vendas que manipula **produtos** e **vendas**.
-Basicamente é um modesto controle de estoque em forma de CRUD para lidar tanto com produtos como com as vendas .
+Se trata de uma API de gerenciamento de **produtos** e **vendas**. Útil para lojas virtuais.
+É quase um controle de estoque por ser um simples CRUD que lida tanto com produtos e as vendas de uma loja virtual, vinculado-os a um banco de dados NoSQL. Tem ainda muita coisa a ser feito. Talvez acrescentar um banco SQL (e.g. PostgreSQL) para lidar com cadastros de usuários. Talvez tente sincronizar com outro projeto que tenho no privado voltado para o mesmo modelo de negócio (lojavirtual). 
+Também pretendo atualizar este projeto para TypeScript; ou criar um repositório a parte com ele todo em TypeScript. 
+A idea final é criar um backend completo de loja virtual, que não precisa ser 100% Nodejs. Por exemplo, o painel administrativo que falta, posso criar em outra linguagem; um espeçie de microserviço. Enfim, ACEITO SUGESTÕES.
 
-Seguindo os princípios REST foi desenvolvido alguns ENDPOINTS que se conectam a um banco de dados NÃO relacional (NoSQL), MongoDB.
+Seguindo os princípios REST, foi desenvolvido alguns ENDPOINTS que se conectam a um banco de dados NÃO relacional (NoSQL), MongoDB.
 
 Há uma Collection para **produtos** (products) serem cadastrados na aplicação, afim de ser possível fazer vendas com esses produtos. 
 Da mesma forma, uma Collection para **vendas** (sales) também foi criada. Essas vendas são realizadas conforme a quantidade de produtos disponíveis em estoque.
@@ -134,7 +136,6 @@ Da mesma forma, uma Collection para **vendas** (sales) também foi criada. Essas
 Como esse projeto não é de arquitetura monolítica, achei viável, também, usar com plugin `docker compose` para automatizar processo de build e criação de container. É até mais recomendado pela praticidade. Mas tudo pode ser manualmente também, óbvio.
 Todavia, usar docker manualmente (sem `docker compose`) é preciso considerar, antes, uns detalhes abaixo:
 
-
 - Precisará então criar uma imagem docker do banco de dados (MongoDB) usando o arquivo Dockerfile que está dentro da pasta `models/`
 
 - Já que o uso de docker em uma aplicação que não tem arquitetura monolitica deixa o deployment de microserviço mais explícito, vale lembrar que, sem docker compose, precisará seguir a ordem certa de levantar os containers. Ou seja: 1 - Container de banco de dados; 2 - Container de Bankend; 3 - Se for usar frontend, baixar/clonar o [outro repositório de front](https://github.com/becauro/games-store-front)  e levante por último.
@@ -210,19 +211,16 @@ Todavia, usar docker manualmente (sem `docker compose`) é preciso considerar, a
       
       
  #### <ins> ☑️ DEVELOPER </ins>
- 
-   Esse modo meio que herda todas observações do modo NORMAL citado anteriormente, portanto, não vou reptir quase nada, "apenas fazer algumas referências e acrescentar as diferenças" (...essa rimou, poeta!).
    
-  
 ========= COMO FUNCIONA =========
 
-   Esse modo consiste em usar outro arquivo de docker compose (_**compose-dev.yml**_) o qual se conecta a outro arquivo Dockerfile (_**Dockerfile-dev**_) configurados de forma que permita que as alterações de código feitas no host, reflitam, em           tempo real, dentro do container e vice-versa.
-   Esse modo facilita para quem está desenvolvendo, pois não precisa ficar fazendo rebuild da imagem docker a cada alteração, nem reiniciar o container; Lógico que em produção deveria se usar o arquivo compose do modo NORMAL, por exemplo.
+   Esse modo consiste em usar outro arquivo de docker compose (_**compose-dev.yml**_) o qual usa outro arquivo Dockerfile (_**Dockerfile-dev**_) configurados de forma que permita que as alterações de código feitas no host, reflitam, em tempo real, dentro do container e vice-versa.
+   Esse modo facilita para quem está desenvolvendo, pois não precisa ficar fazendo reconstrução (rebuild) da imagem docker a cada alteração, nem reiniciar o container; Lógico que em produção deveria se usar o arquivo compose do modo NORMAL, por exemplo.
 
-   Como menionado, o **compose-dev.yml** usa como contexto de build o arquivo **Dockerfile-dev**. Esse Dockerfile-dev tem nada menos que um comando diferente no entrypoint, que é o comando `npm run dev`, ao invés de `npm stat`. Esse comando _npm run      dev_ é quem executa o script que tem **nodemon** no `package.json`.   
-   O **_nodemon_** é uma ferramenta que executa script JS , mas ao mesmo tempo também monitora --- em tempo real --- mudanças ocorridas no código e, automaticamente, reinicia o servidor quando qualquer alteração é salva.
+   Esse arquivo **Dockerfile-dev** só tem de diferente um comando no entrypoint (`npm run dev`), o qual executa o script que tem **nodemon** em `package.json`.   
+   O **_nodemon_** é uma ferramenta que faz o mesmo que o comando **node**, com a diferença de também monitorar mudanças no código e, automaticamente, reiniciar o servidor web quando qualquer alteração for salva.
     
-   No **compose-dev.yml** também foi adicionado um volume do tipo **bind mount**, pois essa isso que permite vincular a pasta raiz do projeto entre host e container, sem precisar fazer rebuild da imagem toda hora só pra desenvolvimento.
+   No **compose-dev.yml** também foi adicionado um configuração de armazenamento do tipo **bind mount**, o qual permite vincular a pasta raiz do projeto entre host e container sem precisar fazer reconstrução da imagem docker a cada alteração no código.
    
 ========= COMO USAR =========
    
@@ -265,7 +263,6 @@ Note: Pra parar container também use a flag -f , hein (👁️)!
          
    Por exemplo, para obter (GET) a lista de `products` da loja, seria: `localhost:3001/products` .
 
-
          
  #### <ins> ☑️ Normal + Frontend </ins>
 
@@ -280,7 +277,7 @@ Note: Pra parar container também use a flag -f , hein (👁️)!
    1. Baixar/clonar previamente o repositório de frontend,
    2. O nome da pasta raiz desse repositório de frontend baixado precisa ser "games-store-frontend",
    3. A pasta do repositório baixado (do FRONTEND) precisa estar uma pasta acima desta aqui (do BACKEND),
-   4. Todas permisões de excução recursiva precisam ser feita na pasta baixada. (Algo como: `sudo chmod -R 777  <pasta front baixada>)` 
+   4. Todas permisões de excução recursiva precisam ser feita na pasta baixada. (Algo como: `sudo chmod -R 777  <pasta front baixada>`) 
    
    A seguir vou dar a opção de como preencher esses requistos de uma vez só, e de duas maneiras. 😺
  
@@ -288,7 +285,7 @@ Note: Pra parar container também use a flag -f , hein (👁️)!
    
    Algumas formas de atender isso. Escolha uma:
 
-   A) `Sem git clone`, usando um script shell:
+   A) Sem `git clone`, usando um script shell:
    
    Acho que forma mais fácil e rápida de preencher todos os requisitos sem usar git, é executando script em shell (em padrão POSIX) que criei: `download_front.sh`.
    Esse script encontra-se na raíz do projeto. O que ele basicamente faz é baixar, extrair, mover para a pasta certa, renomear e configura as permissões necessárias para o repositório frontend baixado.
@@ -297,13 +294,13 @@ Note: Pra parar container também use a flag -f , hein (👁️)!
    Se houver alguma marcação de "FAIL" após a execução do script, siga instruções apresentadas e execute o script novamente, se for o caso.
    
    
-   B) Usando o git clone e depois um simples comando:
+   B) Usando o git clone e mudando permissões :
    
-   * Clone o repostiório frontend ([Link do repo](https://github.com/becauro/games-store-front))
-   * Depois , para evitar problema, dê permissão recursiva para o repositório baixado: `chmod -R 777 games-store-front`
+   1. Clone o repostiório frontend ([Link do repo](https://github.com/becauro/games-store-front)).
+   2. Depois , para evitar problema, dê permissão recursiva para o repositório baixado: `chmod -R 777 games-store-front`.
    
    Essas duas etapas já deveria, automaticamente, preencher todas as condições preestabelecidas. 
-   É uma opção mais pra quem for desenvolver em cima do código. Se for só pra usar, a opção, aterior, via shell script é melhor.
+   É uma opção mais pra quem for desenvolver em cima do código. Se for só pra ver como o projeto funciona, sem querer fazer alterações com git, talvez a opção anterior (via shell script) seja melhor.
    
 
    C) Via Docker compose (TODO)
