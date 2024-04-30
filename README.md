@@ -1,15 +1,17 @@
 # Boas vindas ao repositório Games Store (Backend)
 
-Esse projeto é Uma API RESTfull de um sistema de gerenciamento de uma loja de games, onde é possível criar, visualizar, deletar e atualizar os produtos e as vendas. Usado Node.js, Express e MongoDB.
-Ainda em fase de desenvolvimento, porém é possível já utilizar.
+Esse projeto é uma API RESTfull de um sistema de gerenciamento de uma **loja virtual** (E-commerce ou como queira chamar) de peças e acessórios para gamers, onde é possível criar, visualizar, deletar e atualizar os produtos e as vendas, usado tecnologias como Node.js, Express e MongoDB. Ou seja, o famigerado CRUD.
+
+Esse software backend está em desenvolvimento e teste, porém já é possível utilizá-lo.
+
+P.S: ACEITO SUGESTÕES (PRs, Issues etc).
 
 ---
 
 ### Tem FRONTEND ?
 
-Sim, mas em outro [repositorio](https://github.com/becauro/games-store-front) , que é um projeto **frontend** que fiz em React, o qual tem algumas interfaces. Mas, por padrão, ele não interage com este projeto aqui.
-Até porque, ainda existem pré-perequisitos que precisam ser configurados para vincular ambos projetos (front e back). 
-De qualquer forma, os detalhes para fazer essa configuraçaõ de pré-requisitos já são parte deste readme; especificamente no topico [Via DOCKER Compose > Normal + Frontend](#-%EF%B8%8F-normal--frontend-).
+Sim, mas em outro [repositorio](https://github.com/becauro/games-store-front) , que é um projeto **frontend** que fiz em React. Mas, por padrão, ele não interage com este projeto aqui, pois, para isso, há pré-perequisitos que precisam ser configurados para vincular ambos projetos (front e back). 
+De qualquer forma, os detalhes para fazer essa configuraçaõ de pré-requisitos já são parte deste readme; especificamente no topico [Via DOCKER Compose > Normal + Frontend](#-%EF%B8%8F-normal--frontend-). Portanto, relaxa.
 
 ## <span id="sumario">Sumário</span>
 
@@ -84,10 +86,10 @@ Da mesma forma, uma Collection para **vendas** (sales) também foi criada. Essas
       
    ### Opção 1 - Via Docker
 
-   Se executar via docker, só precisa ter docker. Baixe-o: [site oficial](https://docs.docker.com/engine/install/).
-   Daí basta seguir os procedimentos descritos em [Via DOCKER](#via-docker).
+   Se executar via docker, só precisa ter docker. Baixe-o no [site oficial](https://docs.docker.com/engine/install/).
+   Após isso basta seguir os procedimentos descritos em [Via DOCKER](#via-docker).
    
-   O gerenciador de banco de dados (MongoDB), bem como alguns dados necessários, já são, automaticamente, baixandos e configurados na hora que usa o docker.
+   O gerenciador de banco de dados (MongoDB), bem como alguns dados necessários, já são, automaticamente, baixandos e configurados se optar por usa o projeto em modo "Docker Compose".
    Isso graças a outro `Dockerfile` que deixei dentro da pasta `models` para o `docker compose` usar, e também graças ao shellscript, ali, que lida com a configuração e importação de dados.
 
    ### Opção 2 - Via Docker Compose
