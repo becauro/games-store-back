@@ -8,8 +8,8 @@ Ainda em fase de desenvolvimento, porém é possível já utilizar.
 ### Tem FRONTEND ?
 
 Sim, mas em outro [repositorio](https://github.com/becauro/games-store-front) , que é um projeto **frontend** que fiz em React, o qual tem algumas interfaces. Mas, por padrão, ele não interage com este projeto aqui.
-Até porque, ainda existem pré-perequisitos, para vincular ambos projetos (front e back). 
-De qualquer forma, os detalhes para fazer isso já é parte deste readme; especificamente no topico [Via DOCKER Compose > Normal + Frontend](#-%EF%B8%8F-normal--frontend-).
+Até porque, ainda existem pré-perequisitos que precisam ser configurados para vincular ambos projetos (front e back). 
+De qualquer forma, os detalhes para fazer essa configuraçaõ de pré-requisitos já são parte deste readme; especificamente no topico [Via DOCKER Compose > Normal + Frontend](#-%EF%B8%8F-normal--frontend-).
 
 ## <span id="sumario">Sumário</span>
 
@@ -34,7 +34,7 @@ De qualquer forma, os detalhes para fazer isso já é parte deste readme; especi
 Se trata de uma API de gerenciamento de **produtos** e **vendas**. Útil para lojas virtuais.
 É quase um controle de estoque por ser um simples CRUD que lida tanto com produtos e as vendas de uma loja virtual, vinculado-os a um banco de dados NoSQL. Tem ainda muita coisa a ser feito. Talvez acrescentar um banco SQL (e.g. PostgreSQL) para lidar com cadastros de usuários. Talvez tente sincronizar com outro projeto que tenho no privado voltado para o mesmo modelo de negócio (lojavirtual). 
 Também pretendo atualizar este projeto para TypeScript; ou criar um repositório a parte com ele todo em TypeScript. 
-A idea final é criar um backend completo de loja virtual, que não precisa ser 100% Nodejs. Por exemplo, o painel administrativo que falta, posso criar em outra linguagem; um espeçie de microserviço. Enfim, ACEITO SUGESTÕES.
+A ideia final é criar um backend completo de loja virtual, que não precisa ser 100% Nodejs. Por exemplo, o painel administrativo que falta, posso criar em outra linguagem; um espeçie de microserviço. Enfim, ACEITO SUGESTÕES.
 
 Seguindo os princípios REST, foi desenvolvido alguns ENDPOINTS que se conectam a um banco de dados NÃO relacional (NoSQL), MongoDB.
 
@@ -71,9 +71,15 @@ Da mesma forma, uma Collection para **vendas** (sales) também foi criada. Essas
 ## <span id="requisitos-dep">Requisitos / dependências </span>
 <a href="#sumario">Sumário</a>
 
-   Você pode rodar esse projeto de duas maneiras: 1 - Via Docker 🐳 ; 2 - via Docker Compose; 3 - Manualmente 🖐️
+   Você pode escolher rodar esse projeto de três maneiras: 1 - Via Docker 🐳 ; 2 - via Docker Compose; 3 - Manualmente 🖐️
    
-  Lógico que, se for apenas querer ver o projeto rodando, a forma manual não seria muito interessante.
+   Lógico que, se for apenas querer ver o projeto rodando, essa forma manual não seria muito interessante, de início, em minha opinião.
+
+   Todavia, seja qual for a maneira escolhida precisará de um **Software cliente** para requição de API.
+   Dentre os softwares mais conhecidos até o momento são [Postman](https://www.postman.com/downloads) e [Insomnia](https://insomnia.rest/download).
+   Se for apenas testar requisições GET em um endpoint, apenas um browser (e.g., Firefox, Chrome) serviria, caso o ENDPOINT (rota) não precise obrigatoriamente de autenticação (e.g. Token e etc).
+      
+   Por exemplo. Fazendo uma requisição GET simples a partir de um Browser para a URL **http://localhost:3001/products** , já funcionaria pra testar a API, visto que esse ENDPOINT não necessariamente deveria exigir autenticação  para exbir produtos de uma loja.
   
       
    ### Opção 1 - Via Docker
@@ -113,15 +119,6 @@ Da mesma forma, uma Collection para **vendas** (sales) também foi criada. Essas
       
       [Site oficial](https://www.mongodb.com/try/download/community) para download do _*MongoDB Comunnity Edition*_.
      
-
-   3. **Software cliente** para requição de API (ex.: Postman, Insomnia e etc)
-   
-      Para testar todos os métodos de requição à essa API, se faz necessário um Software específico para isso.
-      Dentre os mais conhecidos até o momento são [Postman](https://www.postman.com/downloads) e [Insomnia](https://insomnia.rest/download).
-      
-      Se for apenas testar o método GET no endpoint, apenas com um browser comum é possível.
-      
-      Por exemplo. Fazendo uma requisição GET a partir de um Browser (Firefox, Chrome e etc) para a URL **http://localhost:3001/products** , funciona.
         
 
 ## Como Executar
